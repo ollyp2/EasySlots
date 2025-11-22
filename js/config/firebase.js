@@ -61,6 +61,11 @@ import {
     getDownloadURL,
     deleteObject
 } from 'https://www.gstatic.com/firebasejs/10.7.0/firebase-storage.js';
+import {
+    getFunctions,
+    httpsCallable,
+    connectFunctionsEmulator
+} from 'https://www.gstatic.com/firebasejs/10.7.0/firebase-functions.js';
 
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);
@@ -69,6 +74,10 @@ const app = initializeApp(firebaseConfig);
 export const auth = getAuth(app);
 export const db = getFirestore(app);
 export const storage = getStorage(app);
+export const functions = getFunctions(app, 'europe-west1');
+
+// Uncomment for local development with emulators
+// connectFunctionsEmulator(functions, 'localhost', 5001);
 
 // Auth providers
 export const googleProvider = new GoogleAuthProvider();
@@ -109,7 +118,9 @@ export {
     uploadBytes,
     uploadBytesResumable,
     getDownloadURL,
-    deleteObject
+    deleteObject,
+    // Functions
+    httpsCallable
 };
 
 // Helper to check if Firebase is properly configured

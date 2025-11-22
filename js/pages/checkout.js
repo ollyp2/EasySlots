@@ -1,10 +1,11 @@
 /**
  * EasySlots - Checkout Page
- * Handles booking form submission and payment processing
+ * Handles booking form submission and Stripe payment processing
  */
 
 import { requireAuth } from '../utils/authGuard.js';
-import { createBooking, calculateBookingTotals } from '../services/bookings.js';
+import { calculateBookingTotals } from '../services/bookings.js';
+import { createCheckoutSession } from '../services/stripe.js';
 import { showToast } from '../components/toast.js';
 import { showLoader, hideLoader } from '../components/loader.js';
 import { formatCurrency } from '../utils/currency.js';
@@ -110,6 +111,14 @@ function renderOrderSummary() {
                     <span class="value">${formatCurrency(total)}</span>
                 </div>
             </div>
+
+            <p class="order-summary__note">
+                <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2">
+                    <rect x="1" y="4" width="22" height="16" rx="2" ry="2"></rect>
+                    <line x1="1" y1="10" x2="23" y2="10"></line>
+                </svg>
+                Secure payment powered by Stripe
+            </p>
         </div>
     `;
 }
@@ -158,7 +167,7 @@ function setupFormHandlers() {
 }
 
 /**
- * Handle form submission
+ * Handle form submission - redirect to Stripe Checkout
  * @param {Event} e - Submit event
  */
 async function handleSubmit(e) {
@@ -173,12 +182,6 @@ async function handleSubmit(e) {
         return;
     }
 
-    // Get form data
-    const customerName = document.getElementById('customer-name').value.trim();
-    const customerEmail = document.getElementById('customer-email').value.trim();
-    const customerPhone = document.getElementById('customer-phone')?.value.trim() || '';
-    const notes = document.getElementById('booking-notes')?.value.trim() || '';
-
     // Terms checkbox
     const termsCheckbox = document.getElementById('terms-agree');
     if (termsCheckbox && !termsCheckbox.checked) {
@@ -186,56 +189,51 @@ async function handleSubmit(e) {
         return;
     }
 
-    // Calculate totals
-    const { subtotal, serviceFee, total } = calculateBookingTotals(
-        bookingData.unitPrice,
-        bookingData.quantity
-    );
-
-    // Prepare booking data
-    const fullBookingData = {
-        ...bookingData,
-        userId: authData.user.uid,
-        customerInfo: {
-            name: customerName,
-            email: customerEmail,
-            phone: customerPhone
-        },
-        notes
+    // Store customer info for after payment
+    const customerInfo = {
+        name: document.getElementById('customer-name').value.trim(),
+        email: document.getElementById('customer-email').value.trim(),
+        phone: document.getElementById('customer-phone')?.value.trim() || '',
+        notes: document.getElementById('booking-notes')?.value.trim() || ''
     };
+    sessionStorage.setItem('customerInfo', JSON.stringify(customerInfo));
 
     // Disable submit button
     submitBtn.disabled = true;
-    submitBtn.innerHTML = '<span class="spinner"></span> Processing...';
+    submitBtn.innerHTML = '<span class="spinner"></span> Redirecting to payment...';
 
     try {
-        // Create booking
-        const bookingId = await createBooking(fullBookingData);
+        // Create Stripe checkout session and redirect
+        await createCheckoutSession({
+            eventId: bookingData.eventId,
+            slotId: bookingData.slotId,
+            quantity: bookingData.quantity,
+            successUrl: `${window.location.origin}/pages/booking/success.html?session_id={CHECKOUT_SESSION_ID}`,
+            cancelUrl: `${window.location.origin}/pages/booking/cancel.html`
+        });
 
-        // Clear pending booking
-        sessionStorage.removeItem('pendingBooking');
-
-        // Store booking ID for success page
-        sessionStorage.setItem('lastBookingId', bookingId);
-
-        // Show success and redirect
-        showToast('Success', 'Booking confirmed!', 'success');
-
-        setTimeout(() => {
-            window.location.href = '/pages/booking/success.html';
-        }, 500);
+        // Note: The page will redirect, so this code won't execute
+        // But just in case something goes wrong with the redirect
     } catch (error) {
-        console.error('Booking error:', error);
+        console.error('Checkout error:', error);
 
-        let message = 'Failed to complete booking. Please try again.';
-        if (error.message.includes('Not enough spots')) {
-            message = 'Sorry, the selected spots are no longer available.';
+        let message = 'Failed to start payment. Please try again.';
+
+        // Handle specific error codes
+        if (error.code === 'unauthenticated') {
+            message = 'Please sign in to complete your booking.';
+        } else if (error.code === 'not-found') {
+            message = 'Event or slot not found. Please try again.';
+        } else if (error.code === 'failed-precondition') {
+            message = error.message || 'Unable to process booking.';
+        } else if (error.message) {
+            message = error.message;
         }
 
         showToast('Error', message, 'error');
 
         submitBtn.disabled = false;
-        submitBtn.textContent = 'Complete Booking';
+        submitBtn.innerHTML = 'Proceed to Payment';
     }
 }
 
@@ -244,6 +242,7 @@ async function handleSubmit(e) {
  */
 function handleCancel() {
     sessionStorage.removeItem('pendingBooking');
+    sessionStorage.removeItem('customerInfo');
     window.location.href = '/pages/booking/cancel.html';
 }
 

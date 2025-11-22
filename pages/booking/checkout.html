@@ -55,7 +55,13 @@
 
                         <section class="checkout-section">
                             <h2 class="checkout-section__title">Payment</h2>
-                            <p class="checkout-info">This is a demo - no real payment will be processed.</p>
+                            <p class="checkout-info">
+                                <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" style="display: inline; vertical-align: middle;">
+                                    <rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect>
+                                    <path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
+                                </svg>
+                                You'll be redirected to Stripe to complete your payment securely.
+                            </p>
                             <div class="form-group">
                                 <label class="checkbox-label">
                                     <input type="checkbox" id="terms-agree" required>
@@ -66,7 +72,7 @@
 
                         <div class="checkout-actions">
                             <button type="button" class="btn btn-outline" id="cancel-booking">Cancel</button>
-                            <button type="submit" class="btn btn-primary btn-lg">Complete Booking</button>
+                            <button type="submit" class="btn btn-primary btn-lg">Proceed to Payment</button>
                         </div>
                     </form>
                 </div>

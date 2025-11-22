@@ -5,6 +5,7 @@
 
 // Stripe functions
 export { createCheckoutSession } from './stripe/createCheckout.js';
+export { getCheckoutSession } from './stripe/getSession.js';
 export { handleStripeWebhook } from './stripe/webhook.js';
 export { createConnectAccount, createConnectAccountLink } from './stripe/connect.js';
 

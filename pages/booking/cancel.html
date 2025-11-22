@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Payment Cancelled - EasySlots</title>
+
+    <link rel="stylesheet" href="/css/main.css">
+    <link rel="stylesheet" href="/css/layout.css">
+    <link rel="stylesheet" href="/css/components.css">
+    <link rel="stylesheet" href="/css/pages/booking.css">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <header class="header" id="header"></header>
+
+    <main class="main">
+        <div class="container container--narrow">
+            <div class="confirmation-page confirmation-page--cancelled">
+                <div class="confirmation-icon confirmation-icon--warning">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <circle cx="12" cy="12" r="10"></circle>
+                        <line x1="15" y1="9" x2="9" y2="15"></line>
+                        <line x1="9" y1="9" x2="15" y2="15"></line>
+                    </svg>
+                </div>
+
+                <h1 class="confirmation-title">Payment Cancelled</h1>
+                <p class="confirmation-text">
+                    Your payment was cancelled. Don't worry, no charges were made to your account.
+                </p>
+
+                <div class="confirmation-actions">
+                    <a href="javascript:history.back()" class="btn btn-primary">Try Again</a>
+                    <a href="/pages/events/index.html" class="btn btn-outline">Browse Events</a>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <footer class="footer" id="footer"></footer>
+
+    <script type="module" src="/js/app.js"></script>
+</body>
+</html>

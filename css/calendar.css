@@ -1,0 +1,382 @@
+/**
+ * EasySlots - Calendar CSS
+ * Date picker and calendar components
+ */
+
+/* ==========================================================================
+   Calendar Container
+   ========================================================================== */
+
+.calendar {
+    background-color: var(--color-white);
+    border-radius: var(--radius-lg);
+    overflow: hidden;
+}
+
+.calendar--bordered {
+    border: 1px solid var(--color-gray-200);
+}
+
+/* ==========================================================================
+   Calendar Header
+   ========================================================================== */
+
+.calendar__header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: var(--spacing-3) var(--spacing-4);
+    background-color: var(--color-gray-50);
+    border-bottom: 1px solid var(--color-gray-200);
+}
+
+.calendar__title {
+    font-size: var(--font-size-base);
+    font-weight: var(--font-weight-semibold);
+    color: var(--color-gray-900);
+}
+
+.calendar__nav {
+    display: flex;
+    gap: var(--spacing-1);
+}
+
+.calendar__nav-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 32px;
+    height: 32px;
+    border-radius: var(--radius-md);
+    color: var(--color-gray-600);
+    transition: all var(--transition-fast);
+}
+
+.calendar__nav-btn:hover {
+    background-color: var(--color-gray-200);
+    color: var(--color-gray-900);
+}
+
+.calendar__nav-btn:disabled {
+    opacity: 0.3;
+    cursor: not-allowed;
+}
+
+.calendar__nav-btn svg {
+    width: 20px;
+    height: 20px;
+}
+
+/* ==========================================================================
+   Calendar Grid
+   ========================================================================== */
+
+.calendar__weekdays {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    padding: var(--spacing-2) var(--spacing-2) 0;
+}
+
+.calendar__weekday {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 32px;
+    font-size: var(--font-size-xs);
+    font-weight: var(--font-weight-semibold);
+    color: var(--color-gray-500);
+    text-transform: uppercase;
+}
+
+.calendar__days {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    padding: var(--spacing-2);
+    gap: var(--spacing-1);
+}
+
+/* ==========================================================================
+   Calendar Day
+   ========================================================================== */
+
+.calendar__day {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    aspect-ratio: 1;
+    font-size: var(--font-size-sm);
+    font-weight: var(--font-weight-medium);
+    color: var(--color-gray-700);
+    background-color: transparent;
+    border-radius: var(--radius-md);
+    cursor: pointer;
+    transition: all var(--transition-fast);
+}
+
+.calendar__day:hover:not(.calendar__day--disabled):not(.calendar__day--selected) {
+    background-color: var(--color-gray-100);
+}
+
+/* Outside current month */
+.calendar__day--outside {
+    color: var(--color-gray-300);
+}
+
+/* Today */
+.calendar__day--today {
+    font-weight: var(--font-weight-bold);
+    color: var(--color-primary);
+}
+
+.calendar__day--today::after {
+    content: '';
+    position: absolute;
+    bottom: 4px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 4px;
+    height: 4px;
+    background-color: var(--color-primary);
+    border-radius: var(--radius-full);
+}
+
+/* Selected */
+.calendar__day--selected {
+    background-color: var(--color-primary);
+    color: var(--color-white);
+}
+
+.calendar__day--selected::after {
+    display: none;
+}
+
+/* Has events/slots */
+.calendar__day--has-slots {
+    color: var(--color-gray-900);
+}
+
+.calendar__day--has-slots::before {
+    content: '';
+    position: absolute;
+    top: 4px;
+    right: 4px;
+    width: 6px;
+    height: 6px;
+    background-color: var(--color-success);
+    border-radius: var(--radius-full);
+}
+
+/* Disabled */
+.calendar__day--disabled {
+    color: var(--color-gray-300);
+    cursor: not-allowed;
+}
+
+.calendar__day--disabled:hover {
+    background-color: transparent;
+}
+
+/* Range selection */
+.calendar__day--range-start {
+    border-top-right-radius: 0;
+    border-bottom-right-radius: 0;
+}
+
+.calendar__day--range-end {
+    border-top-left-radius: 0;
+    border-bottom-left-radius: 0;
+}
+
+.calendar__day--in-range {
+    background-color: var(--color-primary-bg);
+    border-radius: 0;
+}
+
+/* ==========================================================================
+   Slot Picker
+   ========================================================================== */
+
+.slot-picker {
+    margin-top: var(--spacing-4);
+}
+
+.slot-picker__title {
+    font-size: var(--font-size-sm);
+    font-weight: var(--font-weight-semibold);
+    color: var(--color-gray-700);
+    margin-bottom: var(--spacing-3);
+}
+
+.slot-picker__grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: var(--spacing-2);
+}
+
+@media (min-width: 480px) {
+    .slot-picker__grid {
+        grid-template-columns: repeat(4, 1fr);
+    }
+}
+
+.slot-picker__slot {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: var(--spacing-3);
+    font-size: var(--font-size-sm);
+    color: var(--color-gray-700);
+    background-color: var(--color-gray-50);
+    border: 1px solid var(--color-gray-200);
+    border-radius: var(--radius-md);
+    cursor: pointer;
+    transition: all var(--transition-fast);
+}
+
+.slot-picker__slot:hover:not(.slot-picker__slot--disabled):not(.slot-picker__slot--selected) {
+    border-color: var(--color-primary);
+    background-color: var(--color-primary-bg);
+}
+
+.slot-picker__slot--selected {
+    background-color: var(--color-primary);
+    border-color: var(--color-primary);
+    color: var(--color-white);
+}
+
+.slot-picker__slot--disabled {
+    background-color: var(--color-gray-100);
+    color: var(--color-gray-400);
+    cursor: not-allowed;
+    text-decoration: line-through;
+}
+
+.slot-picker__time {
+    font-weight: var(--font-weight-semibold);
+}
+
+.slot-picker__spots {
+    font-size: var(--font-size-xs);
+    opacity: 0.8;
+    margin-top: var(--spacing-1);
+}
+
+/* ==========================================================================
+   Mini Calendar (for booking sidebar)
+   ========================================================================== */
+
+.booking-calendar {
+    margin-bottom: var(--spacing-4);
+}
+
+.booking-calendar .calendar__day {
+    min-height: 36px;
+}
+
+/* ==========================================================================
+   Date Range Picker
+   ========================================================================== */
+
+.date-range-picker {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-4);
+}
+
+@media (min-width: 768px) {
+    .date-range-picker {
+        flex-direction: row;
+    }
+
+    .date-range-picker .calendar {
+        flex: 1;
+    }
+}
+
+.date-range-picker__divider {
+    display: none;
+}
+
+@media (min-width: 768px) {
+    .date-range-picker__divider {
+        display: block;
+        width: 1px;
+        background-color: var(--color-gray-200);
+    }
+}
+
+/* ==========================================================================
+   Inline Date Picker
+   ========================================================================== */
+
+.datepicker-inline {
+    border: 1px solid var(--color-gray-200);
+    border-radius: var(--radius-lg);
+}
+
+/* ==========================================================================
+   Time Slots List
+   ========================================================================== */
+
+.time-slots {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-2);
+}
+
+.time-slot {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: var(--spacing-3) var(--spacing-4);
+    background-color: var(--color-white);
+    border: 1px solid var(--color-gray-200);
+    border-radius: var(--radius-md);
+    cursor: pointer;
+    transition: all var(--transition-fast);
+}
+
+.time-slot:hover:not(.time-slot--disabled) {
+    border-color: var(--color-primary);
+}
+
+.time-slot--selected {
+    background-color: var(--color-primary-bg);
+    border-color: var(--color-primary);
+}
+
+.time-slot--disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+.time-slot__time {
+    font-weight: var(--font-weight-semibold);
+    color: var(--color-gray-900);
+}
+
+.time-slot__info {
+    font-size: var(--font-size-sm);
+    color: var(--color-gray-500);
+}
+
+.time-slot__availability {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-2);
+    font-size: var(--font-size-sm);
+}
+
+.time-slot__availability--available {
+    color: var(--color-success);
+}
+
+.time-slot__availability--limited {
+    color: var(--color-warning);
+}
+
+.time-slot__availability--full {
+    color: var(--color-danger);
+}

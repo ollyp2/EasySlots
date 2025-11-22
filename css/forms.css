@@ -1,0 +1,575 @@
+/**
+ * EasySlots - Forms CSS
+ * Input, Select, Textarea, Checkbox, Radio, Validation
+ */
+
+/* ==========================================================================
+   Form Group
+   ========================================================================== */
+
+.form-group {
+    margin-bottom: var(--spacing-4);
+}
+
+.form-row {
+    display: grid;
+    gap: var(--spacing-4);
+}
+
+@media (min-width: 480px) {
+    .form-row {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+.form-section {
+    margin-bottom: var(--spacing-8);
+    padding-bottom: var(--spacing-8);
+    border-bottom: 1px solid var(--color-gray-200);
+}
+
+.form-section:last-of-type {
+    border-bottom: none;
+    margin-bottom: var(--spacing-6);
+    padding-bottom: 0;
+}
+
+.form-section__title {
+    font-size: var(--font-size-lg);
+    font-weight: var(--font-weight-semibold);
+    margin-bottom: var(--spacing-4);
+}
+
+.form-actions {
+    display: flex;
+    gap: var(--spacing-3);
+    margin-top: var(--spacing-6);
+}
+
+/* ==========================================================================
+   Labels
+   ========================================================================== */
+
+.form-label {
+    display: block;
+    font-size: var(--font-size-sm);
+    font-weight: var(--font-weight-medium);
+    color: var(--color-gray-700);
+    margin-bottom: var(--spacing-2);
+}
+
+.form-label--required::after {
+    content: ' *';
+    color: var(--color-danger);
+}
+
+.form-hint {
+    font-size: var(--font-size-xs);
+    color: var(--color-gray-500);
+    margin-top: var(--spacing-1);
+}
+
+.form-link {
+    display: block;
+    font-size: var(--font-size-sm);
+    text-align: right;
+    margin-top: var(--spacing-1);
+}
+
+.form-text {
+    font-size: var(--font-size-sm);
+    color: var(--color-gray-600);
+    margin-bottom: var(--spacing-4);
+}
+
+/* ==========================================================================
+   Input Base Styles
+   ========================================================================== */
+
+.form-input,
+.form-select,
+.form-textarea {
+    width: 100%;
+    padding: var(--spacing-3) var(--spacing-4);
+    font-size: var(--font-size-base);
+    color: var(--color-gray-900);
+    background-color: var(--color-white);
+    border: 1px solid var(--color-gray-300);
+    border-radius: var(--radius-md);
+    transition: border-color var(--transition-fast), box-shadow var(--transition-fast);
+}
+
+.form-input::placeholder,
+.form-textarea::placeholder {
+    color: var(--color-gray-400);
+}
+
+.form-input:hover,
+.form-select:hover,
+.form-textarea:hover {
+    border-color: var(--color-gray-400);
+}
+
+.form-input:focus,
+.form-select:focus,
+.form-textarea:focus {
+    outline: none;
+    border-color: var(--color-primary);
+    box-shadow: 0 0 0 3px var(--color-primary-bg);
+}
+
+.form-input:disabled,
+.form-select:disabled,
+.form-textarea:disabled {
+    background-color: var(--color-gray-100);
+    color: var(--color-gray-500);
+    cursor: not-allowed;
+}
+
+/* ==========================================================================
+   Select
+   ========================================================================== */
+
+.form-select {
+    appearance: none;
+    background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 20 20'%3e%3cpath stroke='%236B7280' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.5' d='m6 8 4 4 4-4'/%3e%3c/svg%3e");
+    background-position: right var(--spacing-3) center;
+    background-repeat: no-repeat;
+    background-size: 20px;
+    padding-right: var(--spacing-10);
+}
+
+/* ==========================================================================
+   Textarea
+   ========================================================================== */
+
+.form-textarea {
+    min-height: 100px;
+    resize: vertical;
+    line-height: var(--line-height-normal);
+}
+
+/* ==========================================================================
+   Checkbox & Radio
+   ========================================================================== */
+
+.checkbox-label,
+.radio-label {
+    display: flex;
+    align-items: flex-start;
+    gap: var(--spacing-3);
+    font-size: var(--font-size-sm);
+    color: var(--color-gray-700);
+    cursor: pointer;
+}
+
+.checkbox-label input[type="checkbox"],
+.radio-label input[type="radio"] {
+    flex-shrink: 0;
+    width: 18px;
+    height: 18px;
+    margin-top: 2px;
+    accent-color: var(--color-primary);
+    cursor: pointer;
+}
+
+.checkbox-label input[type="checkbox"] {
+    border-radius: var(--radius-sm);
+}
+
+.checkbox-label span,
+.radio-label span {
+    line-height: var(--line-height-normal);
+}
+
+.checkbox-label a,
+.radio-label a {
+    color: var(--color-primary);
+}
+
+/* Radio Group */
+.radio-group {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-3);
+}
+
+@media (min-width: 480px) {
+    .radio-group--inline {
+        flex-direction: row;
+        gap: var(--spacing-6);
+    }
+}
+
+/* Checkbox Group */
+.checkbox-group {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-2);
+}
+
+/* Days Checkbox Group */
+.checkbox-group--days {
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap: var(--spacing-2);
+}
+
+.checkbox-day {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    cursor: pointer;
+}
+
+.checkbox-day input {
+    position: absolute;
+    opacity: 0;
+    width: 0;
+    height: 0;
+}
+
+.checkbox-day span {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 44px;
+    height: 44px;
+    font-size: var(--font-size-sm);
+    font-weight: var(--font-weight-medium);
+    color: var(--color-gray-600);
+    background-color: var(--color-gray-100);
+    border-radius: var(--radius-md);
+    transition: all var(--transition-fast);
+}
+
+.checkbox-day:hover span {
+    background-color: var(--color-gray-200);
+}
+
+.checkbox-day input:checked + span {
+    background-color: var(--color-primary);
+    color: var(--color-white);
+}
+
+/* ==========================================================================
+   Validation States
+   ========================================================================== */
+
+/* Error State */
+.form-input--error,
+.form-select--error,
+.form-textarea--error,
+.form-group--error .form-input,
+.form-group--error .form-select,
+.form-group--error .form-textarea {
+    border-color: var(--color-danger);
+}
+
+.form-input--error:focus,
+.form-select--error:focus,
+.form-textarea--error:focus,
+.form-group--error .form-input:focus,
+.form-group--error .form-select:focus,
+.form-group--error .form-textarea:focus {
+    box-shadow: 0 0 0 3px var(--color-danger-light);
+}
+
+.form-error {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-1);
+    font-size: var(--font-size-xs);
+    color: var(--color-danger);
+    margin-top: var(--spacing-1);
+}
+
+.form-error svg {
+    width: 14px;
+    height: 14px;
+    flex-shrink: 0;
+}
+
+/* Success State */
+.form-input--success,
+.form-select--success,
+.form-textarea--success,
+.form-group--success .form-input,
+.form-group--success .form-select,
+.form-group--success .form-textarea {
+    border-color: var(--color-success);
+}
+
+.form-input--success:focus,
+.form-select--success:focus,
+.form-textarea--success:focus,
+.form-group--success .form-input:focus,
+.form-group--success .form-select:focus,
+.form-group--success .form-textarea:focus {
+    box-shadow: 0 0 0 3px var(--color-success-light);
+}
+
+.form-success {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-1);
+    font-size: var(--font-size-xs);
+    color: var(--color-success);
+    margin-top: var(--spacing-1);
+}
+
+/* ==========================================================================
+   Input Addons
+   ========================================================================== */
+
+.input-group {
+    display: flex;
+}
+
+.input-group .form-input {
+    flex: 1;
+    border-radius: 0;
+}
+
+.input-group .form-input:first-child {
+    border-top-left-radius: var(--radius-md);
+    border-bottom-left-radius: var(--radius-md);
+}
+
+.input-group .form-input:last-child {
+    border-top-right-radius: var(--radius-md);
+    border-bottom-right-radius: var(--radius-md);
+}
+
+.input-addon {
+    display: flex;
+    align-items: center;
+    padding: 0 var(--spacing-4);
+    font-size: var(--font-size-sm);
+    color: var(--color-gray-600);
+    background-color: var(--color-gray-100);
+    border: 1px solid var(--color-gray-300);
+}
+
+.input-addon:first-child {
+    border-right: none;
+    border-top-left-radius: var(--radius-md);
+    border-bottom-left-radius: var(--radius-md);
+}
+
+.input-addon:last-child {
+    border-left: none;
+    border-top-right-radius: var(--radius-md);
+    border-bottom-right-radius: var(--radius-md);
+}
+
+/* ==========================================================================
+   Quantity Selector
+   ========================================================================== */
+
+.quantity-selector {
+    display: flex;
+    align-items: center;
+    gap: 0;
+}
+
+.quantity-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+    height: 40px;
+    font-size: var(--font-size-lg);
+    font-weight: var(--font-weight-medium);
+    color: var(--color-gray-700);
+    background-color: var(--color-gray-100);
+    border: 1px solid var(--color-gray-300);
+    transition: all var(--transition-fast);
+}
+
+.quantity-btn:first-child {
+    border-top-left-radius: var(--radius-md);
+    border-bottom-left-radius: var(--radius-md);
+}
+
+.quantity-btn:last-child {
+    border-top-right-radius: var(--radius-md);
+    border-bottom-right-radius: var(--radius-md);
+}
+
+.quantity-btn:hover {
+    background-color: var(--color-gray-200);
+}
+
+.quantity-input {
+    width: 60px;
+    height: 40px;
+    text-align: center;
+    font-size: var(--font-size-base);
+    font-weight: var(--font-weight-medium);
+    border: 1px solid var(--color-gray-300);
+    border-left: none;
+    border-right: none;
+    border-radius: 0;
+    -moz-appearance: textfield;
+}
+
+.quantity-input::-webkit-outer-spin-button,
+.quantity-input::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+
+/* ==========================================================================
+   Image Upload
+   ========================================================================== */
+
+.image-upload {
+    position: relative;
+}
+
+.image-upload__preview {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: var(--spacing-3);
+    min-height: 200px;
+    padding: var(--spacing-6);
+    background-color: var(--color-gray-50);
+    border: 2px dashed var(--color-gray-300);
+    border-radius: var(--radius-lg);
+    cursor: pointer;
+    transition: all var(--transition-fast);
+}
+
+.image-upload__preview:hover {
+    border-color: var(--color-primary);
+    background-color: var(--color-primary-bg);
+}
+
+.image-upload__preview svg {
+    width: 48px;
+    height: 48px;
+    stroke: var(--color-gray-400);
+}
+
+.image-upload__preview p {
+    font-size: var(--font-size-sm);
+    color: var(--color-gray-500);
+}
+
+.image-upload__preview img {
+    max-width: 100%;
+    max-height: 300px;
+    object-fit: contain;
+    border-radius: var(--radius-md);
+}
+
+.image-upload--avatar {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-4);
+}
+
+.image-upload--avatar .image-upload__preview {
+    width: 80px;
+    height: 80px;
+    min-height: auto;
+    border-radius: var(--radius-full);
+    padding: 0;
+    overflow: hidden;
+}
+
+.image-upload--avatar .image-upload__preview svg {
+    width: 32px;
+    height: 32px;
+}
+
+/* ==========================================================================
+   Search Input
+   ========================================================================== */
+
+.search-input {
+    position: relative;
+}
+
+.search-input .form-input {
+    padding-left: var(--spacing-10);
+}
+
+.search-input__icon {
+    position: absolute;
+    left: var(--spacing-3);
+    top: 50%;
+    transform: translateY(-50%);
+    width: 20px;
+    height: 20px;
+    stroke: var(--color-gray-400);
+    pointer-events: none;
+}
+
+/* ==========================================================================
+   Price Range
+   ========================================================================== */
+
+.price-range {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-2);
+}
+
+.price-range .form-input {
+    width: 100%;
+}
+
+.price-range span {
+    color: var(--color-gray-400);
+}
+
+/* ==========================================================================
+   Slots Builder
+   ========================================================================== */
+
+.slots-builder__header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: var(--spacing-3);
+}
+
+.slots-list {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-3);
+}
+
+.slot-item {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-3);
+    padding: var(--spacing-3);
+    background-color: var(--color-gray-50);
+    border-radius: var(--radius-md);
+}
+
+.slot-item .form-input {
+    width: auto;
+}
+
+.slot-item__remove {
+    padding: var(--spacing-2);
+    color: var(--color-gray-400);
+    border-radius: var(--radius-md);
+    transition: all var(--transition-fast);
+}
+
+.slot-item__remove:hover {
+    color: var(--color-danger);
+    background-color: var(--color-danger-light);
+}
+
+.slot-item__remove svg {
+    width: 18px;
+    height: 18px;
+}

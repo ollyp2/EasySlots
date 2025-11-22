@@ -1,0 +1,240 @@
+/**
+ * EasySlots - Home Page CSS
+ */
+
+/* ==========================================================================
+   Hero Section
+   ========================================================================== */
+
+.hero {
+    padding: var(--spacing-16) 0;
+    text-align: center;
+    background: linear-gradient(135deg, var(--color-primary-bg) 0%, var(--color-white) 100%);
+}
+
+.hero__title {
+    font-size: var(--font-size-4xl);
+    font-weight: var(--font-weight-bold);
+    color: var(--color-gray-900);
+    margin-bottom: var(--spacing-4);
+}
+
+@media (min-width: 768px) {
+    .hero__title {
+        font-size: var(--font-size-5xl);
+    }
+}
+
+.hero__subtitle {
+    font-size: var(--font-size-lg);
+    color: var(--color-gray-600);
+    max-width: 600px;
+    margin: 0 auto var(--spacing-8);
+}
+
+.hero__search {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-3);
+    max-width: 500px;
+    margin: 0 auto;
+}
+
+@media (min-width: 480px) {
+    .hero__search {
+        flex-direction: row;
+    }
+}
+
+.hero__search-input {
+    flex: 1;
+    padding: var(--spacing-4);
+    font-size: var(--font-size-base);
+    border: 1px solid var(--color-gray-300);
+    border-radius: var(--radius-lg);
+}
+
+.hero__search-input:focus {
+    outline: none;
+    border-color: var(--color-primary);
+    box-shadow: 0 0 0 3px var(--color-primary-bg);
+}
+
+.hero__search-btn {
+    padding: var(--spacing-4) var(--spacing-8);
+    white-space: nowrap;
+}
+
+/* ==========================================================================
+   Categories Section
+   ========================================================================== */
+
+.categories {
+    padding: var(--spacing-12) 0;
+}
+
+.categories__grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: var(--spacing-4);
+}
+
+@media (min-width: 480px) {
+    .categories__grid {
+        grid-template-columns: repeat(3, 1fr);
+    }
+}
+
+@media (min-width: 768px) {
+    .categories__grid {
+        grid-template-columns: repeat(6, 1fr);
+    }
+}
+
+.category-card {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: var(--spacing-3);
+    padding: var(--spacing-6);
+    background-color: var(--color-white);
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-sm);
+    text-decoration: none;
+    transition: all var(--transition-fast);
+}
+
+.category-card:hover {
+    transform: translateY(-4px);
+    box-shadow: var(--shadow-md);
+}
+
+.category-card__icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 56px;
+    height: 56px;
+    background-color: var(--color-primary-bg);
+    border-radius: var(--radius-lg);
+}
+
+.category-card__icon svg {
+    width: 28px;
+    height: 28px;
+    stroke: var(--color-primary);
+}
+
+.category-card__name {
+    font-size: var(--font-size-sm);
+    font-weight: var(--font-weight-medium);
+    color: var(--color-gray-700);
+    text-align: center;
+}
+
+/* ==========================================================================
+   Featured Events Section
+   ========================================================================== */
+
+.featured-events {
+    padding: var(--spacing-12) 0;
+    background-color: var(--color-gray-50);
+}
+
+.events-grid {
+    display: grid;
+    gap: var(--spacing-6);
+}
+
+@media (min-width: 480px) {
+    .events-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (min-width: 1024px) {
+    .events-grid {
+        grid-template-columns: repeat(3, 1fr);
+    }
+}
+
+/* ==========================================================================
+   How It Works Section
+   ========================================================================== */
+
+.how-it-works {
+    padding: var(--spacing-16) 0;
+}
+
+.steps {
+    display: grid;
+    gap: var(--spacing-8);
+}
+
+@media (min-width: 768px) {
+    .steps {
+        grid-template-columns: repeat(3, 1fr);
+    }
+}
+
+.step {
+    text-align: center;
+}
+
+.step__icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 64px;
+    height: 64px;
+    margin: 0 auto var(--spacing-4);
+    font-size: var(--font-size-2xl);
+    font-weight: var(--font-weight-bold);
+    color: var(--color-white);
+    background-color: var(--color-primary);
+    border-radius: var(--radius-full);
+}
+
+.step__title {
+    font-size: var(--font-size-xl);
+    font-weight: var(--font-weight-semibold);
+    margin-bottom: var(--spacing-2);
+}
+
+.step__text {
+    font-size: var(--font-size-base);
+    color: var(--color-gray-600);
+}
+
+/* ==========================================================================
+   CTA Section
+   ========================================================================== */
+
+.cta {
+    padding: var(--spacing-16) 0;
+    text-align: center;
+    background-color: var(--color-primary);
+    color: var(--color-white);
+}
+
+.cta__title {
+    font-size: var(--font-size-3xl);
+    font-weight: var(--font-weight-bold);
+    color: var(--color-white);
+    margin-bottom: var(--spacing-3);
+}
+
+.cta__text {
+    font-size: var(--font-size-lg);
+    opacity: 0.9;
+    margin-bottom: var(--spacing-6);
+}
+
+.cta .btn-secondary {
+    background-color: var(--color-white);
+    color: var(--color-primary);
+}
+
+.cta .btn-secondary:hover {
+    background-color: var(--color-gray-100);
+}

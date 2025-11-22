@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Edit Event - EasySlots</title>
+
+    <link rel="stylesheet" href="/css/main.css">
+    <link rel="stylesheet" href="/css/layout.css">
+    <link rel="stylesheet" href="/css/components.css">
+    <link rel="stylesheet" href="/css/forms.css">
+    <link rel="stylesheet" href="/css/calendar.css">
+    <link rel="stylesheet" href="/css/seating.css">
+    <link rel="stylesheet" href="/css/pages/dashboard.css">
+    <link rel="stylesheet" href="/css/pages/seller.css">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <header class="header" id="header"></header>
+
+    <main class="main">
+        <div class="container container--narrow">
+            <div class="page-header">
+                <a href="/pages/seller/events/index.html" class="back-link">&larr; Back to Events</a>
+                <h1 class="page-title">Edit Event</h1>
+            </div>
+
+            <form class="event-form" id="event-form">
+                <!-- Same form structure as create.html -->
+                <!-- Content loaded dynamically based on event ID -->
+            </form>
+        </div>
+    </main>
+
+    <footer class="footer" id="footer"></footer>
+    <div class="toast-container" id="toast-container"></div>
+    <div class="loader-overlay" id="loader" style="display: none;">
+        <div class="loader"></div>
+    </div>
+
+    <script type="module" src="/js/app.js"></script>
+    <script type="module" src="/js/pages/eventEditor.js"></script>
+</body>
+</html>

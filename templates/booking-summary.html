@@ -1,0 +1,49 @@
+<!--
+    Booking Summary Template
+    Used to display order summary during checkout
+-->
+<template id="booking-summary-template">
+    <div class="summary-card">
+        <h3 class="summary-card__title">Order Summary</h3>
+
+        <div class="summary-event">
+            <div class="summary-event__image">
+                <img src="{{imageUrl}}" alt="{{eventTitle}}">
+            </div>
+            <div class="summary-event__info">
+                <div class="summary-event__title">{{eventTitle}}</div>
+                <div class="summary-event__vendor">{{vendorName}}</div>
+            </div>
+        </div>
+
+        <div class="summary-details">
+            <div class="summary-row">
+                <span>Date</span>
+                <span>{{date}}</span>
+            </div>
+            <div class="summary-row">
+                <span>Time</span>
+                <span>{{time}}</span>
+            </div>
+            <div class="summary-row">
+                <span>Quantity</span>
+                <span>{{quantity}} ticket(s)</span>
+            </div>
+        </div>
+
+        <div class="summary-pricing">
+            <div class="summary-row">
+                <span>Subtotal</span>
+                <span>{{subtotal}}</span>
+            </div>
+            <div class="summary-row">
+                <span>Service fee</span>
+                <span>{{serviceFee}}</span>
+            </div>
+            <div class="summary-row summary-total">
+                <span>Total</span>
+                <span>{{total}}</span>
+            </div>
+        </div>
+    </div>
+</template>

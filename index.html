@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="EasySlots - Book events, appointments, and experiences from local vendors">
+    <title>EasySlots - Event Booking Marketplace</title>
+
+    <!-- Styles -->
+    <link rel="stylesheet" href="/css/main.css">
+    <link rel="stylesheet" href="/css/layout.css">
+    <link rel="stylesheet" href="/css/components.css">
+    <link rel="stylesheet" href="/css/pages/home.css">
+
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <!-- Header -->
+    <header class="header" id="header"></header>
+
+    <!-- Main Content -->
+    <main class="main">
+        <!-- Hero Section -->
+        <section class="hero">
+            <div class="container">
+                <h1 class="hero__title">Book Amazing Experiences</h1>
+                <p class="hero__subtitle">Discover and book events, classes, and appointments from local vendors</p>
+                <div class="hero__search">
+                    <input type="text" class="hero__search-input" placeholder="Search events, classes, vendors...">
+                    <button class="btn btn-primary hero__search-btn">Search</button>
+                </div>
+            </div>
+        </section>
+
+        <!-- Categories Section -->
+        <section class="categories">
+            <div class="container">
+                <h2 class="section-title">Browse Categories</h2>
+                <div class="categories__grid" id="categories-grid"></div>
+            </div>
+        </section>
+
+        <!-- Featured Events Section -->
+        <section class="featured-events">
+            <div class="container">
+                <h2 class="section-title">Featured Events</h2>
+                <div class="events-grid" id="featured-events"></div>
+            </div>
+        </section>
+
+        <!-- How It Works Section -->
+        <section class="how-it-works">
+            <div class="container">
+                <h2 class="section-title">How It Works</h2>
+                <div class="steps">
+                    <div class="step">
+                        <div class="step__icon">1</div>
+                        <h3 class="step__title">Browse Events</h3>
+                        <p class="step__text">Find events, classes, and experiences near you</p>
+                    </div>
+                    <div class="step">
+                        <div class="step__icon">2</div>
+                        <h3 class="step__title">Pick a Slot</h3>
+                        <p class="step__text">Choose your preferred date and time</p>
+                    </div>
+                    <div class="step">
+                        <div class="step__icon">3</div>
+                        <h3 class="step__title">Book & Pay</h3>
+                        <p class="step__text">Secure your spot with instant confirmation</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- CTA Section -->
+        <section class="cta">
+            <div class="container">
+                <h2 class="cta__title">Are you a vendor?</h2>
+                <p class="cta__text">Start selling your events and services today</p>
+                <a href="/pages/auth/register.html" class="btn btn-secondary">Get Started</a>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer" id="footer"></footer>
+
+    <!-- Toast Container -->
+    <div class="toast-container" id="toast-container"></div>
+
+    <!-- Scripts -->
+    <script type="module" src="/js/app.js"></script>
+    <script type="module" src="/js/pages/home.js"></script>
+</body>
+</html>

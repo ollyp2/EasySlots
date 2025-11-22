@@ -1,0 +1,371 @@
+/**
+ * EasySlots - Events Pages CSS
+ * Event listing and detail pages
+ */
+
+/* ==========================================================================
+   Events Listing Page
+   ========================================================================== */
+
+.events-section {
+    flex: 1;
+}
+
+.events-toolbar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: var(--spacing-4);
+    margin-bottom: var(--spacing-6);
+}
+
+.results-count {
+    font-size: var(--font-size-sm);
+    color: var(--color-gray-600);
+}
+
+/* ==========================================================================
+   Filters
+   ========================================================================== */
+
+.filters {
+    background-color: var(--color-white);
+    border-radius: var(--radius-lg);
+    padding: var(--spacing-6);
+    box-shadow: var(--shadow-sm);
+    margin-bottom: var(--spacing-6);
+}
+
+@media (min-width: 1024px) {
+    .filters {
+        position: sticky;
+        top: 100px;
+    }
+}
+
+.filter-group {
+    margin-bottom: var(--spacing-4);
+}
+
+.filter-label {
+    display: block;
+    font-size: var(--font-size-sm);
+    font-weight: var(--font-weight-medium);
+    color: var(--color-gray-700);
+    margin-bottom: var(--spacing-2);
+}
+
+/* ==========================================================================
+   Event Detail Page - Hero
+   ========================================================================== */
+
+.event-hero {
+    position: relative;
+    margin-bottom: var(--spacing-8);
+}
+
+.event-hero__image {
+    width: 100%;
+    height: 300px;
+    background-color: var(--color-gray-200);
+    border-radius: var(--radius-xl);
+    overflow: hidden;
+}
+
+@media (min-width: 768px) {
+    .event-hero__image {
+        height: 400px;
+    }
+}
+
+.event-hero__image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.event-hero__content {
+    margin-top: var(--spacing-6);
+}
+
+.event-hero__badges {
+    display: flex;
+    gap: var(--spacing-2);
+    margin-bottom: var(--spacing-3);
+}
+
+.event-hero__title {
+    font-size: var(--font-size-3xl);
+    font-weight: var(--font-weight-bold);
+    margin-bottom: var(--spacing-2);
+}
+
+@media (min-width: 768px) {
+    .event-hero__title {
+        font-size: var(--font-size-4xl);
+    }
+}
+
+.event-hero__vendor {
+    font-size: var(--font-size-base);
+    color: var(--color-gray-600);
+}
+
+.event-hero__vendor a {
+    color: var(--color-primary);
+    font-weight: var(--font-weight-medium);
+}
+
+/* ==========================================================================
+   Event Detail Page - Content
+   ========================================================================== */
+
+.event-details {
+    min-width: 0;
+}
+
+.event-section {
+    background-color: var(--color-white);
+    border-radius: var(--radius-lg);
+    padding: var(--spacing-6);
+    box-shadow: var(--shadow-sm);
+    margin-bottom: var(--spacing-6);
+}
+
+.event-section__title {
+    font-size: var(--font-size-lg);
+    font-weight: var(--font-weight-semibold);
+    margin-bottom: var(--spacing-4);
+    padding-bottom: var(--spacing-3);
+    border-bottom: 1px solid var(--color-gray-100);
+}
+
+.event-description {
+    font-size: var(--font-size-base);
+    color: var(--color-gray-700);
+    line-height: var(--line-height-relaxed);
+}
+
+.event-description p {
+    margin-bottom: var(--spacing-4);
+}
+
+.event-description p:last-child {
+    margin-bottom: 0;
+}
+
+/* Event Location */
+.event-location {
+    display: flex;
+    align-items: flex-start;
+    gap: var(--spacing-3);
+}
+
+.event-location__icon {
+    flex-shrink: 0;
+    width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: var(--color-gray-100);
+    border-radius: var(--radius-md);
+}
+
+.event-location__icon svg {
+    width: 20px;
+    height: 20px;
+    stroke: var(--color-gray-600);
+}
+
+.event-location__text {
+    font-size: var(--font-size-base);
+    color: var(--color-gray-700);
+}
+
+.event-location__label {
+    font-size: var(--font-size-sm);
+    color: var(--color-gray-500);
+}
+
+/* Vendor Card */
+.vendor-card {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-4);
+    padding: var(--spacing-4);
+    background-color: var(--color-gray-50);
+    border-radius: var(--radius-lg);
+}
+
+.vendor-card__avatar {
+    width: 56px;
+    height: 56px;
+    background-color: var(--color-gray-200);
+    border-radius: var(--radius-full);
+    overflow: hidden;
+}
+
+.vendor-card__avatar img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.vendor-card__info {
+    flex: 1;
+}
+
+.vendor-card__name {
+    font-weight: var(--font-weight-semibold);
+    color: var(--color-gray-900);
+}
+
+.vendor-card__events {
+    font-size: var(--font-size-sm);
+    color: var(--color-gray-500);
+}
+
+/* ==========================================================================
+   Booking Sidebar
+   ========================================================================== */
+
+.booking-sidebar {
+    position: sticky;
+    top: 100px;
+}
+
+.booking-card {
+    background-color: var(--color-white);
+    border-radius: var(--radius-lg);
+    padding: var(--spacing-6);
+    box-shadow: var(--shadow-md);
+}
+
+.booking-card__price {
+    display: flex;
+    align-items: baseline;
+    gap: var(--spacing-2);
+    margin-bottom: var(--spacing-4);
+}
+
+.booking-card__price .price {
+    font-size: var(--font-size-3xl);
+    font-weight: var(--font-weight-bold);
+    color: var(--color-gray-900);
+}
+
+.booking-card__price .price-label {
+    font-size: var(--font-size-sm);
+    color: var(--color-gray-500);
+}
+
+.booking-quantity {
+    margin-bottom: var(--spacing-4);
+}
+
+.spots-available {
+    font-size: var(--font-size-sm);
+    color: var(--color-gray-500);
+    margin-top: var(--spacing-2);
+}
+
+.booking-summary {
+    padding: var(--spacing-4) 0;
+    margin-bottom: var(--spacing-4);
+    border-top: 1px solid var(--color-gray-200);
+}
+
+/* ==========================================================================
+   Vendor Profile Page
+   ========================================================================== */
+
+.vendor-header {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    padding: var(--spacing-8) 0;
+    margin-bottom: var(--spacing-8);
+    background-color: var(--color-white);
+    border-radius: var(--radius-xl);
+    box-shadow: var(--shadow-sm);
+}
+
+@media (min-width: 768px) {
+    .vendor-header {
+        flex-direction: row;
+        text-align: left;
+        padding: var(--spacing-8);
+        gap: var(--spacing-8);
+    }
+}
+
+.vendor-header__logo {
+    width: 120px;
+    height: 120px;
+    background-color: var(--color-gray-200);
+    border-radius: var(--radius-full);
+    overflow: hidden;
+    flex-shrink: 0;
+    margin-bottom: var(--spacing-4);
+}
+
+@media (min-width: 768px) {
+    .vendor-header__logo {
+        margin-bottom: 0;
+    }
+}
+
+.vendor-header__logo img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.vendor-header__info {
+    flex: 1;
+}
+
+.vendor-header__name {
+    font-size: var(--font-size-2xl);
+    font-weight: var(--font-weight-bold);
+    margin-bottom: var(--spacing-2);
+}
+
+.vendor-header__description {
+    font-size: var(--font-size-base);
+    color: var(--color-gray-600);
+    margin-bottom: var(--spacing-4);
+}
+
+.vendor-header__meta {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: var(--spacing-6);
+}
+
+@media (min-width: 768px) {
+    .vendor-header__meta {
+        justify-content: flex-start;
+    }
+}
+
+.vendor-stat {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-2);
+    font-size: var(--font-size-sm);
+    color: var(--color-gray-600);
+}
+
+.vendor-stat svg {
+    width: 18px;
+    height: 18px;
+}
+
+.vendor-events {
+    margin-bottom: var(--spacing-8);
+}

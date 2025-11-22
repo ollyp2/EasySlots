@@ -1,0 +1,282 @@
+/**
+ * EasySlots - Booking Pages CSS
+ * Checkout, success, and cancel pages
+ */
+
+/* ==========================================================================
+   Checkout Page
+   ========================================================================== */
+
+.checkout-form {
+    flex: 1;
+}
+
+.checkout-section {
+    background-color: var(--color-white);
+    border-radius: var(--radius-lg);
+    padding: var(--spacing-6);
+    box-shadow: var(--shadow-sm);
+    margin-bottom: var(--spacing-6);
+}
+
+.checkout-section__title {
+    font-size: var(--font-size-lg);
+    font-weight: var(--font-weight-semibold);
+    margin-bottom: var(--spacing-4);
+    padding-bottom: var(--spacing-3);
+    border-bottom: 1px solid var(--color-gray-100);
+}
+
+.checkout-info {
+    font-size: var(--font-size-sm);
+    color: var(--color-gray-600);
+    margin-bottom: var(--spacing-4);
+}
+
+/* ==========================================================================
+   Order Summary
+   ========================================================================== */
+
+.order-summary {
+    position: sticky;
+    top: 100px;
+}
+
+.summary-event {
+    display: flex;
+    gap: var(--spacing-4);
+    padding-bottom: var(--spacing-4);
+    margin-bottom: var(--spacing-4);
+    border-bottom: 1px solid var(--color-gray-100);
+}
+
+.summary-event__image {
+    width: 80px;
+    height: 60px;
+    background-color: var(--color-gray-200);
+    border-radius: var(--radius-md);
+    overflow: hidden;
+    flex-shrink: 0;
+}
+
+.summary-event__image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.summary-event__info {
+    flex: 1;
+    min-width: 0;
+}
+
+.summary-event__title {
+    font-size: var(--font-size-base);
+    font-weight: var(--font-weight-semibold);
+    color: var(--color-gray-900);
+    margin-bottom: var(--spacing-1);
+}
+
+.summary-event__vendor {
+    font-size: var(--font-size-sm);
+    color: var(--color-gray-500);
+}
+
+.summary-details {
+    padding-bottom: var(--spacing-4);
+    margin-bottom: var(--spacing-4);
+    border-bottom: 1px solid var(--color-gray-100);
+}
+
+.summary-pricing {
+    margin-top: var(--spacing-4);
+}
+
+/* ==========================================================================
+   Confirmation Pages (Success & Cancel)
+   ========================================================================== */
+
+.confirmation-page {
+    text-align: center;
+    padding: var(--spacing-12) var(--spacing-6);
+    background-color: var(--color-white);
+    border-radius: var(--radius-xl);
+    box-shadow: var(--shadow-sm);
+}
+
+.confirmation-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 80px;
+    height: 80px;
+    margin: 0 auto var(--spacing-6);
+    background-color: var(--color-success-light);
+    border-radius: var(--radius-full);
+}
+
+.confirmation-icon svg {
+    width: 40px;
+    height: 40px;
+    stroke: var(--color-success);
+}
+
+.confirmation-page--cancelled .confirmation-icon,
+.confirmation-icon--warning {
+    background-color: var(--color-warning-light);
+}
+
+.confirmation-page--cancelled .confirmation-icon svg,
+.confirmation-icon--warning svg {
+    stroke: #856404;
+}
+
+.confirmation-title {
+    font-size: var(--font-size-2xl);
+    font-weight: var(--font-weight-bold);
+    margin-bottom: var(--spacing-3);
+}
+
+.confirmation-text {
+    font-size: var(--font-size-base);
+    color: var(--color-gray-600);
+    max-width: 400px;
+    margin: 0 auto var(--spacing-8);
+}
+
+.confirmation-actions {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-3);
+    max-width: 300px;
+    margin: 0 auto;
+}
+
+@media (min-width: 480px) {
+    .confirmation-actions {
+        flex-direction: row;
+        max-width: none;
+        justify-content: center;
+    }
+}
+
+/* ==========================================================================
+   Booking Details Card
+   ========================================================================== */
+
+.booking-details-card {
+    text-align: left;
+    background-color: var(--color-gray-50);
+    border-radius: var(--radius-lg);
+    padding: var(--spacing-6);
+    margin-bottom: var(--spacing-8);
+    max-width: 500px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.booking-details-card__title {
+    font-size: var(--font-size-lg);
+    font-weight: var(--font-weight-semibold);
+    margin-bottom: var(--spacing-4);
+}
+
+.booking-details-card__row {
+    display: flex;
+    justify-content: space-between;
+    padding: var(--spacing-2) 0;
+    font-size: var(--font-size-sm);
+}
+
+.booking-details-card__label {
+    color: var(--color-gray-500);
+}
+
+.booking-details-card__value {
+    font-weight: var(--font-weight-medium);
+    color: var(--color-gray-900);
+}
+
+/* ==========================================================================
+   Ticket Display
+   ========================================================================== */
+
+.ticket-display {
+    background-color: var(--color-white);
+    border-radius: var(--radius-xl);
+    overflow: hidden;
+    box-shadow: var(--shadow-lg);
+    max-width: 400px;
+    margin: 0 auto;
+}
+
+.ticket-display__header {
+    padding: var(--spacing-6);
+    background-color: var(--color-primary);
+    color: var(--color-white);
+    text-align: center;
+}
+
+.ticket-display__event {
+    font-size: var(--font-size-xl);
+    font-weight: var(--font-weight-bold);
+    margin-bottom: var(--spacing-2);
+}
+
+.ticket-display__vendor {
+    font-size: var(--font-size-sm);
+    opacity: 0.9;
+}
+
+.ticket-display__body {
+    padding: var(--spacing-6);
+}
+
+.ticket-display__info {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: var(--spacing-4);
+    margin-bottom: var(--spacing-6);
+}
+
+.ticket-display__info-item {
+    text-align: center;
+}
+
+.ticket-display__label {
+    font-size: var(--font-size-xs);
+    color: var(--color-gray-500);
+    text-transform: uppercase;
+    margin-bottom: var(--spacing-1);
+}
+
+.ticket-display__value {
+    font-size: var(--font-size-base);
+    font-weight: var(--font-weight-semibold);
+    color: var(--color-gray-900);
+}
+
+.ticket-display__qr {
+    display: flex;
+    justify-content: center;
+    padding: var(--spacing-6);
+    background-color: var(--color-gray-50);
+    border-radius: var(--radius-lg);
+}
+
+.ticket-display__qr img {
+    width: 160px;
+    height: 160px;
+}
+
+.ticket-display__footer {
+    padding: var(--spacing-4) var(--spacing-6);
+    border-top: 2px dashed var(--color-gray-200);
+    text-align: center;
+}
+
+.ticket-display__code {
+    font-size: var(--font-size-sm);
+    font-family: monospace;
+    color: var(--color-gray-600);
+}

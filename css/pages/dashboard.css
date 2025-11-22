@@ -1,0 +1,277 @@
+/**
+ * EasySlots - Dashboard Pages CSS
+ * Buyer dashboard, bookings, tickets
+ */
+
+/* ==========================================================================
+   Bookings List
+   ========================================================================== */
+
+.bookings-list {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-4);
+}
+
+.booking-item {
+    display: flex;
+    flex-direction: column;
+    background-color: var(--color-white);
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-sm);
+    overflow: hidden;
+    transition: box-shadow var(--transition-fast);
+}
+
+@media (min-width: 768px) {
+    .booking-item {
+        flex-direction: row;
+    }
+}
+
+.booking-item:hover {
+    box-shadow: var(--shadow-md);
+}
+
+.booking-item__image {
+    width: 100%;
+    height: 140px;
+    background-color: var(--color-gray-200);
+    flex-shrink: 0;
+}
+
+@media (min-width: 768px) {
+    .booking-item__image {
+        width: 200px;
+        height: auto;
+    }
+}
+
+.booking-item__image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.booking-item__content {
+    flex: 1;
+    padding: var(--spacing-4);
+    display: flex;
+    flex-direction: column;
+}
+
+@media (min-width: 768px) {
+    .booking-item__content {
+        flex-direction: row;
+        align-items: center;
+        gap: var(--spacing-6);
+    }
+}
+
+.booking-item__info {
+    flex: 1;
+    margin-bottom: var(--spacing-4);
+}
+
+@media (min-width: 768px) {
+    .booking-item__info {
+        margin-bottom: 0;
+    }
+}
+
+.booking-item__title {
+    font-size: var(--font-size-lg);
+    font-weight: var(--font-weight-semibold);
+    color: var(--color-gray-900);
+    margin-bottom: var(--spacing-2);
+}
+
+.booking-item__meta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--spacing-4);
+    font-size: var(--font-size-sm);
+    color: var(--color-gray-500);
+}
+
+.booking-item__meta-item {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-1);
+}
+
+.booking-item__meta-item svg {
+    width: 16px;
+    height: 16px;
+}
+
+.booking-item__status {
+    margin-bottom: var(--spacing-4);
+}
+
+@media (min-width: 768px) {
+    .booking-item__status {
+        margin-bottom: 0;
+        text-align: center;
+    }
+}
+
+.booking-item__actions {
+    display: flex;
+    gap: var(--spacing-2);
+}
+
+/* ==========================================================================
+   Tickets Grid
+   ========================================================================== */
+
+.tickets-grid {
+    display: grid;
+    gap: var(--spacing-6);
+}
+
+@media (min-width: 480px) {
+    .tickets-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (min-width: 1024px) {
+    .tickets-grid {
+        grid-template-columns: repeat(3, 1fr);
+    }
+}
+
+/* Ticket Card */
+.ticket-card {
+    background-color: var(--color-white);
+    border-radius: var(--radius-xl);
+    box-shadow: var(--shadow-sm);
+    overflow: hidden;
+    transition: box-shadow var(--transition-fast);
+}
+
+.ticket-card:hover {
+    box-shadow: var(--shadow-md);
+}
+
+.ticket-card__header {
+    padding: var(--spacing-4);
+    background-color: var(--color-primary);
+    color: var(--color-white);
+}
+
+.ticket-card__event {
+    font-size: var(--font-size-base);
+    font-weight: var(--font-weight-semibold);
+    margin-bottom: var(--spacing-1);
+}
+
+.ticket-card__vendor {
+    font-size: var(--font-size-sm);
+    opacity: 0.9;
+}
+
+.ticket-card__body {
+    padding: var(--spacing-4);
+}
+
+.ticket-card__info {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: var(--spacing-4);
+}
+
+.ticket-card__info-item {
+    text-align: center;
+}
+
+.ticket-card__label {
+    font-size: var(--font-size-xs);
+    color: var(--color-gray-500);
+    margin-bottom: var(--spacing-1);
+}
+
+.ticket-card__value {
+    font-size: var(--font-size-sm);
+    font-weight: var(--font-weight-semibold);
+    color: var(--color-gray-900);
+}
+
+.ticket-card__qr {
+    display: flex;
+    justify-content: center;
+    padding: var(--spacing-3);
+    background-color: var(--color-gray-50);
+    border-radius: var(--radius-md);
+    margin-bottom: var(--spacing-4);
+}
+
+.ticket-card__qr img {
+    width: 100px;
+    height: 100px;
+}
+
+.ticket-card__footer {
+    display: flex;
+    justify-content: center;
+    padding-top: var(--spacing-3);
+    border-top: 2px dashed var(--color-gray-200);
+}
+
+.ticket-card__code {
+    font-size: var(--font-size-xs);
+    font-family: monospace;
+    color: var(--color-gray-500);
+}
+
+/* Ticket status modifiers */
+.ticket-card--used .ticket-card__header {
+    background-color: var(--color-gray-500);
+}
+
+.ticket-card--used .ticket-card__qr {
+    opacity: 0.5;
+}
+
+.ticket-card--expired .ticket-card__header {
+    background-color: var(--color-danger);
+}
+
+/* ==========================================================================
+   Profile Form
+   ========================================================================== */
+
+.profile-form {
+    background-color: var(--color-white);
+    border-radius: var(--radius-lg);
+    padding: var(--spacing-6);
+    box-shadow: var(--shadow-sm);
+}
+
+/* ==========================================================================
+   Settings Form
+   ========================================================================== */
+
+.settings-form {
+    background-color: var(--color-white);
+    border-radius: var(--radius-lg);
+    padding: var(--spacing-6);
+    box-shadow: var(--shadow-sm);
+}
+
+/* ==========================================================================
+   Header Actions (for dashboard pages)
+   ========================================================================== */
+
+.header-actions {
+    display: flex;
+    gap: var(--spacing-3);
+    flex-wrap: wrap;
+}
+
+.header-actions .form-input,
+.header-actions .form-select {
+    width: auto;
+    min-width: 150px;
+}

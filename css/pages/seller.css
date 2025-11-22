@@ -1,0 +1,424 @@
+/**
+ * EasySlots - Seller/Vendor Pages CSS
+ * Vendor dashboard, events management, scanner, payouts
+ */
+
+/* ==========================================================================
+   Events List (Seller View)
+   ========================================================================== */
+
+.events-list--seller {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-4);
+}
+
+.event-list-item {
+    display: flex;
+    flex-direction: column;
+    background-color: var(--color-white);
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-sm);
+    overflow: hidden;
+}
+
+@media (min-width: 768px) {
+    .event-list-item {
+        flex-direction: row;
+    }
+}
+
+.event-list-item__image {
+    width: 100%;
+    height: 140px;
+    background-color: var(--color-gray-200);
+    flex-shrink: 0;
+}
+
+@media (min-width: 768px) {
+    .event-list-item__image {
+        width: 180px;
+        height: auto;
+    }
+}
+
+.event-list-item__image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.event-list-item__content {
+    flex: 1;
+    padding: var(--spacing-4);
+    display: flex;
+    flex-direction: column;
+}
+
+@media (min-width: 768px) {
+    .event-list-item__content {
+        flex-direction: row;
+        align-items: center;
+        gap: var(--spacing-4);
+    }
+}
+
+.event-list-item__info {
+    flex: 1;
+    margin-bottom: var(--spacing-4);
+}
+
+@media (min-width: 768px) {
+    .event-list-item__info {
+        margin-bottom: 0;
+    }
+}
+
+.event-list-item__title {
+    font-size: var(--font-size-lg);
+    font-weight: var(--font-weight-semibold);
+    color: var(--color-gray-900);
+    margin-bottom: var(--spacing-2);
+}
+
+.event-list-item__meta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--spacing-3);
+    font-size: var(--font-size-sm);
+    color: var(--color-gray-500);
+}
+
+.event-list-item__stats {
+    display: flex;
+    gap: var(--spacing-6);
+    margin-bottom: var(--spacing-4);
+}
+
+@media (min-width: 768px) {
+    .event-list-item__stats {
+        margin-bottom: 0;
+    }
+}
+
+.event-list-item__stat {
+    text-align: center;
+}
+
+.event-list-item__stat-value {
+    font-size: var(--font-size-xl);
+    font-weight: var(--font-weight-bold);
+    color: var(--color-gray-900);
+}
+
+.event-list-item__stat-label {
+    font-size: var(--font-size-xs);
+    color: var(--color-gray-500);
+}
+
+.event-list-item__actions {
+    display: flex;
+    gap: var(--spacing-2);
+}
+
+/* ==========================================================================
+   Scanner Page
+   ========================================================================== */
+
+.scanner-page {
+    max-width: 600px;
+    margin: 0 auto;
+}
+
+.scanner-header {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-4);
+    margin-bottom: var(--spacing-6);
+}
+
+@media (min-width: 480px) {
+    .scanner-header {
+        flex-direction: row;
+        align-items: center;
+        justify-content: space-between;
+    }
+}
+
+.scanner-header .form-select {
+    width: 100%;
+    max-width: 250px;
+}
+
+.scanner-container {
+    background-color: var(--color-white);
+    border-radius: var(--radius-xl);
+    box-shadow: var(--shadow-sm);
+    overflow: hidden;
+    margin-bottom: var(--spacing-6);
+}
+
+.scanner-view {
+    position: relative;
+    aspect-ratio: 4 / 3;
+    background-color: var(--color-gray-900);
+}
+
+.scanner-view video {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.scanner-overlay {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.scanner-frame {
+    width: 200px;
+    height: 200px;
+    border: 3px solid var(--color-white);
+    border-radius: var(--radius-lg);
+    box-shadow: 0 0 0 9999px rgba(0, 0, 0, 0.5);
+}
+
+.scanner-manual {
+    padding: var(--spacing-6);
+    text-align: center;
+}
+
+.scanner-manual p {
+    font-size: var(--font-size-sm);
+    color: var(--color-gray-500);
+    margin-bottom: var(--spacing-3);
+}
+
+.manual-input {
+    display: flex;
+    gap: var(--spacing-2);
+}
+
+.manual-input .form-input {
+    flex: 1;
+}
+
+/* Scanner Result */
+.scanner-result {
+    margin-bottom: var(--spacing-6);
+}
+
+.result-card {
+    background-color: var(--color-white);
+    border-radius: var(--radius-xl);
+    box-shadow: var(--shadow-sm);
+    overflow: hidden;
+}
+
+.result-card--valid {
+    border: 2px solid var(--color-success);
+}
+
+.result-card--invalid {
+    border: 2px solid var(--color-danger);
+}
+
+.result-card__header {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-3);
+    padding: var(--spacing-4);
+}
+
+.result-card--valid .result-card__header {
+    background-color: var(--color-success-light);
+}
+
+.result-card--invalid .result-card__header {
+    background-color: var(--color-danger-light);
+}
+
+.result-card__icon {
+    width: 32px;
+    height: 32px;
+}
+
+.result-card--valid .result-card__icon {
+    color: var(--color-success);
+}
+
+.result-card--invalid .result-card__icon {
+    color: var(--color-danger);
+}
+
+.result-card__status {
+    font-size: var(--font-size-lg);
+    font-weight: var(--font-weight-semibold);
+}
+
+.result-card__body {
+    padding: var(--spacing-4);
+}
+
+.result-card__info {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: var(--spacing-3);
+}
+
+.result-card__label {
+    font-size: var(--font-size-xs);
+    color: var(--color-gray-500);
+}
+
+.result-card__value {
+    font-size: var(--font-size-sm);
+    font-weight: var(--font-weight-medium);
+    color: var(--color-gray-900);
+}
+
+/* Recent Scans */
+.recent-scans {
+    background-color: var(--color-white);
+    border-radius: var(--radius-lg);
+    padding: var(--spacing-6);
+    box-shadow: var(--shadow-sm);
+}
+
+.scans-list {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-3);
+}
+
+.scan-item {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-3);
+    padding: var(--spacing-3);
+    background-color: var(--color-gray-50);
+    border-radius: var(--radius-md);
+}
+
+.scan-item__status {
+    width: 8px;
+    height: 8px;
+    border-radius: var(--radius-full);
+}
+
+.scan-item__status--valid {
+    background-color: var(--color-success);
+}
+
+.scan-item__status--invalid {
+    background-color: var(--color-danger);
+}
+
+.scan-item__info {
+    flex: 1;
+}
+
+.scan-item__name {
+    font-size: var(--font-size-sm);
+    font-weight: var(--font-weight-medium);
+    color: var(--color-gray-900);
+}
+
+.scan-item__code {
+    font-size: var(--font-size-xs);
+    color: var(--color-gray-500);
+}
+
+.scan-item__time {
+    font-size: var(--font-size-xs);
+    color: var(--color-gray-400);
+}
+
+/* ==========================================================================
+   Payouts Page
+   ========================================================================== */
+
+.balance-card {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-4);
+    background-color: var(--color-white);
+    border-radius: var(--radius-xl);
+    padding: var(--spacing-6);
+    box-shadow: var(--shadow-sm);
+    margin-bottom: var(--spacing-6);
+}
+
+@media (min-width: 768px) {
+    .balance-card {
+        flex-direction: row;
+        align-items: center;
+    }
+}
+
+.balance-card__available,
+.balance-card__pending {
+    flex: 1;
+}
+
+.balance-label {
+    display: block;
+    font-size: var(--font-size-sm);
+    color: var(--color-gray-500);
+    margin-bottom: var(--spacing-1);
+}
+
+.balance-amount {
+    font-size: var(--font-size-3xl);
+    font-weight: var(--font-weight-bold);
+    color: var(--color-gray-900);
+}
+
+.balance-card__pending .balance-amount {
+    color: var(--color-gray-500);
+}
+
+.balance-card__actions {
+    display: flex;
+    gap: var(--spacing-3);
+}
+
+/* Setup Card */
+.setup-card {
+    text-align: center;
+    padding: var(--spacing-8);
+    background-color: var(--color-gray-50);
+    border-radius: var(--radius-lg);
+}
+
+.setup-card h2 {
+    font-size: var(--font-size-xl);
+    margin-bottom: var(--spacing-2);
+}
+
+.setup-card p {
+    color: var(--color-gray-600);
+    margin-bottom: var(--spacing-6);
+}
+
+/* ==========================================================================
+   Event Form (Create/Edit)
+   ========================================================================== */
+
+.event-form {
+    background-color: var(--color-white);
+    border-radius: var(--radius-lg);
+    padding: var(--spacing-6);
+    box-shadow: var(--shadow-sm);
+}
+
+/* ==========================================================================
+   Seating Chart Container (in booking sidebar)
+   ========================================================================== */
+
+.seating-chart-container {
+    margin-bottom: var(--spacing-4);
+}

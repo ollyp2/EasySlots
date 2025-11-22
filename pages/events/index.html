@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Browse all events and experiences on EasySlots">
+    <title>Browse Events - EasySlots</title>
+
+    <link rel="stylesheet" href="/css/main.css">
+    <link rel="stylesheet" href="/css/layout.css">
+    <link rel="stylesheet" href="/css/components.css">
+    <link rel="stylesheet" href="/css/forms.css">
+    <link rel="stylesheet" href="/css/pages/events.css">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <header class="header" id="header"></header>
+
+    <main class="main">
+        <div class="container">
+            <div class="page-header">
+                <h1 class="page-title">Browse Events</h1>
+            </div>
+
+            <!-- Filters -->
+            <aside class="filters" id="filters">
+                <div class="filter-group">
+                    <label class="filter-label">Category</label>
+                    <select class="form-select" id="filter-category">
+                        <option value="">All Categories</option>
+                        <option value="fitness">Fitness</option>
+                        <option value="music">Music</option>
+                        <option value="coaching">Coaching</option>
+                        <option value="rentals">Rentals</option>
+                        <option value="workshop">Workshop</option>
+                        <option value="other">Other</option>
+                    </select>
+                </div>
+                <div class="filter-group">
+                    <label class="filter-label">Date</label>
+                    <input type="date" class="form-input" id="filter-date">
+                </div>
+                <div class="filter-group">
+                    <label class="filter-label">Price Range</label>
+                    <div class="price-range">
+                        <input type="number" class="form-input" id="filter-price-min" placeholder="Min">
+                        <span>-</span>
+                        <input type="number" class="form-input" id="filter-price-max" placeholder="Max">
+                    </div>
+                </div>
+                <button class="btn btn-primary btn-block" id="apply-filters">Apply Filters</button>
+                <button class="btn btn-outline btn-block" id="clear-filters">Clear</button>
+            </aside>
+
+            <!-- Events Grid -->
+            <section class="events-section">
+                <div class="events-toolbar">
+                    <p class="results-count"><span id="results-count">0</span> events found</p>
+                    <select class="form-select" id="sort-events">
+                        <option value="date-asc">Date (Earliest)</option>
+                        <option value="date-desc">Date (Latest)</option>
+                        <option value="price-asc">Price (Low to High)</option>
+                        <option value="price-desc">Price (High to Low)</option>
+                    </select>
+                </div>
+                <div class="events-grid" id="events-grid">
+                    <!-- Events loaded dynamically -->
+                </div>
+                <div class="pagination" id="pagination"></div>
+            </section>
+        </div>
+    </main>
+
+    <footer class="footer" id="footer"></footer>
+    <div class="toast-container" id="toast-container"></div>
+
+    <script type="module" src="/js/app.js"></script>
+    <script type="module" src="/js/pages/eventList.js"></script>
+</body>
+</html>

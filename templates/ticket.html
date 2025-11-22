@@ -1,0 +1,36 @@
+<!--
+    Ticket Template
+    Used to render ticket cards with QR codes
+-->
+<template id="ticket-template">
+    <div class="ticket-card {{#used}}ticket-card--used{{/used}}">
+        <div class="ticket-card__header">
+            <div class="ticket-card__event">{{eventTitle}}</div>
+            <div class="ticket-card__vendor">{{vendorName}}</div>
+        </div>
+        <div class="ticket-card__body">
+            <div class="ticket-card__info">
+                <div class="ticket-card__info-item">
+                    <div class="ticket-card__label">Date</div>
+                    <div class="ticket-card__value">{{date}}</div>
+                </div>
+                <div class="ticket-card__info-item">
+                    <div class="ticket-card__label">Time</div>
+                    <div class="ticket-card__value">{{time}}</div>
+                </div>
+                {{#seatId}}
+                <div class="ticket-card__info-item">
+                    <div class="ticket-card__label">Seat</div>
+                    <div class="ticket-card__value">{{seatId}}</div>
+                </div>
+                {{/seatId}}
+            </div>
+            <div class="ticket-card__qr">
+                <img src="{{qrCodeUrl}}" alt="Ticket QR Code">
+            </div>
+            <div class="ticket-card__footer">
+                <span class="ticket-card__code">{{code}}</span>
+            </div>
+        </div>
+    </div>
+</template>

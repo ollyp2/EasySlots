@@ -1,0 +1,372 @@
+/**
+ * EasySlots - Seating CSS
+ * Seating chart components for assigned seating events
+ */
+
+/* ==========================================================================
+   Seating Chart Container
+   ========================================================================== */
+
+.seating-chart {
+    position: relative;
+    background-color: var(--color-gray-50);
+    border: 1px solid var(--color-gray-200);
+    border-radius: var(--radius-lg);
+    overflow: hidden;
+}
+
+.seating-chart__stage {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: var(--spacing-4);
+    background-color: var(--color-gray-200);
+    font-size: var(--font-size-sm);
+    font-weight: var(--font-weight-semibold);
+    color: var(--color-gray-600);
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+}
+
+.seating-chart__grid {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: var(--spacing-3);
+    padding: var(--spacing-6);
+    overflow-x: auto;
+}
+
+/* ==========================================================================
+   Seating Row
+   ========================================================================== */
+
+.seating-row {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-2);
+}
+
+.seating-row__label {
+    width: 24px;
+    font-size: var(--font-size-xs);
+    font-weight: var(--font-weight-semibold);
+    color: var(--color-gray-500);
+    text-align: center;
+}
+
+.seating-row__seats {
+    display: flex;
+    gap: var(--spacing-1);
+}
+
+/* ==========================================================================
+   Seat
+   ========================================================================== */
+
+.seat {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 28px;
+    height: 28px;
+    font-size: var(--font-size-xs);
+    font-weight: var(--font-weight-medium);
+    color: var(--color-gray-600);
+    background-color: var(--color-white);
+    border: 2px solid var(--color-gray-300);
+    border-radius: var(--radius-sm);
+    cursor: pointer;
+    transition: all var(--transition-fast);
+}
+
+.seat:hover:not(.seat--unavailable):not(.seat--selected) {
+    border-color: var(--color-primary);
+    background-color: var(--color-primary-bg);
+}
+
+/* Selected seat */
+.seat--selected {
+    background-color: var(--color-primary);
+    border-color: var(--color-primary);
+    color: var(--color-white);
+}
+
+/* Unavailable/booked seat */
+.seat--unavailable {
+    background-color: var(--color-gray-200);
+    border-color: var(--color-gray-200);
+    color: var(--color-gray-400);
+    cursor: not-allowed;
+}
+
+/* Wheelchair accessible */
+.seat--accessible {
+    border-style: dashed;
+}
+
+/* VIP/Premium seat */
+.seat--premium {
+    border-color: var(--color-accent);
+}
+
+.seat--premium.seat--selected {
+    background-color: var(--color-accent);
+    border-color: var(--color-accent);
+}
+
+/* Aisle gap */
+.seat--aisle {
+    visibility: hidden;
+    width: 16px;
+}
+
+/* ==========================================================================
+   Seating Legend
+   ========================================================================== */
+
+.seating-legend {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: var(--spacing-4);
+    padding: var(--spacing-4);
+    border-top: 1px solid var(--color-gray-200);
+    background-color: var(--color-white);
+}
+
+.seating-legend__item {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-2);
+    font-size: var(--font-size-xs);
+    color: var(--color-gray-600);
+}
+
+.seating-legend__icon {
+    width: 20px;
+    height: 20px;
+    border-radius: var(--radius-sm);
+}
+
+.seating-legend__icon--available {
+    background-color: var(--color-white);
+    border: 2px solid var(--color-gray-300);
+}
+
+.seating-legend__icon--selected {
+    background-color: var(--color-primary);
+    border: 2px solid var(--color-primary);
+}
+
+.seating-legend__icon--unavailable {
+    background-color: var(--color-gray-200);
+    border: 2px solid var(--color-gray-200);
+}
+
+.seating-legend__icon--premium {
+    background-color: var(--color-white);
+    border: 2px solid var(--color-accent);
+}
+
+/* ==========================================================================
+   Seating Selection Info
+   ========================================================================== */
+
+.seating-selection {
+    padding: var(--spacing-4);
+    background-color: var(--color-white);
+    border-top: 1px solid var(--color-gray-200);
+}
+
+.seating-selection__title {
+    font-size: var(--font-size-sm);
+    font-weight: var(--font-weight-semibold);
+    color: var(--color-gray-700);
+    margin-bottom: var(--spacing-2);
+}
+
+.seating-selection__seats {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--spacing-2);
+}
+
+.seating-selection__seat {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--spacing-1);
+    padding: var(--spacing-1) var(--spacing-2);
+    font-size: var(--font-size-xs);
+    font-weight: var(--font-weight-medium);
+    background-color: var(--color-primary-bg);
+    color: var(--color-primary);
+    border-radius: var(--radius-full);
+}
+
+.seating-selection__remove {
+    display: flex;
+    padding: 2px;
+    border-radius: var(--radius-full);
+    transition: background-color var(--transition-fast);
+}
+
+.seating-selection__remove:hover {
+    background-color: var(--color-primary);
+    color: var(--color-white);
+}
+
+.seating-selection__remove svg {
+    width: 12px;
+    height: 12px;
+}
+
+/* ==========================================================================
+   Seating Builder (Vendor)
+   ========================================================================== */
+
+.seating-builder {
+    background-color: var(--color-white);
+    border: 1px solid var(--color-gray-200);
+    border-radius: var(--radius-lg);
+    overflow: hidden;
+}
+
+.seating-builder__toolbar {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--spacing-3);
+    padding: var(--spacing-4);
+    background-color: var(--color-gray-50);
+    border-bottom: 1px solid var(--color-gray-200);
+}
+
+.seating-builder__tool {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-2);
+    padding: var(--spacing-2) var(--spacing-3);
+    font-size: var(--font-size-sm);
+    color: var(--color-gray-600);
+    background-color: var(--color-white);
+    border: 1px solid var(--color-gray-200);
+    border-radius: var(--radius-md);
+    cursor: pointer;
+    transition: all var(--transition-fast);
+}
+
+.seating-builder__tool:hover {
+    border-color: var(--color-primary);
+    color: var(--color-primary);
+}
+
+.seating-builder__tool--active {
+    background-color: var(--color-primary);
+    border-color: var(--color-primary);
+    color: var(--color-white);
+}
+
+.seating-builder__tool svg {
+    width: 16px;
+    height: 16px;
+}
+
+.seating-builder__canvas {
+    min-height: 400px;
+    padding: var(--spacing-6);
+    overflow: auto;
+}
+
+.seating-builder__row {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-2);
+    margin-bottom: var(--spacing-2);
+}
+
+.seating-builder__row-label {
+    width: 60px;
+}
+
+.seating-builder__row-seats {
+    display: flex;
+    gap: var(--spacing-1);
+    flex: 1;
+}
+
+.seating-builder__add-row {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: var(--spacing-2);
+    padding: var(--spacing-3);
+    font-size: var(--font-size-sm);
+    color: var(--color-gray-500);
+    border: 2px dashed var(--color-gray-300);
+    border-radius: var(--radius-md);
+    cursor: pointer;
+    transition: all var(--transition-fast);
+}
+
+.seating-builder__add-row:hover {
+    border-color: var(--color-primary);
+    color: var(--color-primary);
+}
+
+/* ==========================================================================
+   Seating Chart Zoom Controls
+   ========================================================================== */
+
+.seating-zoom {
+    position: absolute;
+    bottom: var(--spacing-4);
+    right: var(--spacing-4);
+    display: flex;
+    gap: var(--spacing-1);
+    background-color: var(--color-white);
+    border-radius: var(--radius-md);
+    box-shadow: var(--shadow-md);
+    padding: var(--spacing-1);
+}
+
+.seating-zoom__btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 32px;
+    height: 32px;
+    border-radius: var(--radius-sm);
+    color: var(--color-gray-600);
+    transition: all var(--transition-fast);
+}
+
+.seating-zoom__btn:hover {
+    background-color: var(--color-gray-100);
+    color: var(--color-gray-900);
+}
+
+.seating-zoom__btn svg {
+    width: 18px;
+    height: 18px;
+}
+
+/* ==========================================================================
+   Responsive Seating
+   ========================================================================== */
+
+@media (max-width: 767px) {
+    .seating-chart__grid {
+        padding: var(--spacing-4);
+    }
+
+    .seat {
+        width: 24px;
+        height: 24px;
+        font-size: 10px;
+    }
+
+    .seating-row__label {
+        width: 20px;
+        font-size: 10px;
+    }
+}

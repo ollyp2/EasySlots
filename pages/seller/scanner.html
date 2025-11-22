@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ticket Scanner - EasySlots</title>
+
+    <link rel="stylesheet" href="/css/main.css">
+    <link rel="stylesheet" href="/css/layout.css">
+    <link rel="stylesheet" href="/css/components.css">
+    <link rel="stylesheet" href="/css/pages/dashboard.css">
+    <link rel="stylesheet" href="/css/pages/seller.css">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <header class="header" id="header"></header>
+
+    <main class="main">
+        <div class="container">
+            <div class="scanner-page">
+                <div class="scanner-header">
+                    <h1 class="page-title">Ticket Scanner</h1>
+                    <select class="form-select" id="event-select">
+                        <option value="">Select Event</option>
+                    </select>
+                </div>
+
+                <div class="scanner-container">
+                    <!-- Camera View -->
+                    <div class="scanner-view" id="scanner-view">
+                        <video id="scanner-video" autoplay playsinline></video>
+                        <div class="scanner-overlay">
+                            <div class="scanner-frame"></div>
+                        </div>
+                    </div>
+
+                    <!-- Manual Entry -->
+                    <div class="scanner-manual">
+                        <p>Or enter ticket code manually:</p>
+                        <div class="manual-input">
+                            <input type="text" class="form-input" id="ticket-code" placeholder="Enter ticket code">
+                            <button class="btn btn-primary" id="validate-btn">Validate</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Result Display -->
+                <div class="scanner-result" id="scanner-result" style="display: none;">
+                    <div class="result-card" id="result-card">
+                        <!-- Result loaded dynamically -->
+                    </div>
+                </div>
+
+                <!-- Recent Scans -->
+                <section class="recent-scans">
+                    <h2 class="section-title">Recent Scans</h2>
+                    <div class="scans-list" id="scans-list">
+                        <!-- Loaded dynamically -->
+                    </div>
+                </section>
+            </div>
+        </div>
+    </main>
+
+    <footer class="footer" id="footer"></footer>
+    <div class="toast-container" id="toast-container"></div>
+
+    <script type="module" src="/js/app.js"></script>
+    <script type="module" src="/js/pages/ticketScanner.js"></script>
+</body>
+</html>

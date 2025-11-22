@@ -13,6 +13,7 @@ import {
     sendPasswordResetEmail,
     signOut,
     updateProfile,
+    onAuthStateChanged,
     doc,
     setDoc,
     getDoc,
@@ -150,6 +151,48 @@ export async function getUserProfile(userId) {
     return userDoc.exists() ? { id: userDoc.id, ...userDoc.data() } : null;
 }
 
+/**
+ * Subscribe to auth state changes
+ * @param {Function} callback - Callback function receiving user object or null
+ * @returns {Function} Unsubscribe function
+ */
+export function onAuthStateChange(callback) {
+    return onAuthStateChanged(auth, callback);
+}
+
+/**
+ * Sign up with email - alias for registerWithEmail with simpler params
+ * @param {string} email - User email
+ * @param {string} password - User password
+ * @param {string} displayName - User display name
+ * @param {boolean} isVendor - Whether user is a vendor
+ * @returns {Promise<Object>} User object
+ */
+export async function signUpWithEmail(email, password, displayName, isVendor = false) {
+    const nameParts = displayName.split(' ');
+    const firstName = nameParts[0] || '';
+    const lastName = nameParts.slice(1).join(' ') || '';
+    return registerWithEmail({ email, password, firstName, lastName, isVendor });
+}
+
+/**
+ * Sign in with email - alias for loginWithEmail
+ * @param {string} email - User email
+ * @param {string} password - User password
+ * @returns {Promise<Object>} User object
+ */
+export async function signInWithEmail(email, password) {
+    return loginWithEmail(email, password);
+}
+
+/**
+ * Sign in with Google - alias for loginWithGoogle
+ * @returns {Promise<Object>} User object
+ */
+export async function signInWithGoogle() {
+    return loginWithGoogle();
+}
+
 export default {
     loginWithEmail,
     registerWithEmail,
@@ -157,5 +200,9 @@ export default {
     resetPassword,
     logout,
     getCurrentUser,
-    getUserProfile
+    getUserProfile,
+    onAuthStateChange,
+    signUpWithEmail,
+    signInWithEmail,
+    signInWithGoogle
 };

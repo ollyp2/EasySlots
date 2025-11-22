@@ -11,6 +11,7 @@ import {
     setDoc,
     addDoc,
     updateDoc,
+    deleteDoc,
     collection,
     query,
     where,
@@ -20,6 +21,69 @@ import {
     serverTimestamp
 } from '../config/firebase.js';
 import { CONSTANTS } from '../config/constants.js';
+
+/**
+ * Create a new event
+ * @param {string} vendorId - Vendor ID
+ * @param {Object} eventData - Event data
+ * @returns {Promise<string>} Created event ID
+ */
+export async function createEvent(vendorId, eventData) {
+    const slug = generateSlug(eventData.title);
+
+    const eventRef = await addDoc(collection(db, 'events'), {
+        ...eventData,
+        vendorId,
+        slug,
+        status: eventData.status || 'draft',
+        createdAt: serverTimestamp(),
+        updatedAt: serverTimestamp()
+    });
+
+    return eventRef.id;
+}
+
+/**
+ * Update an event
+ * @param {string} eventId - Event ID
+ * @param {Object} eventData - Event data to update
+ * @returns {Promise<void>}
+ */
+export async function updateEvent(eventId, eventData) {
+    const updateData = { ...eventData };
+
+    // Update slug if title changed
+    if (eventData.title) {
+        updateData.slug = generateSlug(eventData.title);
+    }
+
+    await updateDoc(doc(db, 'events', eventId), {
+        ...updateData,
+        updatedAt: serverTimestamp()
+    });
+}
+
+/**
+ * Delete an event (soft delete)
+ * @param {string} eventId - Event ID
+ * @returns {Promise<void>}
+ */
+export async function deleteEvent(eventId) {
+    await updateDoc(doc(db, 'events', eventId), {
+        status: 'deleted',
+        deletedAt: serverTimestamp(),
+        updatedAt: serverTimestamp()
+    });
+}
+
+/**
+ * Hard delete an event (permanent)
+ * @param {string} eventId - Event ID
+ * @returns {Promise<void>}
+ */
+export async function permanentDeleteEvent(eventId) {
+    await deleteDoc(doc(db, 'events', eventId));
+}
 
 /**
  * Get event by ID
@@ -32,79 +96,85 @@ export async function getEventById(eventId) {
 }
 
 /**
- * Get active events with optional filters
- * @param {Object} filters - Filter options
- * @returns {Promise<Array>} Events array
- */
-export async function getEvents(filters = {}) {
-    let q = query(
-        collection(db, 'events'),
-        where('status', '==', CONSTANTS.EVENT_STATUS.ACTIVE)
-    );
-
-    if (filters.category) {
-        q = query(q, where('category', '==', filters.category));
-    }
-
-    if (filters.vendorId) {
-        q = query(q, where('vendorId', '==', filters.vendorId));
-    }
-
-    q = query(q, orderBy('startDate', 'asc'), limit(filters.limit || CONSTANTS.MAX_EVENTS_PER_PAGE));
-
-    if (filters.startAfter) {
-        q = query(q, startAfter(filters.startAfter));
-    }
-
-    const snapshot = await getDocs(q);
-    return snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
-}
-
-/**
  * Get events by vendor
  * @param {string} vendorId - Vendor ID
- * @param {string} status - Optional status filter
+ * @param {string} status - Optional status filter ('all', 'published', 'draft')
  * @returns {Promise<Array>} Events array
  */
-export async function getVendorEvents(vendorId, status = null) {
+export async function getEventsByVendor(vendorId, status = null) {
     let q = query(
         collection(db, 'events'),
         where('vendorId', '==', vendorId),
         orderBy('createdAt', 'desc')
     );
 
-    if (status) {
-        q = query(q, where('status', '==', status));
+    const snapshot = await getDocs(q);
+    let events = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+
+    // Filter out deleted events
+    events = events.filter(event => event.status !== 'deleted');
+
+    // Filter by status if provided
+    if (status && status !== 'all') {
+        events = events.filter(event => event.status === status);
     }
 
-    const snapshot = await getDocs(q);
-    return snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+    return events;
 }
 
 /**
- * Create a new event
- * @param {Object} eventData - Event data
- * @returns {Promise<string>} Created event ID
+ * Get published events with filters
+ * @param {Object} filters - Filter options
+ * @returns {Promise<Array>} Events array
  */
-export async function createEvent(eventData) {
-    const eventRef = await addDoc(collection(db, 'events'), {
-        ...eventData,
-        status: eventData.status || CONSTANTS.EVENT_STATUS.DRAFT,
-        createdAt: serverTimestamp(),
-        updatedAt: serverTimestamp()
-    });
-    return eventRef.id;
+export async function getPublishedEvents(filters = {}) {
+    let q = query(
+        collection(db, 'events'),
+        where('status', '==', 'published'),
+        orderBy('createdAt', 'desc'),
+        limit(filters.limit || 20)
+    );
+
+    const snapshot = await getDocs(q);
+    let events = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+
+    // Client-side filtering for additional criteria
+    if (filters.category) {
+        events = events.filter(e => e.category === filters.category);
+    }
+
+    if (filters.vendorId) {
+        events = events.filter(e => e.vendorId === filters.vendorId);
+    }
+
+    if (filters.eventType) {
+        events = events.filter(e => e.eventType === filters.eventType);
+    }
+
+    return events;
 }
 
 /**
- * Update an event
+ * Publish an event
  * @param {string} eventId - Event ID
- * @param {Object} data - Event data to update
  * @returns {Promise<void>}
  */
-export async function updateEvent(eventId, data) {
+export async function publishEvent(eventId) {
     await updateDoc(doc(db, 'events', eventId), {
-        ...data,
+        status: 'published',
+        publishedAt: serverTimestamp(),
+        updatedAt: serverTimestamp()
+    });
+}
+
+/**
+ * Unpublish an event (set to draft)
+ * @param {string} eventId - Event ID
+ * @returns {Promise<void>}
+ */
+export async function unpublishEvent(eventId) {
+    await updateDoc(doc(db, 'events', eventId), {
+        status: 'draft',
         updatedAt: serverTimestamp()
     });
 }
@@ -117,9 +187,8 @@ export async function updateEvent(eventId, data) {
 export async function getFeaturedEvents(count = 6) {
     const q = query(
         collection(db, 'events'),
-        where('status', '==', CONSTANTS.EVENT_STATUS.ACTIVE),
-        where('featured', '==', true),
-        orderBy('startDate', 'asc'),
+        where('status', '==', 'published'),
+        orderBy('createdAt', 'desc'),
         limit(count)
     );
 
@@ -127,11 +196,101 @@ export async function getFeaturedEvents(count = 6) {
     return snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
 }
 
+/**
+ * Get events by category
+ * @param {string} category - Category name
+ * @param {number} limitCount - Max events to return
+ * @returns {Promise<Array>} Events array
+ */
+export async function getEventsByCategory(category, limitCount = 12) {
+    const q = query(
+        collection(db, 'events'),
+        where('status', '==', 'published'),
+        where('category', '==', category),
+        orderBy('createdAt', 'desc'),
+        limit(limitCount)
+    );
+
+    const snapshot = await getDocs(q);
+    return snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+}
+
+/**
+ * Search events by title/description
+ * @param {string} searchTerm - Search term
+ * @returns {Promise<Array>} Matching events
+ */
+export async function searchEvents(searchTerm) {
+    const q = query(
+        collection(db, 'events'),
+        where('status', '==', 'published'),
+        orderBy('createdAt', 'desc'),
+        limit(100)
+    );
+
+    const snapshot = await getDocs(q);
+    const events = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+
+    const lowerSearch = searchTerm.toLowerCase();
+    return events.filter(event =>
+        event.title?.toLowerCase().includes(lowerSearch) ||
+        event.description?.toLowerCase().includes(lowerSearch) ||
+        event.shortDescription?.toLowerCase().includes(lowerSearch)
+    );
+}
+
+/**
+ * Get vendor's event stats
+ * @param {string} vendorId - Vendor ID
+ * @returns {Promise<Object>} Event stats
+ */
+export async function getVendorEventStats(vendorId) {
+    const events = await getEventsByVendor(vendorId);
+
+    return {
+        total: events.length,
+        published: events.filter(e => e.status === 'published').length,
+        draft: events.filter(e => e.status === 'draft').length
+    };
+}
+
+/**
+ * Generate URL-safe slug from title
+ * @param {string} title - Event title
+ * @returns {string} URL slug
+ */
+function generateSlug(title) {
+    return title
+        .toLowerCase()
+        .replace(/[^a-z0-9\s-]/g, '')
+        .replace(/\s+/g, '-')
+        .replace(/-+/g, '-')
+        .trim();
+}
+
+// Legacy function for backward compatibility
+export async function getEvents(filters = {}) {
+    return getPublishedEvents(filters);
+}
+
+export async function getVendorEvents(vendorId, status = null) {
+    return getEventsByVendor(vendorId, status);
+}
+
 export default {
-    getEventById,
-    getEvents,
-    getVendorEvents,
     createEvent,
     updateEvent,
-    getFeaturedEvents
+    deleteEvent,
+    permanentDeleteEvent,
+    getEventById,
+    getEventsByVendor,
+    getPublishedEvents,
+    publishEvent,
+    unpublishEvent,
+    getFeaturedEvents,
+    getEventsByCategory,
+    searchEvents,
+    getVendorEventStats,
+    getEvents,
+    getVendorEvents
 };

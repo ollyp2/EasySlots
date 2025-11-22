@@ -10,7 +10,8 @@ export { handleStripeWebhook } from './stripe/webhook.js';
 export { createConnectAccount, createConnectAccountLink } from './stripe/connect.js';
 
 // Email functions
-export { sendBookingConfirmation } from './email/sendConfirmation.js';
+export { sendBookingConfirmation, sendBookingConfirmationEmail } from './email/sendConfirmation.js';
+export { sendCancellationEmail } from './email/sendCancellation.js';
 export { sendTicketEmail } from './email/sendTickets.js';
 
 // Ticket functions

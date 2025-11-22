@@ -5,6 +5,8 @@
 
 import { getBookingById } from '../services/bookings.js';
 import { getCheckoutSession } from '../services/stripe.js';
+import { getTicketsByBooking } from '../services/tickets.js';
+import { createTicketCard } from '../components/ticketCard.js';
 import { formatCurrency } from '../utils/currency.js';
 import { showLoader, hideLoader } from '../components/loader.js';
 import { showToast } from '../components/toast.js';
@@ -27,6 +29,7 @@ async function init() {
                 const booking = await getBookingById(bookingId);
                 if (booking) {
                     renderBookingDetails(booking);
+                    await loadAndDisplayTickets(bookingId);
                 }
                 sessionStorage.removeItem('lastBookingId');
             }
@@ -55,9 +58,14 @@ async function handleStripeSession(sessionId) {
             // Payment successful
             if (sessionData.booking) {
                 renderBookingDetails(sessionData.booking);
+                await loadAndDisplayTickets(sessionData.booking.id);
             } else {
                 // Booking might not be created yet (webhook delay)
                 renderPaymentConfirmation(sessionData);
+                // Try to load tickets after a short delay
+                if (sessionData.metadata?.bookingId) {
+                    setTimeout(() => loadAndDisplayTickets(sessionData.metadata.bookingId), 2000);
+                }
             }
         } else if (sessionData.paymentStatus === 'unpaid') {
             // Payment not completed
@@ -70,6 +78,90 @@ async function handleStripeSession(sessionId) {
         // The webhook will handle the actual booking
         renderGenericSuccess();
     }
+}
+
+/**
+ * Load and display tickets for a booking
+ * @param {string} bookingId - Booking ID
+ */
+async function loadAndDisplayTickets(bookingId) {
+    const ticketsContainer = document.getElementById('tickets-container');
+    if (!ticketsContainer) return;
+
+    try {
+        // Small delay to allow webhook to create tickets
+        await new Promise(resolve => setTimeout(resolve, 1500));
+
+        const tickets = await getTicketsByBooking(bookingId);
+
+        if (tickets.length === 0) {
+            ticketsContainer.innerHTML = `
+                <div class="tickets-loading">
+                    <p class="text-muted">
+                        <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" class="spinner-inline">
+                            <circle cx="12" cy="12" r="10"></circle>
+                        </svg>
+                        Your tickets are being generated...
+                    </p>
+                </div>
+            `;
+            // Retry after a few seconds
+            setTimeout(() => retryLoadTickets(bookingId, ticketsContainer, 3), 3000);
+            return;
+        }
+
+        renderTickets(tickets, ticketsContainer);
+    } catch (error) {
+        console.error('Error loading tickets:', error);
+    }
+}
+
+/**
+ * Retry loading tickets
+ * @param {string} bookingId - Booking ID
+ * @param {HTMLElement} container - Container element
+ * @param {number} retriesLeft - Number of retries remaining
+ */
+async function retryLoadTickets(bookingId, container, retriesLeft) {
+    if (retriesLeft <= 0) {
+        container.innerHTML = `
+            <p class="text-muted">
+                Tickets will be available in your
+                <a href="/pages/buyer/tickets.html">My Tickets</a> page shortly.
+            </p>
+        `;
+        return;
+    }
+
+    try {
+        const tickets = await getTicketsByBooking(bookingId);
+        if (tickets.length > 0) {
+            renderTickets(tickets, container);
+        } else {
+            setTimeout(() => retryLoadTickets(bookingId, container, retriesLeft - 1), 3000);
+        }
+    } catch (error) {
+        console.error('Retry failed:', error);
+        setTimeout(() => retryLoadTickets(bookingId, container, retriesLeft - 1), 3000);
+    }
+}
+
+/**
+ * Render tickets to container
+ * @param {Array} tickets - Tickets array
+ * @param {HTMLElement} container - Container element
+ */
+function renderTickets(tickets, container) {
+    container.innerHTML = `
+        <h2 class="tickets-title">Your Tickets</h2>
+        <div class="tickets-grid tickets-grid--success"></div>
+    `;
+
+    const grid = container.querySelector('.tickets-grid');
+    tickets.forEach(ticket => {
+        const card = createTicketCard(ticket, { showQR: true, showActions: true });
+        grid.appendChild(card);
+    });
 }
 
 /**
@@ -133,7 +225,7 @@ function renderPaymentConfirmation(sessionData) {
     const detailsEl = document.getElementById('booking-details');
     if (!detailsEl) return;
 
-    const { metadata, amountTotal, currency } = sessionData;
+    const { metadata, amountTotal } = sessionData;
 
     detailsEl.innerHTML = `
         <div class="success-details">

@@ -14,5 +14,5 @@ export { sendBookingConfirmation } from './email/sendConfirmation.js';
 export { sendTicketEmail } from './email/sendTickets.js';
 
 // Ticket functions
-export { generateTicket } from './tickets/generate.js';
+export { generateTicketsOnBookingConfirm, generateTicket } from './tickets/generate.js';
 export { validateTicketCode } from './tickets/validate.js';

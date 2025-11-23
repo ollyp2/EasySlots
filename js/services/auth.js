@@ -1,5 +1,5 @@
 /**
- * EasySlots - Authentication Service
+ * EasySeats - Authentication Service
  * Handles user authentication operations
  */
 

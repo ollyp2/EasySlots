@@ -1,5 +1,5 @@
 /**
- * EasySlots - Ticket Card Component
+ * EasySeats - Ticket Card Component
  * Renders ticket cards with QR codes
  */
 

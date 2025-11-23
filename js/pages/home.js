@@ -1,5 +1,5 @@
 /**
- * EasySlots - Home Page
+ * EasySeats - Home Page
  */
 
 import { getFeaturedEvents } from '../services/events.js';

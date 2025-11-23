@@ -1,5 +1,5 @@
 /**
- * EasySlots - Firebase Cloud Functions
+ * EasySeats - Firebase Cloud Functions
  * Main entry point
  */
 

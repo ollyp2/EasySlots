@@ -1,5 +1,5 @@
 /**
- * EasySlots - Components CSS
+ * EasySeats - Components CSS
  * Buttons, Cards, Badges, Modals, Toasts, Tables
  */
 
@@ -1154,6 +1154,57 @@
     position: relative;
 }
 
+.header__user-btn {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-2);
+    padding: var(--spacing-2) var(--spacing-3);
+    border-radius: var(--radius-md);
+    background: transparent;
+    border: 1px solid transparent;
+    transition: all var(--transition-fast);
+    cursor: pointer;
+}
+
+.header__user-btn:hover {
+    background: var(--color-gray-100);
+}
+
+.header__user-btn svg {
+    width: 16px;
+    height: 16px;
+    color: var(--color-gray-500);
+}
+
+.header__avatar {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    background: var(--color-primary-bg);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+}
+
+.header__avatar svg {
+    width: 18px;
+    height: 18px;
+    color: var(--color-primary);
+}
+
+.header__user-name {
+    font-size: var(--font-size-sm);
+    font-weight: var(--font-weight-medium);
+    color: var(--color-gray-700);
+}
+
+@media (max-width: 640px) {
+    .header__user-name {
+        display: none;
+    }
+}
+
 .dropdown-menu {
     position: absolute;
     top: 100%;
@@ -1260,4 +1311,71 @@
     height: 100%;
     object-fit: cover;
     border-radius: 50%;
+}
+
+/* ==========================================================================
+   Theme Selector
+   ========================================================================== */
+
+.theme-selector {
+    display: flex;
+    gap: var(--spacing-3);
+    flex-wrap: wrap;
+}
+
+.theme-option {
+    position: relative;
+    width: 48px;
+    height: 48px;
+    border-radius: var(--radius-lg);
+    border: 2px solid var(--color-gray-200);
+    padding: 4px;
+    cursor: pointer;
+    transition: all var(--transition-fast);
+    background: var(--color-white);
+}
+
+.theme-option:hover {
+    border-color: var(--color-gray-400);
+    transform: scale(1.05);
+}
+
+.theme-option.active {
+    border-color: var(--color-primary);
+    box-shadow: 0 0 0 2px var(--color-primary-bg);
+}
+
+.theme-option__color {
+    display: block;
+    width: 100%;
+    height: 100%;
+    border-radius: var(--radius-md);
+}
+
+.theme-option__check {
+    display: none;
+    position: absolute;
+    top: -6px;
+    right: -6px;
+    width: 20px;
+    height: 20px;
+    background: var(--color-primary);
+    border-radius: 50%;
+    border: 2px solid var(--color-white);
+}
+
+.theme-option__check::after {
+    content: '';
+    position: absolute;
+    top: 4px;
+    left: 6px;
+    width: 5px;
+    height: 8px;
+    border: solid white;
+    border-width: 0 2px 2px 0;
+    transform: rotate(45deg);
+}
+
+.theme-option.active .theme-option__check {
+    display: block;
 }

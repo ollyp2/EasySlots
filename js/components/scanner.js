@@ -1,5 +1,5 @@
 /**
- * EasySlots - QR Scanner Component
+ * EasySeats - QR Scanner Component
  * Camera-based QR code scanning for ticket validation
  */
 

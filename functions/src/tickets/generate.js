@@ -1,5 +1,5 @@
 /**
- * EasySlots - Ticket Generation
+ * EasySeats - Ticket Generation
  * Handles ticket creation with QR codes
  */
 

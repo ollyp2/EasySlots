@@ -1,5 +1,5 @@
 /**
- * EasySlots - Users Service
+ * EasySeats - Users Service
  * Handles user profile operations
  */
 

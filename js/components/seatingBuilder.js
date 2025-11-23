@@ -1,5 +1,5 @@
 /**
- * EasySlots - Seating Builder Component
+ * EasySeats - Seating Builder Component
  * For vendors to create seating layouts
  */
 

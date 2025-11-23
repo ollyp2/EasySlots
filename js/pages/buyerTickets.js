@@ -1,5 +1,5 @@
 /**
- * EasySlots - Buyer Tickets Page
+ * EasySeats - Buyer Tickets Page
  * Displays user's tickets with QR codes
  */
 

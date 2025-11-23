@@ -1,5 +1,5 @@
 /**
- * EasySlots - Loader Component
+ * EasySeats - Loader Component
  * Shows loading states
  */
 

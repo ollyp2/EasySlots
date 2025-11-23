@@ -1,5 +1,5 @@
 /**
- * EasySlots - Register Page
+ * EasySeats - Register Page
  * Handles user registration functionality
  */
 
@@ -102,7 +102,7 @@ async function handleGoogleSignUp() {
 
     try {
         const user = await loginWithGoogle();
-        showToast('Success', 'Welcome to EasySlots!', 'success');
+        showToast('Success', 'Welcome to EasySeats!', 'success');
 
         // Google users start as buyers, redirect to buyer dashboard
         const profile = await getUserProfile(user.uid);

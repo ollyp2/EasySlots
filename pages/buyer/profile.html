@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>My Profile - EasySlots</title>
+    <title>My Profile - EasySeats</title>
 
     <link rel="stylesheet" href="/css/main.css">
     <link rel="stylesheet" href="/css/layout.css">
@@ -88,7 +88,34 @@
                         <section class="form-section" id="become-vendor-section">
                             <h2 class="form-section__title">Become a Vendor</h2>
                             <p class="form-text">Want to sell your own events and services? Register as a vendor to start listing events.</p>
-                            <a href="/pages/auth/register.html?vendor=true" class="btn btn-outline">Register as Vendor</a>
+                            <a href="/pages/auth/register.html?role=vendor" class="btn btn-outline">Register as Vendor</a>
+                        </section>
+
+                        <!-- Appearance Section -->
+                        <section class="form-section">
+                            <h2 class="form-section__title">Appearance</h2>
+                            <p class="form-text">Customize the color theme for your buyer experience.</p>
+                            <div class="form-group">
+                                <label class="form-label">Buyer Theme</label>
+                                <div class="theme-selector" id="buyer-theme-selector">
+                                    <button type="button" class="theme-option theme-option--default" data-theme="default" title="Default Blue">
+                                        <span class="theme-option__color" style="background: #4A90A4;"></span>
+                                        <span class="theme-option__check"></span>
+                                    </button>
+                                    <button type="button" class="theme-option" data-theme="purple" title="Purple">
+                                        <span class="theme-option__color" style="background: #7C3AED;"></span>
+                                        <span class="theme-option__check"></span>
+                                    </button>
+                                    <button type="button" class="theme-option" data-theme="teal" title="Teal">
+                                        <span class="theme-option__color" style="background: #0D9488;"></span>
+                                        <span class="theme-option__check"></span>
+                                    </button>
+                                    <button type="button" class="theme-option" data-theme="rose" title="Rose">
+                                        <span class="theme-option__color" style="background: #E11D48;"></span>
+                                        <span class="theme-option__check"></span>
+                                    </button>
+                                </div>
+                            </div>
                         </section>
 
                         <div class="form-actions">

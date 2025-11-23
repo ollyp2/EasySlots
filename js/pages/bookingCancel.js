@@ -1,5 +1,5 @@
 /**
- * EasySlots - Booking Cancel Page
+ * EasySeats - Booking Cancel Page
  */
 
 function init() {

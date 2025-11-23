@@ -1,5 +1,5 @@
 /**
- * EasySlots - Firestore Utilities for Cloud Functions
+ * EasySeats - Firestore Utilities for Cloud Functions
  */
 
 import admin from 'firebase-admin';

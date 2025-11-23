@@ -1,5 +1,5 @@
 /**
- * EasySlots - Buyer Dashboard Page
+ * EasySeats - Buyer Dashboard Page
  * Shows user stats and upcoming bookings overview
  */
 

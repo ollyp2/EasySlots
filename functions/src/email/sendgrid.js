@@ -1,5 +1,5 @@
 /**
- * EasySlots - SendGrid Email Service
+ * EasySeats - SendGrid Email Service
  * Handles email sending via SendGrid API
  */
 

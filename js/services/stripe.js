@@ -1,5 +1,5 @@
 /**
- * EasySlots - Stripe Service
+ * EasySeats - Stripe Service
  * Frontend integration for Stripe payments
  */
 

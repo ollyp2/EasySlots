@@ -1,5 +1,5 @@
 /**
- * EasySlots - Vendors Service
+ * EasySeats - Vendors Service
  * Handles vendor profile and operations
  */
 

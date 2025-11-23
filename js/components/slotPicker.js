@@ -1,5 +1,5 @@
 /**
- * EasySlots - Slot Picker Component
+ * EasySeats - Slot Picker Component
  * Time slot selection for bookings
  */
 

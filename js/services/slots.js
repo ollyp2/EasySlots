@@ -1,5 +1,5 @@
 /**
- * EasySlots - Slots Service
+ * EasySeats - Slots Service
  * Handles time slot operations
  */
 

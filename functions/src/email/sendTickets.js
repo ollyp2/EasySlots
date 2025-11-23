@@ -1,5 +1,5 @@
 /**
- * EasySlots - Send Tickets Email
+ * EasySeats - Send Tickets Email
  */
 
 import sgMail from '@sendgrid/mail';
@@ -22,7 +22,7 @@ export async function sendTicketEmail(data) {
             to: email,
             from: {
                 email: 'tickets@easyslots.app',
-                name: 'EasySlots'
+                name: 'EasySeats'
             },
             subject: `Your Tickets: ${eventTitle}`,
             html: getTicketEmailTemplate({ tickets, eventTitle })

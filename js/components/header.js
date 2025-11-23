@@ -1,5 +1,5 @@
 /**
- * EasySlots - Header Component
+ * EasySeats - Header Component
  * Renders and manages the site header with auth state and seller mode toggle
  */
 
@@ -62,7 +62,7 @@ function renderHeader() {
         <div class="container">
             <div class="header__inner">
                 <a href="/" class="header__logo">
-                    <span>EasySlots</span>
+                    <span>EasySeats</span>
                 </a>
 
                 <nav class="header__nav">

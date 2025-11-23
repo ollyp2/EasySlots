@@ -1,5 +1,5 @@
 /**
- * EasySlots - Stripe Connect Functions
+ * EasySeats - Stripe Connect Functions
  * Handles vendor onboarding to Stripe Connect
  */
 

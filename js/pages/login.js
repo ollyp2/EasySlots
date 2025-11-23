@@ -1,5 +1,5 @@
 /**
- * EasySlots - Login Page
+ * EasySeats - Login Page
  * Handles user login functionality
  */
 

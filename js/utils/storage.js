@@ -1,5 +1,5 @@
 /**
- * EasySlots - Storage Utilities
+ * EasySeats - Storage Utilities
  * Local storage helpers
  */
 

@@ -1,5 +1,5 @@
 /**
- * EasySlots - Auth Guard Utility
+ * EasySeats - Auth Guard Utility
  * Protects routes based on authentication state and seller mode
  */
 

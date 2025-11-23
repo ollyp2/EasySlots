@@ -1,5 +1,5 @@
 /**
- * EasySlots - Seller Dashboard Page
+ * EasySeats - Seller Dashboard Page
  * Shows vendor stats, recent bookings, and upcoming events
  */
 

@@ -1,5 +1,5 @@
 /**
- * EasySlots - Main Application Entry Point
+ * EasySeats - Main Application Entry Point
  * Initializes the application and handles global state
  */
 

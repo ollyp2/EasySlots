@@ -1,5 +1,5 @@
 /**
- * EasySlots - Stripe Utilities for Cloud Functions
+ * EasySeats - Stripe Utilities for Cloud Functions
  */
 
 import Stripe from 'stripe';

@@ -1,5 +1,5 @@
 /**
- * EasySlots - QR Code Component
+ * EasySeats - QR Code Component
  * Generates QR codes for tickets
  */
 

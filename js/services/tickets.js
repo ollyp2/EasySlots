@@ -1,5 +1,5 @@
 /**
- * EasySlots - Tickets Service
+ * EasySeats - Tickets Service
  * Handles ticket operations
  */
 

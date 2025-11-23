@@ -1,5 +1,5 @@
 /**
- * EasySlots - Payments Service
+ * EasySeats - Payments Service
  * Handles Stripe payment operations
  */
 

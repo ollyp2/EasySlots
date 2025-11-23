@@ -1,5 +1,5 @@
 /**
- * EasySlots - Firebase Configuration
+ * EasySeats - Firebase Configuration
  *
  * IMPORTANT: Replace the placeholder values below with your actual Firebase project config.
  * You can find these values in your Firebase Console:

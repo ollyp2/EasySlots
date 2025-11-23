@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Settings - EasySlots</title>
+    <title>Settings - EasySeats</title>
 
     <link rel="stylesheet" href="/css/main.css">
     <link rel="stylesheet" href="/css/layout.css">
@@ -134,6 +134,33 @@
                             </div>
                         </section>
 
+                        <!-- Appearance Section -->
+                        <section class="form-section">
+                            <h2 class="form-section__title">Appearance</h2>
+                            <p class="form-text">Customize the color theme for your seller dashboard.</p>
+                            <div class="form-group">
+                                <label class="form-label">Seller Theme</label>
+                                <div class="theme-selector" id="seller-theme-selector">
+                                    <button type="button" class="theme-option theme-option--default" data-theme="default" title="Default Green">
+                                        <span class="theme-option__color" style="background: #5A9A7A;"></span>
+                                        <span class="theme-option__check"></span>
+                                    </button>
+                                    <button type="button" class="theme-option" data-theme="emerald" title="Emerald">
+                                        <span class="theme-option__color" style="background: #059669;"></span>
+                                        <span class="theme-option__check"></span>
+                                    </button>
+                                    <button type="button" class="theme-option" data-theme="olive" title="Olive">
+                                        <span class="theme-option__color" style="background: #65A30D;"></span>
+                                        <span class="theme-option__check"></span>
+                                    </button>
+                                    <button type="button" class="theme-option" data-theme="forest" title="Forest">
+                                        <span class="theme-option__color" style="background: #166534;"></span>
+                                        <span class="theme-option__check"></span>
+                                    </button>
+                                </div>
+                            </div>
+                        </section>
+
                         <div class="form-actions">
                             <button type="submit" class="btn btn-primary">Save Settings</button>
                         </div>
@@ -147,5 +174,6 @@
     <div class="toast-container" id="toast-container"></div>
 
     <script type="module" src="/js/app.js"></script>
+    <script type="module" src="/js/pages/sellerSettings.js"></script>
 </body>
 </html>

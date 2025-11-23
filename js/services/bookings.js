@@ -1,5 +1,5 @@
 /**
- * EasySlots - Bookings Service
+ * EasySeats - Bookings Service
  * Handles booking operations with slot reservation
  */
 

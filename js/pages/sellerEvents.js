@@ -1,5 +1,5 @@
 /**
- * EasySlots - Seller Events Page
+ * EasySeats - Seller Events Page
  * Lists vendor's events with filtering and actions
  */
 

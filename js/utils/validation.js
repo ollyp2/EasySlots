@@ -1,5 +1,5 @@
 /**
- * EasySlots - Validation Utilities
+ * EasySeats - Validation Utilities
  * Form validation helpers
  */
 

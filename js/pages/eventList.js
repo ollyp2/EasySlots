@@ -1,5 +1,5 @@
 /**
- * EasySlots - Event List Page
+ * EasySeats - Event List Page
  * Browse and filter published events
  */
 

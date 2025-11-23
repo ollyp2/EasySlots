@@ -1,5 +1,5 @@
 /**
- * EasySlots - Event Editor Page (Create/Edit)
+ * EasySeats - Event Editor Page (Create/Edit)
  * Handles event creation and editing with image upload and slot management
  */
 
@@ -65,7 +65,7 @@ function updatePageTitle() {
     if (titleEl) {
         titleEl.textContent = isEditMode ? 'Edit Event' : 'Create Event';
     }
-    document.title = `${isEditMode ? 'Edit' : 'Create'} Event - EasySlots`;
+    document.title = `${isEditMode ? 'Edit' : 'Create'} Event - EasySeats`;
 }
 
 /**

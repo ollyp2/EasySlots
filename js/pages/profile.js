@@ -1,11 +1,11 @@
 /**
- * EasySlots - Profile Page
+ * EasySeats - Profile Page
  * Handles user profile management and vendor mode toggle
  */
 
 import { auth, onAuthStateChanged } from '../config/firebase.js';
 import { getUserProfile, updateUserProfile } from '../services/auth.js';
-import { isSellerModeEnabled, setSellerMode } from '../utils/sellerMode.js';
+import { isSellerModeEnabled, setSellerMode, setBuyerTheme, getThemeSettings } from '../utils/sellerMode.js';
 import { renderSidebar } from '../components/sidebar.js';
 import { showToast } from '../utils/toast.js';
 
@@ -34,8 +34,19 @@ async function initProfile() {
         // Setup vendor toggle section
         setupVendorSection();
 
+        // Setup theme selector
+        setupThemeSelector();
+
         // Setup form submission
         setupFormSubmission();
+
+        // Handle URL hash for scrolling to become-vendor section
+        if (window.location.hash === '#become-vendor') {
+            const section = document.getElementById('become-vendor-section');
+            if (section) {
+                section.scrollIntoView({ behavior: 'smooth' });
+            }
+        }
     });
 }
 
@@ -121,6 +132,43 @@ function setupVendorSection() {
         if (vendorModeSection) vendorModeSection.style.display = 'none';
         if (becomeVendorSection) becomeVendorSection.style.display = 'block';
     }
+}
+
+/**
+ * Setup theme selector
+ */
+function setupThemeSelector() {
+    const themeSelector = document.getElementById('buyer-theme-selector');
+    if (!themeSelector) return;
+
+    const themeOptions = themeSelector.querySelectorAll('.theme-option');
+    const { buyerTheme } = getThemeSettings();
+
+    // Set initial active state
+    themeOptions.forEach(option => {
+        const theme = option.dataset.theme;
+        if (theme === buyerTheme || (buyerTheme === 'default' && theme === 'default')) {
+            option.classList.add('active');
+        }
+
+        // Add click handler
+        option.addEventListener('click', () => {
+            // Remove active from all
+            themeOptions.forEach(opt => opt.classList.remove('active'));
+            // Add active to clicked
+            option.classList.add('active');
+
+            // Apply theme
+            const selectedTheme = option.dataset.theme;
+            if (selectedTheme === 'default') {
+                setBuyerTheme(null); // Reset to default
+            } else {
+                setBuyerTheme(selectedTheme);
+            }
+
+            showToast('Theme updated!', 'success');
+        });
+    });
 }
 
 /**

@@ -1,5 +1,5 @@
 /**
- * EasySlots - Booking Success Page
+ * EasySeats - Booking Success Page
  * Handles successful payment completion from Stripe
  */
 

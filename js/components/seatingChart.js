@@ -1,5 +1,5 @@
 /**
- * EasySlots - Seating Chart Component
+ * EasySeats - Seating Chart Component
  * Interactive seat selection for events with assigned seating
  */
 

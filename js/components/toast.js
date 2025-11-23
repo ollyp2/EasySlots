@@ -1,5 +1,5 @@
 /**
- * EasySlots - Toast Notification Component
+ * EasySeats - Toast Notification Component
  * Shows temporary notification messages
  */
 

@@ -1,5 +1,5 @@
 /**
- * EasySlots - Booking Cancellation Email Trigger
+ * EasySeats - Booking Cancellation Email Trigger
  * Sends cancellation email when booking status changes to 'cancelled'
  */
 

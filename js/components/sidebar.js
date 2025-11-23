@@ -1,5 +1,5 @@
 /**
- * EasySlots - Unified Sidebar Component
+ * EasySeats - Unified Sidebar Component
  * Renders consistent navigation based on user role and seller mode
  */
 

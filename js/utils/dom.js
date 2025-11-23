@@ -1,5 +1,5 @@
 /**
- * EasySlots - DOM Utilities
+ * EasySeats - DOM Utilities
  * Helper functions for DOM manipulation
  */
 

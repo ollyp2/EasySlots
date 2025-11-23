@@ -1,5 +1,5 @@
 /**
- * EasySlots - Event Card Component
+ * EasySeats - Event Card Component
  * Renders event cards for listings
  */
 

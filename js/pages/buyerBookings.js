@@ -1,5 +1,5 @@
 /**
- * EasySlots - Buyer Bookings Page
+ * EasySeats - Buyer Bookings Page
  */
 
 import { requireAuth } from '../utils/authGuard.js';

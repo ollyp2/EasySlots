@@ -1,5 +1,5 @@
 /**
- * EasySlots - Booking Confirmation Email Trigger
+ * EasySeats - Booking Confirmation Email Trigger
  * Sends confirmation email when booking status changes to 'confirmed'
  */
 

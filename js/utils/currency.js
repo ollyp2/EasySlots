@@ -1,5 +1,5 @@
 /**
- * EasySlots - Currency Utilities
+ * EasySeats - Currency Utilities
  * Helper functions for currency formatting
  */
 

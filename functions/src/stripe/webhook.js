@@ -1,5 +1,5 @@
 /**
- * EasySlots - Stripe Webhook Handler
+ * EasySeats - Stripe Webhook Handler
  */
 
 import { onRequest } from 'firebase-functions/v2/https';

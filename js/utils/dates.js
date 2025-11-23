@@ -1,5 +1,5 @@
 /**
- * EasySlots - Date Utilities
+ * EasySeats - Date Utilities
  * Helper functions for date/time formatting and manipulation
  */
 

@@ -1,5 +1,5 @@
 /**
- * EasySlots - Create Stripe Checkout Session
+ * EasySeats - Create Stripe Checkout Session
  */
 
 import { onCall, HttpsError } from 'firebase-functions/v2/https';

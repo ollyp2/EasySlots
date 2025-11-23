@@ -1,5 +1,5 @@
 /**
- * EasySlots - Vendor Profile Page
+ * EasySeats - Vendor Profile Page
  */
 
 // Placeholder - to be implemented

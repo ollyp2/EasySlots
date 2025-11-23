@@ -1,5 +1,5 @@
 /**
- * EasySlots - Router Utilities
+ * EasySeats - Router Utilities
  * URL and navigation helpers
  */
 

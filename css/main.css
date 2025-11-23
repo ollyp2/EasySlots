@@ -1,5 +1,5 @@
 /**
- * EasySlots - Main CSS
+ * EasySeats - Main CSS
  * CSS Custom Properties, Reset, and Utility Classes
  */
 
@@ -333,4 +333,72 @@ button {
     transition-property: background-color, border-color, color, fill, stroke, opacity, box-shadow, transform;
     transition-duration: 150ms;
     transition-timing-function: ease;
+}
+
+/* ==========================================================================
+   Seller Mode - Green Color Scheme
+   ========================================================================== */
+
+body.seller-mode {
+    --color-primary: #5A9A7A;
+    --color-primary-light: #7AB89A;
+    --color-primary-dark: #4A8A6A;
+    --color-primary-bg: #EBF7F1;
+}
+
+/* Seller mode indicator in header */
+body.seller-mode .header {
+    border-bottom-color: var(--color-primary-light);
+}
+
+body.seller-mode .header__logo {
+    color: var(--color-primary);
+}
+
+/* ==========================================================================
+   Custom Color Themes (stored in localStorage)
+   ========================================================================== */
+
+/* Custom buyer colors - applied via JS */
+body[data-theme-buyer="purple"] {
+    --color-primary: #7C3AED;
+    --color-primary-light: #A78BFA;
+    --color-primary-dark: #5B21B6;
+    --color-primary-bg: #F5F3FF;
+}
+
+body[data-theme-buyer="teal"] {
+    --color-primary: #0D9488;
+    --color-primary-light: #2DD4BF;
+    --color-primary-dark: #0F766E;
+    --color-primary-bg: #F0FDFA;
+}
+
+body[data-theme-buyer="rose"] {
+    --color-primary: #E11D48;
+    --color-primary-light: #FB7185;
+    --color-primary-dark: #BE123C;
+    --color-primary-bg: #FFF1F2;
+}
+
+/* Custom seller colors */
+body.seller-mode[data-theme-seller="emerald"] {
+    --color-primary: #059669;
+    --color-primary-light: #34D399;
+    --color-primary-dark: #047857;
+    --color-primary-bg: #ECFDF5;
+}
+
+body.seller-mode[data-theme-seller="olive"] {
+    --color-primary: #65A30D;
+    --color-primary-light: #A3E635;
+    --color-primary-dark: #4D7C0F;
+    --color-primary-bg: #F7FEE7;
+}
+
+body.seller-mode[data-theme-seller="forest"] {
+    --color-primary: #166534;
+    --color-primary-light: #22C55E;
+    --color-primary-dark: #14532D;
+    --color-primary-bg: #F0FDF4;
 }

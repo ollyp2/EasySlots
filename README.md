@@ -1,4 +1,4 @@
-# EasySlots
+# EasySeats
 
 A multi-vendor event booking marketplace built with vanilla HTML/CSS/JS and Firebase.
 

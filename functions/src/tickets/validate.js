@@ -1,5 +1,5 @@
 /**
- * EasySlots - Ticket Validation
+ * EasySeats - Ticket Validation
  */
 
 import { onCall, HttpsError } from 'firebase-functions/v2/https';

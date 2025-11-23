@@ -1,5 +1,5 @@
 /**
- * EasySlots - Calendar Component
+ * EasySeats - Calendar Component
  * Date picker and calendar for slot selection
  */
 

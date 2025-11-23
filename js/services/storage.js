@@ -1,5 +1,5 @@
 /**
- * EasySlots - Storage Service
+ * EasySeats - Storage Service
  * Handles Firebase Storage operations for file uploads
  */
 

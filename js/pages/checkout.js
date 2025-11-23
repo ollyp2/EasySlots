@@ -1,5 +1,5 @@
 /**
- * EasySlots - Checkout Page
+ * EasySeats - Checkout Page
  * Handles booking form submission and Stripe payment processing
  */
 

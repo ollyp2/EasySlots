@@ -1,7 +1,7 @@
 {
   "name": "easyslots-functions",
   "version": "1.0.0",
-  "description": "Firebase Cloud Functions for EasySlots",
+  "description": "Firebase Cloud Functions for EasySeats",
   "main": "src/index.js",
   "type": "module",
   "engines": {

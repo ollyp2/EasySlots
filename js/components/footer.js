@@ -1,7 +1,14 @@
 /**
- * EasySlots - Footer Component
- * Renders the site footer
+ * EasySeats - Footer Component
+ * Renders the site footer with dynamic vendor links
  */
+
+import { auth, onAuthStateChanged } from '../config/firebase.js';
+import { getUserProfile } from '../services/auth.js';
+import { isSellerModeEnabled, setSellerMode } from '../utils/sellerMode.js';
+
+let currentUser = null;
+let userProfile = null;
 
 /**
  * Initialize the footer component
@@ -11,6 +18,79 @@ export function initFooter() {
     if (!footerEl) return;
 
     footerEl.innerHTML = renderFooter();
+
+    // Listen for auth state changes
+    onAuthStateChanged(auth, async (user) => {
+        currentUser = user;
+        if (user) {
+            userProfile = await getUserProfile(user.uid);
+        } else {
+            userProfile = null;
+        }
+        updateFooterVendorSection(footerEl);
+    });
+
+    // Listen for seller mode changes
+    window.addEventListener('sellerModeChanged', () => {
+        updateFooterVendorSection(footerEl);
+    });
+}
+
+/**
+ * Update the vendor section based on user state
+ */
+function updateFooterVendorSection(footerEl) {
+    const vendorLinksNav = footerEl.querySelector('#footer-vendor-links');
+    if (!vendorLinksNav) return;
+
+    const isVendor = userProfile?.role === 'vendor';
+    const sellerModeOn = isVendor && isSellerModeEnabled();
+
+    let html = '';
+
+    if (!currentUser) {
+        // Not logged in - show register link
+        html = `
+            <a href="/pages/auth/register.html?role=vendor" class="footer__link">Become a Vendor</a>
+            <a href="/pages/seller/dashboard.html" class="footer__link">Vendor Dashboard</a>
+        `;
+    } else if (isVendor) {
+        // Already a vendor - show mode toggle and dashboard
+        html = `
+            <a href="#" class="footer__link footer__vendor-toggle" id="footer-vendor-toggle">
+                ${sellerModeOn ? 'Switch to Buyer Mode' : 'Switch to Seller Mode'}
+            </a>
+            <a href="/pages/seller/dashboard.html" class="footer__link">Seller Dashboard</a>
+        `;
+    } else {
+        // Logged in as buyer - show upgrade link to profile
+        html = `
+            <a href="/pages/buyer/profile.html#become-vendor" class="footer__link">Become a Vendor</a>
+            <a href="/pages/seller/dashboard.html" class="footer__link">Vendor Dashboard</a>
+        `;
+    }
+
+    html += `
+        <a href="#" class="footer__link">Pricing</a>
+        <a href="#" class="footer__link">Help Center</a>
+    `;
+
+    vendorLinksNav.innerHTML = html;
+
+    // Attach toggle event
+    const toggleLink = vendorLinksNav.querySelector('#footer-vendor-toggle');
+    if (toggleLink) {
+        toggleLink.addEventListener('click', (e) => {
+            e.preventDefault();
+            const newMode = !isSellerModeEnabled();
+            setSellerMode(newMode);
+            if (newMode) {
+                window.location.href = '/pages/seller/dashboard.html';
+            } else {
+                window.location.href = '/pages/buyer/dashboard.html';
+            }
+        });
+    }
 }
 
 /**
@@ -24,7 +104,7 @@ function renderFooter() {
         <div class="container">
             <div class="footer__grid">
                 <div class="footer__brand">
-                    <div class="footer__logo">EasySlots</div>
+                    <div class="footer__logo">EasySeats</div>
                     <p class="footer__description">
                         Book amazing events, classes, and experiences from local vendors.
                         Your next adventure is just a click away.
@@ -44,7 +124,7 @@ function renderFooter() {
 
                 <div class="footer__section">
                     <h4 class="footer__title">For Vendors</h4>
-                    <nav class="footer__links">
+                    <nav class="footer__links" id="footer-vendor-links">
                         <a href="/pages/auth/register.html?role=vendor" class="footer__link">Become a Vendor</a>
                         <a href="/pages/seller/dashboard.html" class="footer__link">Vendor Dashboard</a>
                         <a href="#" class="footer__link">Pricing</a>
@@ -65,7 +145,7 @@ function renderFooter() {
 
             <div class="footer__bottom">
                 <p class="footer__copyright">
-                    &copy; ${currentYear} EasySlots. All rights reserved.
+                    &copy; ${currentYear} EasySeats. All rights reserved.
                 </p>
                 <div class="footer__social">
                     <a href="#" class="footer__social-link" aria-label="Facebook">

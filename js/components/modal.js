@@ -1,5 +1,5 @@
 /**
- * EasySlots - Modal Component
+ * EasySeats - Modal Component
  * Handles modal dialogs
  */
 

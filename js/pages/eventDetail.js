@@ -1,5 +1,5 @@
 /**
- * EasySlots - Event Detail Page
+ * EasySeats - Event Detail Page
  * View event details, select date/slot, and proceed to booking
  */
 
@@ -55,7 +55,7 @@ async function loadEvent(eventId) {
 }
 
 function renderEventDetails() {
-    document.title = `${event.title} - EasySlots`;
+    document.title = `${event.title} - EasySeats`;
 
     const elements = {
         'event-title': event.title,

@@ -1,5 +1,5 @@
 /**
- * EasySlots - Ticket Scanner Page
+ * EasySeats - Ticket Scanner Page
  * QR code scanning and manual ticket validation for sellers
  */
 

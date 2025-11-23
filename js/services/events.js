@@ -1,5 +1,5 @@
 /**
- * EasySlots - Events Service
+ * EasySeats - Events Service
  * Handles event CRUD operations
  */
 

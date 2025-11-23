@@ -1,10 +1,10 @@
 /**
- * EasySlots - Application Constants
+ * EasySeats - Application Constants
  */
 
 export const CONSTANTS = {
     // App Info
-    APP_NAME: 'EasySlots',
+    APP_NAME: 'EasySeats',
     APP_VERSION: '1.0.0',
 
     // Locale Settings

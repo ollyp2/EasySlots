@@ -1,5 +1,5 @@
 /**
- * EasySlots - Email Templates
+ * EasySeats - Email Templates
  * HTML templates for transactional emails
  */
 

@@ -1,5 +1,5 @@
 /**
- * EasySlots - Forgot Password Page
+ * EasySeats - Forgot Password Page
  * Handles password reset functionality
  */
 

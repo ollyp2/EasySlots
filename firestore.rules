@@ -25,18 +25,35 @@ service cloud.firestore {
 
     // Users collection
     match /users/{userId} {
-      allow read: if isOwner(userId);
-      allow create: if isAuthenticated() && request.auth.uid == userId;
-      allow update: if isOwner(userId) &&
+      // User can read their own profile
+      allow read: if request.auth != null && request.auth.uid == userId;
+
+      // User can create their own profile document
+      allow create: if request.auth != null && request.auth.uid == userId;
+
+      // User can update their own profile (but not role/vendorId)
+      allow update: if request.auth != null && request.auth.uid == userId &&
         !request.resource.data.diff(resource.data).affectedKeys().hasAny(['role', 'vendorId']);
+
+      // No delete allowed
+      allow delete: if false;
     }
 
     // Vendors collection
     match /vendors/{vendorId} {
-      allow read: if true; // Public profiles
-      allow create: if isAuthenticated();
-      allow update: if isVendorOwner(vendorId);
-      allow delete: if false; // Soft delete only
+      // Public profiles - anyone can read
+      allow read: if true;
+
+      // Authenticated user can create vendor profile with their own userId
+      allow create: if request.auth != null &&
+        request.resource.data.userId == request.auth.uid;
+
+      // Vendor owner can update their profile
+      allow update: if request.auth != null &&
+        resource.data.userId == request.auth.uid;
+
+      // No delete allowed (soft delete only)
+      allow delete: if false;
     }
 
     // Events collection
@@ -65,11 +82,20 @@ service cloud.firestore {
 
     // Tickets collection
     match /tickets/{ticketId} {
-      allow read: if isOwner(resource.data.userId) ||
-        isVendorOwner(resource.data.vendorId);
-      allow create: if false; // Created by Cloud Functions only
-      allow update: if isVendorOwner(resource.data.vendorId) &&
-        request.resource.data.diff(resource.data).affectedKeys().hasOnly(['status', 'usedAt', 'updatedAt']);
+      // Ticket owner or vendor can read
+      allow read: if request.auth != null && (
+        resource.data.userId == request.auth.uid ||
+        resource.data.vendorId == request.auth.uid
+      );
+
+      // Created by Cloud Functions only (admin SDK bypasses rules)
+      allow create: if false;
+
+      // Vendor can update ticket status (for check-in)
+      allow update: if request.auth != null &&
+        resource.data.vendorId == request.auth.uid &&
+        request.resource.data.diff(resource.data).affectedKeys()
+          .hasOnly(['status', 'usedAt', 'checkedIn', 'checkedInAt', 'updatedAt']);
     }
 
     // Payouts collection

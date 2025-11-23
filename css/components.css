@@ -1016,3 +1016,119 @@
     font-size: var(--font-size-sm);
     color: var(--color-gray-600);
 }
+
+/* ==========================================================================
+   Toggle Switch (Seller Mode)
+   ========================================================================== */
+
+.toggle-switch {
+    position: relative;
+    display: inline-block;
+    width: 48px;
+    height: 24px;
+    flex-shrink: 0;
+}
+
+.toggle-switch input {
+    opacity: 0;
+    width: 0;
+    height: 0;
+}
+
+.toggle-slider {
+    position: absolute;
+    cursor: pointer;
+    inset: 0;
+    background-color: var(--color-gray-300);
+    transition: 0.3s;
+    border-radius: 24px;
+}
+
+.toggle-slider:before {
+    position: absolute;
+    content: "";
+    height: 18px;
+    width: 18px;
+    left: 3px;
+    bottom: 3px;
+    background-color: white;
+    transition: 0.3s;
+    border-radius: 50%;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
+}
+
+.toggle-switch input:checked + .toggle-slider {
+    background-color: var(--color-primary);
+}
+
+.toggle-switch input:checked + .toggle-slider:before {
+    transform: translateX(24px);
+}
+
+.toggle-switch input:focus + .toggle-slider {
+    box-shadow: 0 0 0 2px var(--color-primary-light);
+}
+
+/* Seller Mode Toggle in Dropdown */
+.seller-mode-toggle {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--spacing-3);
+    padding: var(--spacing-2) var(--spacing-3);
+    cursor: default;
+}
+
+.seller-mode-toggle:hover {
+    background-color: transparent;
+}
+
+/* Mobile Menu Toggle */
+.mobile-menu__toggle {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: var(--spacing-3) var(--spacing-4);
+    border-bottom: 1px solid var(--color-gray-200);
+}
+
+.mobile-menu__divider {
+    border: none;
+    border-top: 1px solid var(--color-gray-200);
+    margin: var(--spacing-2) 0;
+}
+
+/* Vendor Badge */
+.badge--vendor {
+    display: inline-block;
+    background: var(--color-accent);
+    color: white;
+    font-size: var(--font-size-xs);
+    font-weight: var(--font-weight-medium);
+    padding: 2px 8px;
+    border-radius: 10px;
+    margin-left: var(--spacing-2);
+}
+
+/* Dropdown Icons */
+.dropdown-icon {
+    margin-right: var(--spacing-2);
+    font-size: 1rem;
+}
+
+/* Avatar Icon */
+.header__avatar-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: 100%;
+    font-size: 1.2rem;
+}
+
+.header__avatar-icon img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 50%;
+}

@@ -1,10 +1,11 @@
 /**
  * EasySlots - Header Component
- * Renders and manages the site header with auth state
+ * Renders and manages the site header with auth state and seller mode toggle
  */
 
 import { auth, onAuthStateChanged } from '../config/firebase.js';
 import { logout, getUserProfile } from '../services/auth.js';
+import { isSellerModeEnabled, setSellerMode } from '../utils/sellerMode.js';
 
 let currentUser = null;
 let userProfile = null;
@@ -27,6 +28,11 @@ export function initHeader() {
         } else {
             userProfile = null;
         }
+        updateHeaderAuthState(headerEl);
+    });
+
+    // Listen for seller mode changes
+    window.addEventListener('sellerModeChanged', () => {
         updateHeaderAuthState(headerEl);
     });
 }
@@ -59,10 +65,7 @@ function renderHeader() {
                         <div class="header__user-menu">
                             <button class="header__user-btn" id="user-menu-btn">
                                 <div class="header__avatar" id="user-avatar">
-                                    <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2">
-                                        <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
-                                        <circle cx="12" cy="7" r="4"></circle>
-                                    </svg>
+                                    <span class="header__avatar-icon" id="avatar-icon"></span>
                                 </div>
                                 <span class="header__user-name" data-user="name">Account</span>
                                 <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2">
@@ -70,60 +73,7 @@ function renderHeader() {
                                 </svg>
                             </button>
                             <div class="dropdown-menu" id="user-dropdown" style="display: none;">
-                                <div class="dropdown-header" id="dropdown-header">
-                                    <span class="dropdown-email" data-user="email"></span>
-                                </div>
-                                <hr class="dropdown-divider">
-                                <a href="/pages/buyer/dashboard.html" class="dropdown-item">
-                                    <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2">
-                                        <rect x="3" y="3" width="7" height="7"></rect>
-                                        <rect x="14" y="3" width="7" height="7"></rect>
-                                        <rect x="14" y="14" width="7" height="7"></rect>
-                                        <rect x="3" y="14" width="7" height="7"></rect>
-                                    </svg>
-                                    My Dashboard
-                                </a>
-                                <a href="/pages/buyer/bookings.html" class="dropdown-item">
-                                    <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2">
-                                        <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect>
-                                        <line x1="16" y1="2" x2="16" y2="6"></line>
-                                        <line x1="8" y1="2" x2="8" y2="6"></line>
-                                        <line x1="3" y1="10" x2="21" y2="10"></line>
-                                    </svg>
-                                    My Bookings
-                                </a>
-                                <a href="/pages/buyer/tickets.html" class="dropdown-item">
-                                    <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2">
-                                        <path d="M2 9a3 3 0 0 1 0 6v2a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2v-2a3 3 0 0 1 0-6V7a2 2 0 0 0-2-2H4a2 2 0 0 0-2 2Z"></path>
-                                    </svg>
-                                    My Tickets
-                                </a>
-                                <a href="/pages/buyer/profile.html" class="dropdown-item">
-                                    <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2">
-                                        <circle cx="12" cy="12" r="3"></circle>
-                                        <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path>
-                                    </svg>
-                                    Settings
-                                </a>
-                                <div class="dropdown-seller-section" data-role="seller" style="display: none;">
-                                    <hr class="dropdown-divider">
-                                    <a href="/pages/seller/dashboard.html" class="dropdown-item dropdown-item--highlight">
-                                        <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2">
-                                            <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
-                                            <polyline points="9 22 9 12 15 12 15 22"></polyline>
-                                        </svg>
-                                        Seller Dashboard
-                                    </a>
-                                </div>
-                                <hr class="dropdown-divider">
-                                <button class="dropdown-item dropdown-item--danger" id="logout-btn">
-                                    <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2">
-                                        <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path>
-                                        <polyline points="16 17 21 12 16 7"></polyline>
-                                        <line x1="21" y1="12" x2="9" y2="12"></line>
-                                    </svg>
-                                    Sign Out
-                                </button>
+                                <!-- Dropdown content rendered dynamically -->
                             </div>
                         </div>
                     </div>
@@ -150,17 +100,152 @@ function renderHeader() {
                 <a href="/pages/auth/login.html" class="btn btn-ghost btn-block">Sign In</a>
                 <a href="/pages/auth/register.html" class="btn btn-primary btn-block">Get Started</a>
             </div>
-            <div class="mobile-menu__user" data-auth="required" style="display: none;">
-                <a href="/pages/buyer/dashboard.html" class="mobile-menu__link">My Dashboard</a>
-                <a href="/pages/buyer/bookings.html" class="mobile-menu__link">My Bookings</a>
-                <a href="/pages/buyer/tickets.html" class="mobile-menu__link">My Tickets</a>
-                <div data-role="seller" style="display: none;">
-                    <a href="/pages/seller/dashboard.html" class="mobile-menu__link mobile-menu__link--highlight">Seller Dashboard</a>
-                </div>
-                <button class="btn btn-ghost btn-block" id="mobile-logout-btn">Sign Out</button>
+            <div class="mobile-menu__user" data-auth="required" style="display: none;" id="mobile-user-menu">
+                <!-- Mobile menu content rendered dynamically -->
             </div>
         </div>
     `;
+}
+
+/**
+ * Render dropdown menu content based on user role and mode
+ * @param {boolean} isVendor - Whether user is a vendor
+ * @param {boolean} sellerModeOn - Whether seller mode is enabled
+ * @returns {string} Dropdown HTML
+ */
+function renderDropdownContent(isVendor, sellerModeOn) {
+    let html = '';
+
+    // Header with email
+    html += `
+        <div class="dropdown-header">
+            <span class="dropdown-email" data-user="email"></span>
+            ${isVendor ? `<span class="badge badge--vendor">${sellerModeOn ? 'Seller Mode' : 'Buyer Mode'}</span>` : ''}
+        </div>
+    `;
+
+    // Seller Mode Toggle (only for vendors)
+    if (isVendor) {
+        html += `
+            <div class="dropdown-item seller-mode-toggle">
+                <span>Seller Mode</span>
+                <label class="toggle-switch">
+                    <input type="checkbox" id="seller-mode-toggle" ${sellerModeOn ? 'checked' : ''}>
+                    <span class="toggle-slider"></span>
+                </label>
+            </div>
+            <hr class="dropdown-divider">
+        `;
+    }
+
+    if (sellerModeOn && isVendor) {
+        // SELLER MENU
+        html += `
+            <a href="/pages/seller/dashboard.html" class="dropdown-item">
+                <span class="dropdown-icon">📊</span>
+                Seller Dashboard
+            </a>
+            <a href="/pages/seller/events/index.html" class="dropdown-item">
+                <span class="dropdown-icon">🎪</span>
+                My Events
+            </a>
+            <a href="/pages/seller/bookings.html" class="dropdown-item">
+                <span class="dropdown-icon">📅</span>
+                Bookings
+            </a>
+            <a href="/pages/seller/scanner.html" class="dropdown-item">
+                <span class="dropdown-icon">📱</span>
+                Scanner
+            </a>
+            <a href="/pages/seller/payouts.html" class="dropdown-item">
+                <span class="dropdown-icon">💰</span>
+                Payouts
+            </a>
+            <a href="/pages/seller/settings.html" class="dropdown-item">
+                <span class="dropdown-icon">⚙️</span>
+                Settings
+            </a>
+        `;
+    } else {
+        // BUYER MENU
+        html += `
+            <a href="/pages/buyer/dashboard.html" class="dropdown-item">
+                <span class="dropdown-icon">📊</span>
+                My Dashboard
+            </a>
+            <a href="/pages/buyer/bookings.html" class="dropdown-item">
+                <span class="dropdown-icon">📅</span>
+                My Bookings
+            </a>
+            <a href="/pages/buyer/tickets.html" class="dropdown-item">
+                <span class="dropdown-icon">🎫</span>
+                My Tickets
+            </a>
+        `;
+    }
+
+    // Common items
+    html += `
+        <hr class="dropdown-divider">
+        <a href="/pages/buyer/profile.html" class="dropdown-item">
+            <span class="dropdown-icon">👤</span>
+            Profile
+        </a>
+        <hr class="dropdown-divider">
+        <button class="dropdown-item dropdown-item--danger" id="logout-btn">
+            <span class="dropdown-icon">🚪</span>
+            Sign Out
+        </button>
+    `;
+
+    return html;
+}
+
+/**
+ * Render mobile menu content based on user role and mode
+ * @param {boolean} isVendor - Whether user is a vendor
+ * @param {boolean} sellerModeOn - Whether seller mode is enabled
+ * @returns {string} Mobile menu HTML
+ */
+function renderMobileMenuContent(isVendor, sellerModeOn) {
+    let html = '';
+
+    // Seller Mode Toggle (only for vendors)
+    if (isVendor) {
+        html += `
+            <div class="mobile-menu__toggle">
+                <span>Seller Mode</span>
+                <label class="toggle-switch">
+                    <input type="checkbox" id="mobile-seller-mode-toggle" ${sellerModeOn ? 'checked' : ''}>
+                    <span class="toggle-slider"></span>
+                </label>
+            </div>
+            <hr class="mobile-menu__divider">
+        `;
+    }
+
+    if (sellerModeOn && isVendor) {
+        html += `
+            <a href="/pages/seller/dashboard.html" class="mobile-menu__link">📊 Seller Dashboard</a>
+            <a href="/pages/seller/events/index.html" class="mobile-menu__link">🎪 My Events</a>
+            <a href="/pages/seller/bookings.html" class="mobile-menu__link">📅 Bookings</a>
+            <a href="/pages/seller/scanner.html" class="mobile-menu__link">📱 Scanner</a>
+            <a href="/pages/seller/payouts.html" class="mobile-menu__link">💰 Payouts</a>
+        `;
+    } else {
+        html += `
+            <a href="/pages/buyer/dashboard.html" class="mobile-menu__link">📊 My Dashboard</a>
+            <a href="/pages/buyer/bookings.html" class="mobile-menu__link">📅 My Bookings</a>
+            <a href="/pages/buyer/tickets.html" class="mobile-menu__link">🎫 My Tickets</a>
+        `;
+    }
+
+    html += `
+        <a href="/pages/buyer/profile.html" class="mobile-menu__link">👤 Profile</a>
+        <button class="btn btn-ghost btn-block" id="mobile-logout-btn">🚪 Sign Out</button>
+    `;
+
+    return html;
 }
 
 /**
@@ -184,30 +269,81 @@ function updateHeaderAuthState(headerEl) {
     if (currentUser) {
         const displayName = userProfile?.displayName || currentUser.displayName || currentUser.email?.split('@')[0] || 'User';
         const email = currentUser.email || '';
+        const isVendor = userProfile?.role === 'vendor';
+        const sellerModeOn = isVendor && isSellerModeEnabled();
 
+        // Update name
         const nameElements = headerEl.querySelectorAll('[data-user="name"]');
         nameElements.forEach(el => {
             el.textContent = displayName;
         });
 
-        const emailElements = headerEl.querySelectorAll('[data-user="email"]');
-        emailElements.forEach(el => {
-            el.textContent = email;
-        });
-
-        // Update avatar with photo or initial
-        const avatarEl = headerEl.querySelector('#user-avatar');
-        if (avatarEl && currentUser.photoURL) {
-            avatarEl.innerHTML = `<img src="${currentUser.photoURL}" alt="${displayName}" class="header__avatar-img">`;
+        // Update avatar icon based on mode
+        const avatarIcon = headerEl.querySelector('#avatar-icon');
+        if (avatarIcon) {
+            if (currentUser.photoURL) {
+                avatarIcon.innerHTML = `<img src="${currentUser.photoURL}" alt="${displayName}" class="header__avatar-img">`;
+            } else {
+                avatarIcon.textContent = sellerModeOn ? '💰' : '👤';
+            }
         }
 
-        // Show seller section if user is a vendor
-        const sellerElements = headerEl.querySelectorAll('[data-role="seller"]');
-        const isSeller = userProfile?.role === 'vendor';
-        sellerElements.forEach(el => {
-            el.style.display = isSeller ? '' : 'none';
-        });
+        // Render dropdown content
+        const dropdown = headerEl.querySelector('#user-dropdown');
+        if (dropdown) {
+            dropdown.innerHTML = renderDropdownContent(isVendor, sellerModeOn);
+
+            // Update email in dropdown
+            const dropdownEmail = dropdown.querySelector('[data-user="email"]');
+            if (dropdownEmail) {
+                dropdownEmail.textContent = email;
+            }
+
+            // Re-attach logout button event
+            const logoutBtn = dropdown.querySelector('#logout-btn');
+            if (logoutBtn) {
+                logoutBtn.addEventListener('click', handleLogout);
+            }
+
+            // Attach seller mode toggle event
+            const sellerToggle = dropdown.querySelector('#seller-mode-toggle');
+            if (sellerToggle) {
+                sellerToggle.addEventListener('change', (e) => {
+                    setSellerMode(e.target.checked);
+                    window.location.reload();
+                });
+            }
+        }
+
+        // Render mobile menu content
+        const mobileUserMenu = headerEl.querySelector('#mobile-user-menu');
+        if (mobileUserMenu) {
+            mobileUserMenu.innerHTML = renderMobileMenuContent(isVendor, sellerModeOn);
+
+            // Re-attach mobile logout button event
+            const mobileLogoutBtn = mobileUserMenu.querySelector('#mobile-logout-btn');
+            if (mobileLogoutBtn) {
+                mobileLogoutBtn.addEventListener('click', handleLogout);
+            }
+
+            // Attach mobile seller mode toggle event
+            const mobileSellerToggle = mobileUserMenu.querySelector('#mobile-seller-mode-toggle');
+            if (mobileSellerToggle) {
+                mobileSellerToggle.addEventListener('change', (e) => {
+                    setSellerMode(e.target.checked);
+                    window.location.reload();
+                });
+            }
+        }
     }
+}
+
+/**
+ * Handle logout
+ */
+async function handleLogout() {
+    await logout();
+    window.location.href = '/';
 }
 
 /**
@@ -231,23 +367,6 @@ function attachHeaderEvents(headerEl) {
                 userDropdown.style.display = 'none';
             }
         });
-    }
-
-    // Logout buttons
-    const logoutBtn = headerEl.querySelector('#logout-btn');
-    const mobileLogoutBtn = headerEl.querySelector('#mobile-logout-btn');
-
-    const handleLogout = async () => {
-        await logout();
-        window.location.href = '/';
-    };
-
-    if (logoutBtn) {
-        logoutBtn.addEventListener('click', handleLogout);
-    }
-
-    if (mobileLogoutBtn) {
-        mobileLogoutBtn.addEventListener('click', handleLogout);
     }
 
     // Mobile menu toggle

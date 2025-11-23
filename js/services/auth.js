@@ -48,13 +48,14 @@ export async function registerWithEmail({ email, password, firstName, lastName, 
     });
 
     // Create user document in Firestore
+    // For vendors, set vendorId immediately (Firestore rules prevent updating it later)
     await setDoc(doc(db, 'users', user.uid), {
         email: user.email,
         firstName,
         lastName,
         displayName: `${firstName} ${lastName}`,
         role: isVendor ? CONSTANTS.USER_ROLES.VENDOR : CONSTANTS.USER_ROLES.BUYER,
-        vendorId: null,
+        vendorId: isVendor ? user.uid : null,
         createdAt: serverTimestamp(),
         updatedAt: serverTimestamp()
     });
@@ -78,9 +79,6 @@ export async function registerWithEmail({ email, password, firstName, lastName, 
             createdAt: serverTimestamp(),
             updatedAt: serverTimestamp()
         });
-
-        // Update user with vendorId
-        await setDoc(doc(db, 'users', user.uid), { vendorId: user.uid }, { merge: true });
     }
 
     return user;

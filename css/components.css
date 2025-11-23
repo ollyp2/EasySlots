@@ -1352,6 +1352,11 @@
     box-shadow: 0 0 0 2px var(--color-white), 0 0 0 4px var(--color-gray-900);
 }
 
+body.dark-mode .color-preset.active {
+    border-color: var(--color-gray-100);
+    box-shadow: 0 0 0 2px #1F2937, 0 0 0 4px var(--color-gray-100);
+}
+
 .custom-color {
     display: flex;
     align-items: center;

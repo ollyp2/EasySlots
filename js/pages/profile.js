@@ -16,7 +16,7 @@ import {
     setSellerColor
 } from '../utils/sellerMode.js';
 import { renderSidebar } from '../components/sidebar.js';
-import { showToast } from '../utils/toast.js';
+import { showToast } from '../components/toast.js';
 
 let currentUser = null;
 let userProfile = null;

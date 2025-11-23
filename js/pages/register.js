@@ -7,6 +7,7 @@ import { registerWithEmail, loginWithGoogle, getUserProfile } from '../services/
 import { showToast } from '../components/toast.js';
 import { showLoader, hideLoader } from '../components/loader.js';
 import { redirectIfAuth } from '../utils/authGuard.js';
+import { setSellerMode } from '../utils/sellerMode.js';
 
 /**
  * Initialize register page
@@ -80,12 +81,9 @@ async function handleEmailRegister(e) {
 
         showToast('Success', 'Account created successfully!', 'success');
 
-        // Redirect based on role
-        if (isVendor) {
-            window.location.href = '/pages/seller/dashboard.html';
-        } else {
-            window.location.href = '/pages/buyer/dashboard.html';
-        }
+        // Always start as buyer - users can switch to seller mode via toggle
+        setSellerMode(false);
+        window.location.href = '/pages/buyer/dashboard.html';
     } catch (error) {
         console.error('Registration error:', error);
         handleAuthError(error);
@@ -104,13 +102,9 @@ async function handleGoogleSignUp() {
         const user = await loginWithGoogle();
         showToast('Success', 'Welcome to EasySeats!', 'success');
 
-        // Google users start as buyers, redirect to buyer dashboard
-        const profile = await getUserProfile(user.uid);
-        if (profile && profile.role === 'vendor') {
-            window.location.href = '/pages/seller/dashboard.html';
-        } else {
-            window.location.href = '/pages/buyer/dashboard.html';
-        }
+        // Always start as buyer - users can switch to seller mode via toggle
+        setSellerMode(false);
+        window.location.href = '/pages/buyer/dashboard.html';
     } catch (error) {
         console.error('Google signup error:', error);
         handleAuthError(error);

@@ -7,7 +7,7 @@ import { loginWithEmail, loginWithGoogle, getUserProfile } from '../services/aut
 import { showToast } from '../components/toast.js';
 import { showLoader, hideLoader } from '../components/loader.js';
 import { redirectIfAuth } from '../utils/authGuard.js';
-import { isSellerModeEnabled } from '../utils/sellerMode.js';
+import { setSellerMode } from '../utils/sellerMode.js';
 
 /**
  * Initialize login page
@@ -89,20 +89,9 @@ async function redirectToDashboard(userId) {
         return;
     }
 
-    // Get user profile to determine role and check seller mode
-    try {
-        const profile = await getUserProfile(userId);
-        const isVendor = profile && profile.role === 'vendor';
-        const sellerModeOn = isVendor && isSellerModeEnabled();
-
-        if (sellerModeOn) {
-            window.location.href = '/pages/seller/dashboard.html';
-        } else {
-            window.location.href = '/pages/buyer/dashboard.html';
-        }
-    } catch {
-        window.location.href = '/pages/buyer/dashboard.html';
-    }
+    // Always start as buyer - users can switch to seller mode via toggle
+    setSellerMode(false);
+    window.location.href = '/pages/buyer/dashboard.html';
 }
 
 /**

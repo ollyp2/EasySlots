@@ -29,7 +29,7 @@
 
                 <div class="dashboard-content">
                     <div class="dashboard-header">
-                        <h1 class="dashboard-title">Buyer Settings</h1>
+                        <h1 class="dashboard-title">Settings</h1>
                     </div>
 
                     <form class="profile-form" id="profile-form">
@@ -57,7 +57,7 @@
                             </div>
                         </section>
 
-                        <!-- Theme Settings -->
+                        <!-- Appearance Settings -->
                         <section class="form-section">
                             <h2 class="form-section__title">Appearance</h2>
 
@@ -73,22 +73,44 @@
                                 </div>
                             </div>
 
-                            <!-- Theme Color -->
+                            <!-- Buy-Mode Color -->
                             <div class="form-group">
-                                <label class="form-label">Theme Color</label>
+                                <label class="form-label">Buy-Mode Color</label>
+                                <p class="form-hint">Theme color when browsing as a buyer</p>
                                 <div class="color-picker-container">
-                                    <div class="color-presets">
-                                        <button type="button" class="color-preset" data-color="#4A90A4" style="background:#4A90A4" title="Default Blue"></button>
-                                        <button type="button" class="color-preset" data-color="#28A745" style="background:#28A745" title="Green"></button>
-                                        <button type="button" class="color-preset" data-color="#6366F1" style="background:#6366F1" title="Indigo"></button>
-                                        <button type="button" class="color-preset" data-color="#EC4899" style="background:#EC4899" title="Pink"></button>
-                                        <button type="button" class="color-preset" data-color="#F59E0B" style="background:#F59E0B" title="Amber"></button>
-                                        <button type="button" class="color-preset" data-color="#EF4444" style="background:#EF4444" title="Red"></button>
+                                    <div class="color-presets" id="buyer-color-presets">
+                                        <button type="button" class="color-preset" data-color="#4A90A4" data-mode="buyer" style="background:#4A90A4" title="Default Blue"></button>
+                                        <button type="button" class="color-preset" data-color="#6366F1" data-mode="buyer" style="background:#6366F1" title="Indigo"></button>
+                                        <button type="button" class="color-preset" data-color="#8B5CF6" data-mode="buyer" style="background:#8B5CF6" title="Purple"></button>
+                                        <button type="button" class="color-preset" data-color="#EC4899" data-mode="buyer" style="background:#EC4899" title="Pink"></button>
+                                        <button type="button" class="color-preset" data-color="#F59E0B" data-mode="buyer" style="background:#F59E0B" title="Amber"></button>
+                                        <button type="button" class="color-preset" data-color="#EF4444" data-mode="buyer" style="background:#EF4444" title="Red"></button>
                                     </div>
                                     <div class="custom-color">
                                         <label class="form-label-sm">Custom:</label>
-                                        <input type="color" id="custom-color-picker" class="color-input" value="#4A90A4">
-                                        <button type="button" class="btn btn-sm btn-ghost" id="reset-color">Reset</button>
+                                        <input type="color" id="buyer-color-picker" class="color-input" value="#4A90A4">
+                                        <button type="button" class="btn btn-sm btn-ghost" id="reset-buyer-color">Reset</button>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Seller-Mode Color -->
+                            <div class="form-group">
+                                <label class="form-label">Seller-Mode Color</label>
+                                <p class="form-hint">Theme color when managing events as a seller</p>
+                                <div class="color-picker-container">
+                                    <div class="color-presets" id="seller-color-presets">
+                                        <button type="button" class="color-preset" data-color="#28A745" data-mode="seller" style="background:#28A745" title="Default Green"></button>
+                                        <button type="button" class="color-preset" data-color="#10B981" data-mode="seller" style="background:#10B981" title="Emerald"></button>
+                                        <button type="button" class="color-preset" data-color="#14B8A6" data-mode="seller" style="background:#14B8A6" title="Teal"></button>
+                                        <button type="button" class="color-preset" data-color="#06B6D4" data-mode="seller" style="background:#06B6D4" title="Cyan"></button>
+                                        <button type="button" class="color-preset" data-color="#84CC16" data-mode="seller" style="background:#84CC16" title="Lime"></button>
+                                        <button type="button" class="color-preset" data-color="#22C55E" data-mode="seller" style="background:#22C55E" title="Green"></button>
+                                    </div>
+                                    <div class="custom-color">
+                                        <label class="form-label-sm">Custom:</label>
+                                        <input type="color" id="seller-color-picker" class="color-input" value="#28A745">
+                                        <button type="button" class="btn btn-sm btn-ghost" id="reset-seller-color">Reset</button>
                                     </div>
                                 </div>
                             </div>

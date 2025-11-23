@@ -1,16 +1,29 @@
 /**
  * EasySeats - Profile/Settings Page
- * Handles user profile management, vendor mode toggle, dark mode, and theme colors
+ * Handles user profile management, vendor mode toggle, dark mode, and dual theme colors
  */
 
 import { auth, onAuthStateChanged } from '../config/firebase.js';
 import { getUserProfile, updateUserProfile } from '../services/auth.js';
-import { isSellerModeEnabled, setSellerMode, isDarkModeEnabled, setDarkMode, getCustomColor, setCustomColor } from '../utils/sellerMode.js';
+import {
+    isSellerModeEnabled,
+    setSellerMode,
+    isDarkModeEnabled,
+    setDarkMode,
+    getBuyerColor,
+    setBuyerColor,
+    getSellerColor,
+    setSellerColor
+} from '../utils/sellerMode.js';
 import { renderSidebar } from '../components/sidebar.js';
 import { showToast } from '../utils/toast.js';
 
 let currentUser = null;
 let userProfile = null;
+
+// Default colors
+const DEFAULT_BUYER_COLOR = '#4A90A4';
+const DEFAULT_SELLER_COLOR = '#28A745';
 
 /**
  * Initialize the profile page
@@ -52,7 +65,6 @@ function populateForm() {
     const phoneInput = document.getElementById('phone');
 
     if (currentUser) {
-        // Split display name into first/last
         const displayName = userProfile?.displayName || currentUser.displayName || '';
         const nameParts = displayName.split(' ');
 
@@ -83,11 +95,9 @@ function setupVendorSection() {
     const isVendor = userProfile?.role === 'vendor';
 
     if (isVendor) {
-        // Show vendor mode toggle, hide become vendor section
         if (vendorModeSection) vendorModeSection.style.display = 'block';
         if (becomeVendorSection) becomeVendorSection.style.display = 'none';
 
-        // Set initial toggle state
         const sellerModeOn = isSellerModeEnabled();
         if (profileSellerToggle) {
             profileSellerToggle.checked = sellerModeOn;
@@ -96,38 +106,31 @@ function setupVendorSection() {
             toggleLabelText.textContent = sellerModeOn ? 'Seller Mode ON' : 'Seller Mode OFF';
         }
 
-        // Add toggle event listener
         if (profileSellerToggle) {
             profileSellerToggle.addEventListener('change', async (e) => {
                 const enabled = e.target.checked;
                 setSellerMode(enabled);
 
-                // Update label
                 if (toggleLabelText) {
                     toggleLabelText.textContent = enabled ? 'Seller Mode ON' : 'Seller Mode OFF';
                 }
 
-                // Re-render sidebar
                 await renderSidebar();
 
-                // Show toast
                 showToast(
                     enabled ? 'Seller Mode activated!' : 'Seller Mode deactivated!',
                     enabled ? 'success' : 'info'
                 );
-
-                // Note: NO REDIRECT - user stays on settings page
             });
         }
     } else {
-        // Show become vendor section, hide vendor mode toggle
         if (vendorModeSection) vendorModeSection.style.display = 'none';
         if (becomeVendorSection) becomeVendorSection.style.display = 'block';
     }
 }
 
 /**
- * Setup theme settings (dark mode, color picker)
+ * Setup theme settings (dark mode, dual color pickers)
  */
 function setupThemeSettings() {
     // Dark Mode Toggle
@@ -152,41 +155,52 @@ function setupThemeSettings() {
         });
     }
 
-    // Color Presets
-    const colorPresets = document.querySelectorAll('.color-preset');
-    const customColorPicker = document.getElementById('custom-color-picker');
-    const resetColorBtn = document.getElementById('reset-color');
+    // Setup Buyer Color Picker
+    setupColorPicker('buyer', getBuyerColor(), setBuyerColor, DEFAULT_BUYER_COLOR);
 
-    // Get current color
-    const currentColor = getCustomColor() || '#4A90A4';
+    // Setup Seller Color Picker
+    setupColorPicker('seller', getSellerColor(), setSellerColor, DEFAULT_SELLER_COLOR);
+}
+
+/**
+ * Setup a color picker with presets and custom input
+ * @param {string} mode - 'buyer' or 'seller'
+ * @param {string} currentColor - Current color value
+ * @param {Function} setColorFn - Function to set the color
+ * @param {string} defaultColor - Default color value
+ */
+function setupColorPicker(mode, currentColor, setColorFn, defaultColor) {
+    const colorPresets = document.querySelectorAll(`.color-preset[data-mode="${mode}"]`);
+    const customColorPicker = document.getElementById(`${mode}-color-picker`);
+    const resetColorBtn = document.getElementById(`reset-${mode}-color`);
 
     // Set custom color picker value
     if (customColorPicker) {
-        customColorPicker.value = currentColor;
+        customColorPicker.value = currentColor || defaultColor;
     }
 
     // Mark active preset
     colorPresets.forEach(preset => {
-        if (preset.dataset.color.toLowerCase() === currentColor.toLowerCase()) {
+        if (preset.dataset.color.toLowerCase() === (currentColor || defaultColor).toLowerCase()) {
             preset.classList.add('active');
         }
 
         preset.addEventListener('click', () => {
             const color = preset.dataset.color;
 
-            // Update active state
+            // Update active state for this mode only
             colorPresets.forEach(p => p.classList.remove('active'));
             preset.classList.add('active');
 
             // Apply color
-            setCustomColor(color);
+            setColorFn(color);
 
             // Update custom picker
             if (customColorPicker) {
                 customColorPicker.value = color;
             }
 
-            showToast('Theme color updated', 'success');
+            showToast(`${mode === 'buyer' ? 'Buy-Mode' : 'Seller-Mode'} color updated`, 'success');
         });
     });
 
@@ -195,12 +209,12 @@ function setupThemeSettings() {
         customColorPicker.addEventListener('change', (e) => {
             const color = e.target.value;
 
-            // Remove active from presets
+            // Remove active from presets for this mode
             colorPresets.forEach(p => p.classList.remove('active'));
 
             // Apply color
-            setCustomColor(color);
-            showToast('Custom theme color applied', 'success');
+            setColorFn(color);
+            showToast(`Custom ${mode === 'buyer' ? 'Buy-Mode' : 'Seller-Mode'} color applied`, 'success');
         });
     }
 
@@ -208,20 +222,20 @@ function setupThemeSettings() {
     if (resetColorBtn) {
         resetColorBtn.addEventListener('click', () => {
             // Reset to default
-            setCustomColor(null);
+            setColorFn(null);
 
             // Reset UI
             if (customColorPicker) {
-                customColorPicker.value = '#4A90A4';
+                customColorPicker.value = defaultColor;
             }
             colorPresets.forEach(p => {
                 p.classList.remove('active');
-                if (p.dataset.color === '#4A90A4') {
+                if (p.dataset.color === defaultColor) {
                     p.classList.add('active');
                 }
             });
 
-            showToast('Theme color reset to default', 'info');
+            showToast(`${mode === 'buyer' ? 'Buy-Mode' : 'Seller-Mode'} color reset to default`, 'info');
         });
     }
 }

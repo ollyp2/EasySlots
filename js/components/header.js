@@ -155,11 +155,11 @@ function renderDropdownContent(isVendor, sellerModeOn) {
     }
 
     if (sellerModeOn && isVendor) {
-        // SELLER MENU (6 items)
+        // SELLER MENU - matches SELLER_NAV in sidebar.js
         html += `
             <a href="/pages/seller/dashboard.html" class="dropdown-item">
                 <span class="dropdown-icon">${HEADER_ICONS.dashboard}</span>
-                Seller Dashboard
+                Dashboard
             </a>
             <a href="/pages/seller/events/index.html" class="dropdown-item">
                 <span class="dropdown-icon">${HEADER_ICONS.events}</span>
@@ -183,11 +183,11 @@ function renderDropdownContent(isVendor, sellerModeOn) {
             </a>
         `;
     } else {
-        // BUYER MENU (4 items - matches sidebar)
+        // BUYER MENU - matches BUYER_NAV in sidebar.js
         html += `
             <a href="/pages/buyer/dashboard.html" class="dropdown-item">
                 <span class="dropdown-icon">${HEADER_ICONS.dashboard}</span>
-                My Dashboard
+                Dashboard
             </a>
             <a href="/pages/buyer/bookings.html" class="dropdown-item">
                 <span class="dropdown-icon">${HEADER_ICONS.calendar}</span>
@@ -240,9 +240,9 @@ function renderMobileMenuContent(isVendor, sellerModeOn) {
     }
 
     if (sellerModeOn && isVendor) {
-        // SELLER MOBILE MENU (6 items)
+        // SELLER MOBILE MENU - matches SELLER_NAV
         html += `
-            <a href="/pages/seller/dashboard.html" class="mobile-menu__link"><span class="mobile-menu__icon">${HEADER_ICONS.dashboard}</span> Seller Dashboard</a>
+            <a href="/pages/seller/dashboard.html" class="mobile-menu__link"><span class="mobile-menu__icon">${HEADER_ICONS.dashboard}</span> Dashboard</a>
             <a href="/pages/seller/events/index.html" class="mobile-menu__link"><span class="mobile-menu__icon">${HEADER_ICONS.events}</span> My Events</a>
             <a href="/pages/seller/bookings.html" class="mobile-menu__link"><span class="mobile-menu__icon">${HEADER_ICONS.calendar}</span> Bookings</a>
             <a href="/pages/seller/scanner.html" class="mobile-menu__link"><span class="mobile-menu__icon">${HEADER_ICONS.scanner}</span> Scanner</a>
@@ -250,9 +250,9 @@ function renderMobileMenuContent(isVendor, sellerModeOn) {
             <a href="/pages/seller/settings.html" class="mobile-menu__link"><span class="mobile-menu__icon">${HEADER_ICONS.settings}</span> Settings</a>
         `;
     } else {
-        // BUYER MOBILE MENU (4 items - matches sidebar)
+        // BUYER MOBILE MENU - matches BUYER_NAV
         html += `
-            <a href="/pages/buyer/dashboard.html" class="mobile-menu__link"><span class="mobile-menu__icon">${HEADER_ICONS.dashboard}</span> My Dashboard</a>
+            <a href="/pages/buyer/dashboard.html" class="mobile-menu__link"><span class="mobile-menu__icon">${HEADER_ICONS.dashboard}</span> Dashboard</a>
             <a href="/pages/buyer/bookings.html" class="mobile-menu__link"><span class="mobile-menu__icon">${HEADER_ICONS.calendar}</span> My Bookings</a>
             <a href="/pages/buyer/tickets.html" class="mobile-menu__link"><span class="mobile-menu__icon">${HEADER_ICONS.ticket}</span> My Tickets</a>
             <a href="/pages/buyer/profile.html" class="mobile-menu__link"><span class="mobile-menu__icon">${HEADER_ICONS.settings}</span> Settings</a>

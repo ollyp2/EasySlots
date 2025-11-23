@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Settings - EasySeats</title>
+    <title>Seller Settings - EasySeats</title>
 
     <link rel="stylesheet" href="/css/main.css">
     <link rel="stylesheet" href="/css/layout.css">
@@ -24,49 +24,109 @@
             <div class="dashboard-layout">
                 <aside class="dashboard-sidebar">
                     <nav class="dashboard-nav">
-                        <a href="/pages/seller/dashboard.html" class="dashboard-nav__item">
-                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7"></rect><rect x="14" y="3" width="7" height="7"></rect><rect x="14" y="14" width="7" height="7"></rect><rect x="3" y="14" width="7" height="7"></rect></svg>
-                            Dashboard
-                        </a>
-                        <a href="/pages/seller/events/index.html" class="dashboard-nav__item">
-                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg>
-                            My Events
-                        </a>
-                        <a href="/pages/seller/bookings.html" class="dashboard-nav__item">
-                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 9a3 3 0 0 1 0 6v2a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2v-2a3 3 0 0 1 0-6V7a2 2 0 0 0-2-2H4a2 2 0 0 0-2 2Z"></path></svg>
-                            Bookings
-                        </a>
-                        <a href="/pages/seller/scanner.html" class="dashboard-nav__item">
-                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 7V5a2 2 0 0 1 2-2h2"></path><path d="M17 3h2a2 2 0 0 1 2 2v2"></path><path d="M21 17v2a2 2 0 0 1-2 2h-2"></path><path d="M7 21H5a2 2 0 0 1-2-2v-2"></path><rect x="7" y="7" width="10" height="10"></rect></svg>
-                            Scanner
-                        </a>
-                        <a href="/pages/seller/payouts.html" class="dashboard-nav__item">
-                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="1" x2="12" y2="23"></line><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path></svg>
-                            Payouts
-                        </a>
-                        <a href="/pages/seller/settings.html" class="dashboard-nav__item dashboard-nav__item--active">
-                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"></circle><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path></svg>
-                            Settings
-                        </a>
+                        <!-- Dynamically rendered by sidebar.js -->
                     </nav>
                 </aside>
 
                 <div class="dashboard-content">
                     <div class="dashboard-header">
-                        <h1 class="dashboard-title">Vendor Settings</h1>
+                        <h1 class="dashboard-title">Settings</h1>
                     </div>
 
                     <form class="settings-form" id="settings-form">
-                        <!-- Business Profile -->
+                        <!-- Personal Information (Shared) -->
                         <section class="form-section">
-                            <h2 class="form-section__title">Business Profile</h2>
+                            <h2 class="form-section__title">Personal Information</h2>
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label class="form-label" for="first-name">First Name</label>
+                                    <input type="text" class="form-input" id="first-name" required>
+                                </div>
+                                <div class="form-group">
+                                    <label class="form-label" for="last-name">Last Name</label>
+                                    <input type="text" class="form-input" id="last-name" required>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label" for="email">Email</label>
+                                <input type="email" class="form-input" id="email" disabled>
+                                <p class="form-hint">Email cannot be changed</p>
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label" for="phone">Phone</label>
+                                <input type="tel" class="form-input" id="phone">
+                            </div>
+                        </section>
+
+                        <!-- Appearance Settings (Shared) -->
+                        <section class="form-section">
+                            <h2 class="form-section__title">Appearance</h2>
+
+                            <!-- Dark Mode -->
+                            <div class="form-group">
+                                <label class="form-label">Dark Mode</label>
+                                <div class="toggle-container">
+                                    <label class="toggle-switch">
+                                        <input type="checkbox" id="dark-mode-toggle">
+                                        <span class="toggle-slider"></span>
+                                    </label>
+                                    <span class="toggle-label" id="dark-mode-label">Off</span>
+                                </div>
+                            </div>
+
+                            <!-- Buy-Mode Color -->
+                            <div class="form-group">
+                                <label class="form-label">Buy-Mode Color</label>
+                                <p class="form-hint">Theme color when browsing as a buyer</p>
+                                <div class="color-picker-container">
+                                    <div class="color-presets" id="buyer-color-presets">
+                                        <button type="button" class="color-preset" data-color="#4A90A4" data-mode="buyer" style="background:#4A90A4" title="Default Blue"></button>
+                                        <button type="button" class="color-preset" data-color="#6366F1" data-mode="buyer" style="background:#6366F1" title="Indigo"></button>
+                                        <button type="button" class="color-preset" data-color="#8B5CF6" data-mode="buyer" style="background:#8B5CF6" title="Purple"></button>
+                                        <button type="button" class="color-preset" data-color="#EC4899" data-mode="buyer" style="background:#EC4899" title="Pink"></button>
+                                        <button type="button" class="color-preset" data-color="#F59E0B" data-mode="buyer" style="background:#F59E0B" title="Amber"></button>
+                                        <button type="button" class="color-preset" data-color="#EF4444" data-mode="buyer" style="background:#EF4444" title="Red"></button>
+                                    </div>
+                                    <div class="custom-color">
+                                        <label class="form-label-sm">Custom:</label>
+                                        <input type="color" id="buyer-color-picker" class="color-input" value="#4A90A4">
+                                        <button type="button" class="btn btn-sm btn-ghost" id="reset-buyer-color">Reset</button>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Seller-Mode Color -->
+                            <div class="form-group">
+                                <label class="form-label">Seller-Mode Color</label>
+                                <p class="form-hint">Theme color when managing events as a seller</p>
+                                <div class="color-picker-container">
+                                    <div class="color-presets" id="seller-color-presets">
+                                        <button type="button" class="color-preset" data-color="#28A745" data-mode="seller" style="background:#28A745" title="Default Green"></button>
+                                        <button type="button" class="color-preset" data-color="#10B981" data-mode="seller" style="background:#10B981" title="Emerald"></button>
+                                        <button type="button" class="color-preset" data-color="#14B8A6" data-mode="seller" style="background:#14B8A6" title="Teal"></button>
+                                        <button type="button" class="color-preset" data-color="#06B6D4" data-mode="seller" style="background:#06B6D4" title="Cyan"></button>
+                                        <button type="button" class="color-preset" data-color="#84CC16" data-mode="seller" style="background:#84CC16" title="Lime"></button>
+                                        <button type="button" class="color-preset" data-color="#22C55E" data-mode="seller" style="background:#22C55E" title="Green"></button>
+                                    </div>
+                                    <div class="custom-color">
+                                        <label class="form-label-sm">Custom:</label>
+                                        <input type="color" id="seller-color-picker" class="color-input" value="#28A745">
+                                        <button type="button" class="btn btn-sm btn-ghost" id="reset-seller-color">Reset</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </section>
+
+                        <!-- Business Information (Seller-Exclusive) -->
+                        <section class="form-section">
+                            <h2 class="form-section__title">Business Information</h2>
                             <div class="form-group">
                                 <label class="form-label" for="business-name">Business Name *</label>
                                 <input type="text" class="form-input" id="business-name" required>
                             </div>
                             <div class="form-group">
                                 <label class="form-label" for="business-description">Description</label>
-                                <textarea class="form-textarea" id="business-description" rows="4"></textarea>
+                                <textarea class="form-textarea" id="business-description" rows="4" placeholder="Tell customers about your business..."></textarea>
                             </div>
                             <div class="form-group">
                                 <label class="form-label">Logo</label>
@@ -76,18 +136,9 @@
                                     <button type="button" class="btn btn-sm btn-outline">Change Logo</button>
                                 </div>
                             </div>
-                        </section>
-
-                        <!-- Contact Information -->
-                        <section class="form-section">
-                            <h2 class="form-section__title">Contact Information</h2>
                             <div class="form-group">
                                 <label class="form-label" for="contact-email">Contact Email *</label>
                                 <input type="email" class="form-input" id="contact-email" required>
-                            </div>
-                            <div class="form-group">
-                                <label class="form-label" for="contact-phone">Phone</label>
-                                <input type="tel" class="form-input" id="contact-phone">
                             </div>
                             <div class="form-group">
                                 <label class="form-label" for="website">Website</label>
@@ -95,12 +146,12 @@
                             </div>
                         </section>
 
-                        <!-- Location -->
+                        <!-- Business Location (Seller-Exclusive) -->
                         <section class="form-section">
-                            <h2 class="form-section__title">Default Location</h2>
+                            <h2 class="form-section__title">Business Location</h2>
                             <div class="form-group">
                                 <label class="form-label" for="default-address">Address</label>
-                                <input type="text" class="form-input" id="default-address">
+                                <input type="text" class="form-input" id="default-address" placeholder="Street address">
                             </div>
                             <div class="form-row">
                                 <div class="form-group">
@@ -112,9 +163,13 @@
                                     <input type="text" class="form-input" id="default-postal">
                                 </div>
                             </div>
+                            <div class="form-group">
+                                <label class="form-label" for="default-country">Country</label>
+                                <input type="text" class="form-input" id="default-country">
+                            </div>
                         </section>
 
-                        <!-- Booking Settings -->
+                        <!-- Booking Settings (Seller-Exclusive) -->
                         <section class="form-section">
                             <h2 class="form-section__title">Booking Settings</h2>
                             <div class="form-group">
@@ -132,32 +187,11 @@
                                     <span>Auto-confirm bookings (no manual approval required)</span>
                                 </label>
                             </div>
-                        </section>
-
-                        <!-- Appearance Section -->
-                        <section class="form-section">
-                            <h2 class="form-section__title">Appearance</h2>
-                            <p class="form-text">Customize the color theme for your seller dashboard.</p>
                             <div class="form-group">
-                                <label class="form-label">Seller Theme</label>
-                                <div class="theme-selector" id="seller-theme-selector">
-                                    <button type="button" class="theme-option theme-option--default" data-theme="default" title="Default Green">
-                                        <span class="theme-option__color" style="background: #5A9A7A;"></span>
-                                        <span class="theme-option__check"></span>
-                                    </button>
-                                    <button type="button" class="theme-option" data-theme="emerald" title="Emerald">
-                                        <span class="theme-option__color" style="background: #059669;"></span>
-                                        <span class="theme-option__check"></span>
-                                    </button>
-                                    <button type="button" class="theme-option" data-theme="olive" title="Olive">
-                                        <span class="theme-option__color" style="background: #65A30D;"></span>
-                                        <span class="theme-option__check"></span>
-                                    </button>
-                                    <button type="button" class="theme-option" data-theme="forest" title="Forest">
-                                        <span class="theme-option__color" style="background: #166534;"></span>
-                                        <span class="theme-option__check"></span>
-                                    </button>
-                                </div>
+                                <label class="checkbox-label">
+                                    <input type="checkbox" id="require-payment">
+                                    <span>Require payment at booking</span>
+                                </label>
                             </div>
                         </section>
 

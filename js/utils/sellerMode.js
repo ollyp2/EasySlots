@@ -1,14 +1,24 @@
 /**
- * EasySeats - Seller Mode & Theme Management
- * Handles switching between buyer and seller modes, colors, and dark mode
+ * EasySeats - Theme & Mode Management
+ * Handles buyer/seller modes, dark mode, and separate theme colors for each mode
  */
 
 import { auth } from '../config/firebase.js';
 import { getUserProfile } from '../services/auth.js';
 
+// Storage keys
 const SELLER_MODE_KEY = 'easyseats_seller_mode';
 const DARK_MODE_KEY = 'easyseats_dark_mode';
-const CUSTOM_COLOR_KEY = 'easyseats_custom_color';
+const BUYER_COLOR_KEY = 'easyseats_buyer_color';
+const SELLER_COLOR_KEY = 'easyseats_seller_color';
+
+// Default colors
+const DEFAULT_BUYER_COLOR = '#4A90A4';
+const DEFAULT_SELLER_COLOR = '#28A745';
+
+// ============================================
+// Seller Mode
+// ============================================
 
 /**
  * Check if seller mode is enabled
@@ -25,7 +35,6 @@ export function isSellerModeEnabled() {
 export function setSellerMode(enabled) {
     localStorage.setItem(SELLER_MODE_KEY, enabled ? 'true' : 'false');
 
-    // Apply body class for CSS styling
     if (enabled) {
         document.body.classList.add('seller-mode');
         document.body.classList.remove('buyer-mode');
@@ -34,7 +43,9 @@ export function setSellerMode(enabled) {
         document.body.classList.add('buyer-mode');
     }
 
-    // Dispatch event for other components to react
+    // Apply the correct color for the current mode
+    applyCurrentModeColor();
+
     window.dispatchEvent(new CustomEvent('sellerModeChanged', {
         detail: { enabled }
     }));
@@ -81,7 +92,6 @@ export async function getCurrentMode() {
 
 /**
  * Ensure seller mode is enabled (for seller pages)
- * Automatically enables seller mode if user is vendor
  * @returns {Promise<boolean>} True if seller mode is now active
  */
 export async function ensureSellerMode() {
@@ -107,7 +117,6 @@ export function isDarkModeEnabled() {
     if (stored !== null) {
         return stored === 'true';
     }
-    // Check system preference
     return window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
 }
 
@@ -140,39 +149,121 @@ export function toggleDarkMode() {
 }
 
 // ============================================
-// Custom Color
+// Theme Colors (Separate for Buyer/Seller)
 // ============================================
 
 /**
- * Get custom primary color
- * @returns {string|null} Custom color hex or null
+ * Get buyer mode color
+ * @returns {string} Hex color
  */
-export function getCustomColor() {
-    return localStorage.getItem(CUSTOM_COLOR_KEY);
+export function getBuyerColor() {
+    return localStorage.getItem(BUYER_COLOR_KEY) || DEFAULT_BUYER_COLOR;
 }
 
 /**
- * Set custom primary color
- * @param {string|null} color - Hex color string or null to reset
+ * Set buyer mode color
+ * @param {string} color - Hex color string
  */
-export function setCustomColor(color) {
+export function setBuyerColor(color) {
     if (color) {
-        localStorage.setItem(CUSTOM_COLOR_KEY, color);
-        document.documentElement.style.setProperty('--color-primary', color);
-        // Calculate darker shade for hover
-        document.documentElement.style.setProperty('--color-primary-dark', darkenColor(color, 15));
-        document.documentElement.style.setProperty('--color-primary-light', lightenColor(color, 40));
+        localStorage.setItem(BUYER_COLOR_KEY, color);
     } else {
-        localStorage.removeItem(CUSTOM_COLOR_KEY);
-        document.documentElement.style.removeProperty('--color-primary');
-        document.documentElement.style.removeProperty('--color-primary-dark');
-        document.documentElement.style.removeProperty('--color-primary-light');
+        localStorage.removeItem(BUYER_COLOR_KEY);
     }
 
-    window.dispatchEvent(new CustomEvent('themeColorChanged', {
-        detail: { color }
-    }));
+    // Apply if currently in buyer mode
+    if (!isSellerModeEnabled()) {
+        applyColor(color || DEFAULT_BUYER_COLOR);
+    }
+
+    window.dispatchEvent(new CustomEvent('buyerColorChanged', { detail: { color } }));
 }
+
+/**
+ * Get seller mode color
+ * @returns {string} Hex color
+ */
+export function getSellerColor() {
+    return localStorage.getItem(SELLER_COLOR_KEY) || DEFAULT_SELLER_COLOR;
+}
+
+/**
+ * Set seller mode color
+ * @param {string} color - Hex color string
+ */
+export function setSellerColor(color) {
+    if (color) {
+        localStorage.setItem(SELLER_COLOR_KEY, color);
+    } else {
+        localStorage.removeItem(SELLER_COLOR_KEY);
+    }
+
+    // Apply if currently in seller mode
+    if (isSellerModeEnabled()) {
+        applyColor(color || DEFAULT_SELLER_COLOR);
+    }
+
+    window.dispatchEvent(new CustomEvent('sellerColorChanged', { detail: { color } }));
+}
+
+/**
+ * Apply color to CSS custom properties
+ * @param {string} color - Hex color
+ */
+function applyColor(color) {
+    document.documentElement.style.setProperty('--color-primary', color);
+    document.documentElement.style.setProperty('--color-primary-dark', darkenColor(color, 15));
+    document.documentElement.style.setProperty('--color-primary-light', lightenColor(color, 40));
+    document.documentElement.style.setProperty('--color-primary-bg', lightenColor(color, 50));
+}
+
+/**
+ * Apply the correct color based on current mode
+ */
+function applyCurrentModeColor() {
+    const color = isSellerModeEnabled() ? getSellerColor() : getBuyerColor();
+    applyColor(color);
+}
+
+/**
+ * Get all theme settings
+ * @returns {Object} Theme settings object
+ */
+export function getThemeSettings() {
+    return {
+        sellerMode: isSellerModeEnabled(),
+        darkMode: isDarkModeEnabled(),
+        buyerColor: getBuyerColor(),
+        sellerColor: getSellerColor(),
+        defaultBuyerColor: DEFAULT_BUYER_COLOR,
+        defaultSellerColor: DEFAULT_SELLER_COLOR
+    };
+}
+
+/**
+ * Set seller theme (alias for setSellerColor for backwards compatibility)
+ * @param {string} color - Hex color
+ */
+export function setSellerTheme(color) {
+    setSellerColor(color);
+}
+
+// Legacy support - single custom color (maps to current mode)
+export function getCustomColor() {
+    return isSellerModeEnabled() ? getSellerColor() : getBuyerColor();
+}
+
+export function setCustomColor(color) {
+    if (isSellerModeEnabled()) {
+        setSellerColor(color);
+    } else {
+        setBuyerColor(color);
+    }
+}
+
+// ============================================
+// Color Utilities
+// ============================================
 
 /**
  * Darken a hex color
@@ -210,10 +301,9 @@ function lightenColor(hex, percent) {
 
 /**
  * Initialize theme settings on app load
- * Call this from app.js on startup
  */
 export function initTheme() {
-    // Apply seller mode class if enabled
+    // Apply seller/buyer mode class
     if (isSellerModeEnabled()) {
         document.body.classList.add('seller-mode');
     } else {
@@ -225,16 +315,12 @@ export function initTheme() {
         document.body.classList.add('dark-mode');
     }
 
-    // Apply custom color if set
-    const customColor = getCustomColor();
-    if (customColor) {
-        setCustomColor(customColor);
-    }
+    // Apply the correct color for current mode
+    applyCurrentModeColor();
 
     // Listen for system dark mode changes
     if (window.matchMedia) {
         window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', (e) => {
-            // Only auto-change if user hasn't set a preference
             if (localStorage.getItem(DARK_MODE_KEY) === null) {
                 setDarkMode(e.matches);
             }
@@ -242,12 +328,15 @@ export function initTheme() {
     }
 }
 
-// Auto-detect seller pages and enable seller mode
+/**
+ * Auto-detect seller pages and enable seller mode styling
+ */
 export function checkSellerPage() {
     const path = window.location.pathname;
     if (path.includes('/seller/') || path.includes('/pages/seller/')) {
         document.body.classList.add('seller-mode');
         document.body.classList.remove('buyer-mode');
+        applyColor(getSellerColor());
     }
 }
 
@@ -261,6 +350,12 @@ export default {
     isDarkModeEnabled,
     setDarkMode,
     toggleDarkMode,
+    getBuyerColor,
+    setBuyerColor,
+    getSellerColor,
+    setSellerColor,
+    getThemeSettings,
+    setSellerTheme,
     getCustomColor,
     setCustomColor,
     initTheme,

@@ -3,11 +3,14 @@
  */
 
 import Stripe from 'stripe';
-import { defineString } from 'firebase-functions/params';
+import { defineSecret } from 'firebase-functions/params';
 
 // Define secret parameters
-const stripeSecretKey = defineString('STRIPE_SECRET_KEY');
-const stripeWebhookSecret = defineString('STRIPE_WEBHOOK_SECRET');
+const STRIPE_SECRET_KEY = defineSecret('STRIPE_SECRET_KEY');
+const STRIPE_WEBHOOK_SECRET = defineSecret('STRIPE_WEBHOOK_SECRET');
+
+// Export secrets for function binding
+export { STRIPE_SECRET_KEY, STRIPE_WEBHOOK_SECRET };
 
 // Lazy initialization of Stripe
 let stripeInstance = null;
@@ -18,7 +21,7 @@ let stripeInstance = null;
  */
 export function getStripe() {
     if (!stripeInstance) {
-        stripeInstance = new Stripe(stripeSecretKey.value(), {
+        stripeInstance = new Stripe(STRIPE_SECRET_KEY.value(), {
             apiVersion: '2023-10-16'
         });
     }
@@ -30,7 +33,7 @@ export function getStripe() {
  * @returns {string} Webhook secret
  */
 export function getWebhookSecret() {
-    return stripeWebhookSecret.value();
+    return STRIPE_WEBHOOK_SECRET.value();
 }
 
 /**

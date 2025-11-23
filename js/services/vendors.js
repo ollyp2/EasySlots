@@ -3,7 +3,7 @@
  * Handles vendor profile and operations
  */
 
-import { db, doc, getDoc, getDocs, updateDoc, collection, query, where, serverTimestamp } from '../config/firebase.js';
+import { db, doc, getDoc, getDocs, updateDoc, collection, query, where, serverTimestamp, limit } from '../config/firebase.js';
 
 /**
  * Get vendor by ID
@@ -13,6 +13,25 @@ import { db, doc, getDoc, getDocs, updateDoc, collection, query, where, serverTi
 export async function getVendorById(vendorId) {
     const vendorDoc = await getDoc(doc(db, 'vendors', vendorId));
     return vendorDoc.exists() ? { id: vendorDoc.id, ...vendorDoc.data() } : null;
+}
+
+/**
+ * Get vendor by user ID
+ * @param {string} userId - User ID
+ * @returns {Promise<Object|null>} Vendor data
+ */
+export async function getVendorByUserId(userId) {
+    const q = query(
+        collection(db, 'vendors'),
+        where('userId', '==', userId),
+        limit(1)
+    );
+    const snapshot = await getDocs(q);
+
+    if (snapshot.empty) return null;
+
+    const vendorDoc = snapshot.docs[0];
+    return { id: vendorDoc.id, ...vendorDoc.data() };
 }
 
 /**
@@ -41,6 +60,7 @@ export async function getVendorEventsCount(vendorId) {
 
 export default {
     getVendorById,
+    getVendorByUserId,
     updateVendor,
     getVendorEventsCount
 };

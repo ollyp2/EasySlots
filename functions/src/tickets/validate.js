@@ -86,6 +86,8 @@ export const validateTicketCode = onCall(async (request) => {
         // Mark ticket as used
         await updateDocument('tickets', ticketDoc.id, {
             status: 'used',
+            checkedIn: true,
+            checkedInAt: FieldValue.serverTimestamp(),
             usedAt: FieldValue.serverTimestamp()
         });
 
@@ -97,7 +99,8 @@ export const validateTicketCode = onCall(async (request) => {
                 eventTitle: ticket.eventTitle,
                 eventDate: eventDate.toISOString(),
                 eventTime: ticket.eventTime,
-                seatId: ticket.seatId
+                seatId: ticket.seatId,
+                holderName: ticket.holderName || ticket.customerName || null
             }
         };
     } catch (error) {

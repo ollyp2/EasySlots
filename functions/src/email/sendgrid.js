@@ -4,10 +4,10 @@
  */
 
 import sgMail from '@sendgrid/mail';
-import { defineString } from 'firebase-functions/params';
+import { defineSecret } from 'firebase-functions/params';
 
-// SendGrid configuration via Firebase params
-const sendgridApiKey = defineString('SENDGRID_API_KEY');
+// SendGrid configuration via Firebase secrets
+const SENDGRID_API_KEY = defineSecret('SENDGRID_API_KEY');
 const SENDER_EMAIL = 'kevin.mario.radtke@outlook.com';
 const SENDER_NAME = 'EasySeats';
 
@@ -19,10 +19,13 @@ let initialized = false;
  */
 function initSendGrid() {
     if (!initialized) {
-        sgMail.setApiKey(sendgridApiKey.value());
+        sgMail.setApiKey(SENDGRID_API_KEY.value());
         initialized = true;
     }
 }
+
+// Export secret for function binding
+export { SENDGRID_API_KEY };
 
 /**
  * Send an email via SendGrid

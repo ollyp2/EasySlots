@@ -3,8 +3,11 @@
  * Handles ticket operations
  */
 
-import { db, doc, getDoc, getDocs, updateDoc, collection, query, where, orderBy, limit, serverTimestamp } from '../config/firebase.js';
+import { db, doc, getDoc, getDocs, updateDoc, collection, query, where, orderBy, limit, serverTimestamp, app } from '../config/firebase.js';
+import { getFunctions, httpsCallable } from 'https://www.gstatic.com/firebasejs/10.7.0/firebase-functions.js';
 import { CONSTANTS } from '../config/constants.js';
+
+const functions = getFunctions(app);
 
 /**
  * Get ticket by ID
@@ -165,6 +168,27 @@ export async function validateTicket(ticketId, vendorId) {
     return { valid: true, ticket: { id: ticketDoc.id, ...ticket } };
 }
 
+/**
+ * Validate ticket via Cloud Function
+ * @param {string} code - Ticket code
+ * @param {string} vendorId - Vendor ID
+ * @returns {Promise<Object>} Validation result
+ */
+export async function validateTicketViaCloud(code, vendorId) {
+    const validateTicketFn = httpsCallable(functions, 'validateTicketCode');
+
+    try {
+        const result = await validateTicketFn({
+            code: code.toUpperCase(),
+            vendorId: vendorId
+        });
+        return result.data;
+    } catch (error) {
+        console.error('Ticket validation error:', error);
+        throw error;
+    }
+}
+
 export default {
     getTicketById,
     getTicketByCode,
@@ -173,5 +197,6 @@ export default {
     getUpcomingTickets,
     groupTicketsByEvent,
     isTicketValid,
-    validateTicket
+    validateTicket,
+    validateTicketViaCloud
 };

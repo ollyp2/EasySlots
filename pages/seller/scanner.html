@@ -14,53 +14,208 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+    <style>
+        .scanner-container {
+            max-width: 500px;
+            margin: 0 auto;
+            padding: var(--space-4);
+        }
+
+        .scanner-video-container {
+            position: relative;
+            width: 100%;
+            aspect-ratio: 1;
+            background: #000;
+            border-radius: var(--radius-lg);
+            overflow: hidden;
+            margin-bottom: var(--space-4);
+        }
+
+        #scanner-video {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .scanner-overlay {
+            position: absolute;
+            inset: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            pointer-events: none;
+        }
+
+        .scanner-frame {
+            width: 70%;
+            height: 70%;
+            border: 3px solid var(--color-primary);
+            border-radius: var(--radius-md);
+            box-shadow: 0 0 0 9999px rgba(0,0,0,0.5);
+        }
+
+        .scanner-result {
+            padding: var(--space-4);
+            border-radius: var(--radius-lg);
+            text-align: center;
+            margin-bottom: var(--space-4);
+            display: none;
+        }
+
+        .scanner-result.success {
+            background: #d4edda;
+            border: 2px solid var(--color-success);
+            display: block;
+        }
+
+        .scanner-result.error {
+            background: #f8d7da;
+            border: 2px solid var(--color-error);
+            display: block;
+        }
+
+        .scanner-result.warning {
+            background: #fff3cd;
+            border: 2px solid var(--color-warning);
+            display: block;
+        }
+
+        .scanner-result.loading {
+            background: #e7f3ff;
+            border: 2px solid var(--color-primary);
+            display: block;
+        }
+
+        .ticket-details {
+            background: white;
+            padding: var(--space-4);
+            border-radius: var(--radius-lg);
+            border: 1px solid var(--color-border);
+            text-align: left;
+            margin-top: var(--space-3);
+        }
+
+        .ticket-details p {
+            margin: var(--space-2) 0;
+        }
+
+        .manual-entry {
+            margin-top: var(--space-4);
+            padding-top: var(--space-4);
+            border-top: 1px solid var(--color-border);
+        }
+
+        .manual-entry h3 {
+            margin-bottom: var(--space-3);
+            font-size: 1rem;
+        }
+
+        .manual-entry .form-input {
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            text-align: center;
+            font-size: 1.2rem;
+            margin-bottom: var(--space-3);
+        }
+
+        .recent-scans {
+            margin-top: var(--space-6);
+        }
+
+        .recent-scans h3 {
+            margin-bottom: var(--space-3);
+        }
+
+        .recent-scan-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: var(--space-2) var(--space-3);
+            border-bottom: 1px solid var(--color-border);
+            background: white;
+        }
+
+        .recent-scan-item:first-child {
+            border-radius: var(--radius-md) var(--radius-md) 0 0;
+        }
+
+        .recent-scan-item:last-child {
+            border-radius: 0 0 var(--radius-md) var(--radius-md);
+            border-bottom: none;
+        }
+
+        .scanner-controls {
+            display: flex;
+            flex-direction: column;
+            gap: var(--space-2);
+        }
+
+        .btn--block {
+            width: 100%;
+        }
+
+        .loader {
+            display: inline-block;
+            width: 20px;
+            height: 20px;
+            border: 2px solid #f3f3f3;
+            border-top: 2px solid var(--color-primary);
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+    </style>
 </head>
 <body>
     <header class="header" id="header"></header>
 
     <main class="main">
-        <div class="container">
-            <div class="scanner-page">
-                <div class="scanner-header">
-                    <h1 class="page-title">Ticket Scanner</h1>
-                    <select class="form-select" id="event-select">
-                        <option value="">Select Event</option>
-                    </select>
+        <div class="scanner-container">
+            <h1 class="page-title">Ticket Scanner</h1>
+            <p class="text-secondary" style="margin-bottom: var(--space-4);">Scan QR codes to validate tickets</p>
+
+            <!-- Result Display -->
+            <div id="scanner-result" class="scanner-result"></div>
+
+            <!-- Camera View -->
+            <div class="scanner-video-container">
+                <video id="scanner-video" autoplay playsinline></video>
+                <div class="scanner-overlay">
+                    <div class="scanner-frame"></div>
                 </div>
+            </div>
 
-                <div class="scanner-container">
-                    <!-- Camera View -->
-                    <div class="scanner-view" id="scanner-view">
-                        <video id="scanner-video" autoplay playsinline></video>
-                        <div class="scanner-overlay">
-                            <div class="scanner-frame"></div>
-                        </div>
-                    </div>
+            <!-- Controls -->
+            <div class="scanner-controls">
+                <button id="start-scanner" class="btn btn-primary btn--block">
+                    Start Camera
+                </button>
+                <button id="stop-scanner" class="btn btn-outline btn--block" style="display:none;">
+                    Stop Camera
+                </button>
+            </div>
 
-                    <!-- Manual Entry -->
-                    <div class="scanner-manual">
-                        <p>Or enter ticket code manually:</p>
-                        <div class="manual-input">
-                            <input type="text" class="form-input" id="ticket-code" placeholder="Enter ticket code">
-                            <button class="btn btn-primary" id="validate-btn">Validate</button>
-                        </div>
-                    </div>
+            <!-- Manual Entry -->
+            <div class="manual-entry">
+                <h3>Or enter code manually</h3>
+                <input type="text" id="manual-code" class="form-input"
+                       placeholder="ES-XXXXXXXX" maxlength="11">
+                <button id="validate-manual" class="btn btn-secondary btn--block">
+                    Validate Code
+                </button>
+            </div>
+
+            <!-- Recent Scans -->
+            <div class="recent-scans">
+                <h3>Recent Scans</h3>
+                <div id="recent-scans-list">
+                    <p class="text-secondary">No scans yet</p>
                 </div>
-
-                <!-- Result Display -->
-                <div class="scanner-result" id="scanner-result" style="display: none;">
-                    <div class="result-card" id="result-card">
-                        <!-- Result loaded dynamically -->
-                    </div>
-                </div>
-
-                <!-- Recent Scans -->
-                <section class="recent-scans">
-                    <h2 class="section-title">Recent Scans</h2>
-                    <div class="scans-list" id="scans-list">
-                        <!-- Loaded dynamically -->
-                    </div>
-                </section>
             </div>
         </div>
     </main>

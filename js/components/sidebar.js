@@ -25,7 +25,7 @@ const BUYER_NAV = [
     { href: '/pages/buyer/dashboard.html', icon: 'dashboard', label: 'My Dashboard', key: 'dashboard' },
     { href: '/pages/buyer/bookings.html', icon: 'calendar', label: 'My Bookings', key: 'bookings' },
     { href: '/pages/buyer/tickets.html', icon: 'ticket', label: 'My Tickets', key: 'tickets' },
-    { href: '/pages/buyer/profile.html', icon: 'user', label: 'Profile', key: 'profile' }
+    { href: '/pages/buyer/profile.html', icon: 'settings', label: 'Settings', key: 'settings' }
 ];
 
 const SELLER_NAV = [
@@ -57,7 +57,7 @@ function getActivePageFromUrl() {
     if (path.includes('/buyer/dashboard')) return 'dashboard';
     if (path.includes('/buyer/bookings')) return 'bookings';
     if (path.includes('/buyer/tickets')) return 'tickets';
-    if (path.includes('/buyer/profile')) return 'profile';
+    if (path.includes('/buyer/profile')) return 'settings';
 
     // Seller pages
     if (path.includes('/seller/dashboard')) return 'dashboard';

@@ -62,7 +62,7 @@ function renderHeader() {
         <div class="container">
             <div class="header__inner">
                 <a href="/" class="header__logo">
-                    <span>EasySlots</span>
+                    <span>EasySeats</span>
                 </a>
 
                 <nav class="header__nav">
@@ -80,11 +80,11 @@ function renderHeader() {
                     <div class="header__user-actions" data-auth="required" style="display: none;">
                         <div class="header__user-menu">
                             <button class="header__user-btn" id="user-menu-btn">
+                                <span class="header__user-name" data-user="name">Account</span>
                                 <div class="header__avatar" id="user-avatar">
                                     <span class="header__avatar-icon" id="avatar-icon"></span>
                                 </div>
-                                <span class="header__user-name" data-user="name">Account</span>
-                                <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2">
+                                <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2">
                                     <polyline points="6 9 12 15 18 9"></polyline>
                                 </svg>
                             </button>

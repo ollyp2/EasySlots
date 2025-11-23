@@ -1245,19 +1245,127 @@
     height: 18px;
 }
 
-/* Avatar Icon */
+/* Header User Button */
+.header__user-btn {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-2);
+    padding: var(--spacing-2);
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    border-radius: var(--radius-md);
+    transition: background-color var(--transition-fast);
+}
+
+.header__user-btn:hover {
+    background-color: var(--color-gray-100);
+}
+
+.header__user-name {
+    font-size: var(--font-size-sm);
+    font-weight: var(--font-weight-medium);
+    color: var(--color-gray-700);
+    max-width: 120px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+/* Avatar */
+.header__avatar {
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    background-color: var(--color-gray-200);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    overflow: hidden;
+}
+
 .header__avatar-icon {
     display: flex;
     align-items: center;
     justify-content: center;
     width: 100%;
     height: 100%;
-    font-size: 1.2rem;
+}
+
+.header__avatar-icon svg {
+    width: 16px;
+    height: 16px;
+    stroke: var(--color-gray-600);
 }
 
 .header__avatar-icon img {
     width: 100%;
     height: 100%;
     object-fit: cover;
-    border-radius: 50%;
+}
+
+/* ==========================================================================
+   Color Picker
+   ========================================================================== */
+
+.color-picker-container {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-3);
+}
+
+.color-presets {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--spacing-2);
+}
+
+.color-preset {
+    width: 36px;
+    height: 36px;
+    border-radius: var(--radius-md);
+    border: 2px solid transparent;
+    cursor: pointer;
+    transition: all var(--transition-fast);
+    padding: 0;
+}
+
+.color-preset:hover {
+    transform: scale(1.1);
+}
+
+.color-preset.active {
+    border-color: var(--color-gray-900);
+    box-shadow: 0 0 0 2px var(--color-white), 0 0 0 4px var(--color-gray-900);
+}
+
+.custom-color {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-2);
+}
+
+.form-label-sm {
+    font-size: var(--font-size-sm);
+    color: var(--color-gray-600);
+}
+
+.color-input {
+    width: 48px;
+    height: 36px;
+    padding: 2px;
+    border: 1px solid var(--color-gray-300);
+    border-radius: var(--radius-md);
+    cursor: pointer;
+    background-color: transparent;
+}
+
+.color-input::-webkit-color-swatch-wrapper {
+    padding: 0;
+}
+
+.color-input::-webkit-color-swatch {
+    border: none;
+    border-radius: var(--radius-sm);
 }

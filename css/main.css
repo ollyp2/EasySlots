@@ -334,3 +334,95 @@ button {
     transition-duration: 150ms;
     transition-timing-function: ease;
 }
+
+/* ==========================================================================
+   Seller Mode Styles
+   ========================================================================== */
+
+body.seller-mode {
+    --color-primary: #28A745;
+    --color-primary-light: #48C764;
+    --color-primary-dark: #1E7E34;
+    --color-primary-bg: #D4EDDA;
+}
+
+/* ==========================================================================
+   Dark Mode Styles
+   ========================================================================== */
+
+body.dark-mode {
+    --color-white: #1F2937;
+    --color-gray-50: #111827;
+    --color-gray-100: #1F2937;
+    --color-gray-200: #374151;
+    --color-gray-300: #4B5563;
+    --color-gray-400: #6B7280;
+    --color-gray-500: #9CA3AF;
+    --color-gray-600: #D1D5DB;
+    --color-gray-700: #E5E7EB;
+    --color-gray-800: #F3F4F6;
+    --color-gray-900: #F9FAFB;
+    --color-black: #FFFFFF;
+
+    background-color: #0F172A;
+    color: #E5E7EB;
+}
+
+body.dark-mode .header {
+    background-color: #1F2937;
+    border-color: #374151;
+}
+
+body.dark-mode .footer {
+    background-color: #0F172A;
+}
+
+body.dark-mode .card,
+body.dark-mode .stat-card,
+body.dark-mode .dashboard-sidebar,
+body.dark-mode .dashboard-section {
+    background-color: #1F2937;
+}
+
+body.dark-mode .form-input,
+body.dark-mode .form-select,
+body.dark-mode .form-textarea {
+    background-color: #374151;
+    border-color: #4B5563;
+    color: #E5E7EB;
+}
+
+body.dark-mode .form-input:focus,
+body.dark-mode .form-select:focus,
+body.dark-mode .form-textarea:focus {
+    border-color: var(--color-primary);
+}
+
+body.dark-mode .dropdown-menu {
+    background-color: #1F2937;
+    border-color: #374151;
+}
+
+body.dark-mode .dropdown-item:hover {
+    background-color: #374151;
+}
+
+body.dark-mode .table th {
+    background-color: #374151;
+}
+
+body.dark-mode .table tbody tr:hover {
+    background-color: #374151;
+}
+
+body.dark-mode .modal__content {
+    background-color: #1F2937;
+}
+
+body.dark-mode .modal__footer {
+    background-color: #111827;
+}
+
+body.dark-mode .toast {
+    background-color: #1F2937;
+}

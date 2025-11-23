@@ -24,7 +24,7 @@ function renderFooter() {
         <div class="container">
             <div class="footer__grid">
                 <div class="footer__brand">
-                    <div class="footer__logo">EasySlots</div>
+                    <div class="footer__logo">EasySeats</div>
                     <p class="footer__description">
                         Book amazing events, classes, and experiences from local vendors.
                         Your next adventure is just a click away.
@@ -65,7 +65,7 @@ function renderFooter() {
 
             <div class="footer__bottom">
                 <p class="footer__copyright">
-                    &copy; ${currentYear} EasySlots. All rights reserved.
+                    &copy; ${currentYear} EasySeats. All rights reserved.
                 </p>
                 <div class="footer__social">
                     <a href="#" class="footer__social-link" aria-label="Facebook">

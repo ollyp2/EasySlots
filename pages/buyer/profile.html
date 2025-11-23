@@ -71,10 +71,24 @@
                             </div>
                         </section>
 
-                        <section class="form-section">
+                        <!-- Vendor Mode Section (only shown for vendors) -->
+                        <section class="form-section" id="vendor-mode-section" style="display: none;">
+                            <h2 class="form-section__title">Seller Mode</h2>
+                            <p class="form-text">Switch between buyer and seller mode to manage your events.</p>
+                            <div class="toggle-container">
+                                <label class="toggle-switch">
+                                    <input type="checkbox" id="profile-seller-toggle">
+                                    <span class="toggle-slider"></span>
+                                </label>
+                                <span class="toggle-label" id="toggle-label-text">Seller Mode OFF</span>
+                            </div>
+                        </section>
+
+                        <!-- Become a Vendor Section (only shown for non-vendors) -->
+                        <section class="form-section" id="become-vendor-section">
                             <h2 class="form-section__title">Become a Vendor</h2>
-                            <p class="form-text">Want to sell your own events and services?</p>
-                            <a href="/pages/seller/dashboard.html" class="btn btn-outline">Become a Vendor</a>
+                            <p class="form-text">Want to sell your own events and services? Register as a vendor to start listing events.</p>
+                            <a href="/pages/auth/register.html?vendor=true" class="btn btn-outline">Register as Vendor</a>
                         </section>
 
                         <div class="form-actions">
@@ -90,5 +104,6 @@
     <div class="toast-container" id="toast-container"></div>
 
     <script type="module" src="/js/app.js"></script>
+    <script type="module" src="/js/pages/profile.js"></script>
 </body>
 </html>

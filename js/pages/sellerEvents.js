@@ -10,6 +10,7 @@ import { showLoader, hideLoader } from '../components/loader.js';
 import { confirm } from '../components/modal.js';
 import { formatCurrency } from '../utils/currency.js';
 import { formatDate } from '../utils/dates.js';
+import { renderSidebar } from '../components/sidebar.js';
 
 let vendorId = null;
 let allEvents = [];
@@ -26,6 +27,9 @@ async function init() {
         if (!authData) return;
 
         vendorId = authData.profile.vendorId || authData.user.uid;
+
+        // Render sidebar (dynamic based on mode)
+        await renderSidebar();
 
         // Setup filter tabs
         setupFilters();

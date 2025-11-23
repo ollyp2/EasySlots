@@ -8,6 +8,7 @@ import { showToast } from '../components/toast.js';
 import { showLoader, hideLoader } from '../components/loader.js';
 import { confirm } from '../components/modal.js';
 import { formatCurrency } from '../utils/currency.js';
+import { renderSidebar } from '../components/sidebar.js';
 
 let userId = null;
 let allBookings = [];
@@ -21,6 +22,10 @@ async function init() {
         if (!authData) return;
 
         userId = authData.user.uid;
+
+        // Render sidebar (dynamic based on mode)
+        await renderSidebar();
+
         setupTabs();
         await loadBookings();
     } catch (error) {

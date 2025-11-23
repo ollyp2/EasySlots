@@ -7,6 +7,7 @@ import { auth, onAuthStateChanged, isFirebaseConfigured } from './config/firebas
 import { CONSTANTS } from './config/constants.js';
 import { initHeader } from './components/header.js';
 import { initFooter } from './components/footer.js';
+import { renderSidebar } from './components/sidebar.js';
 import { showToast } from './components/toast.js';
 
 // Global application state
@@ -58,6 +59,12 @@ function handleAuthStateChange(user) {
         AppState.isAuthenticated = true;
         document.body.classList.add('user-authenticated');
         document.body.classList.remove('user-anonymous');
+
+        // Render sidebar if on a dashboard page (for pages without their own JS files)
+        const sidebarNav = document.querySelector('.dashboard-nav');
+        if (sidebarNav) {
+            renderSidebar();
+        }
 
         // Dispatch custom event for other modules to listen to
         window.dispatchEvent(new CustomEvent('auth:login', { detail: AppState.user }));

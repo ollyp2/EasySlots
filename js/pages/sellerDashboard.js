@@ -9,6 +9,7 @@ import { showToast } from '../components/toast.js';
 import { showLoader, hideLoader } from '../components/loader.js';
 import { formatCurrency } from '../utils/currency.js';
 import { formatDate, formatRelativeTime } from '../utils/dates.js';
+import { renderSidebar } from '../components/sidebar.js';
 
 let vendorId = null;
 
@@ -24,6 +25,9 @@ async function init() {
         if (!authData) return;
 
         vendorId = authData.profile.vendorId || authData.user.uid;
+
+        // Render sidebar (dynamic based on mode)
+        await renderSidebar();
 
         // Load dashboard data
         await Promise.all([

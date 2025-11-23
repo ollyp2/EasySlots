@@ -8,6 +8,7 @@ import { getCurrentUser } from '../services/auth.js';
 import { getVendorByUserId } from '../services/vendors.js';
 import { validateTicketViaCloud } from '../services/tickets.js';
 import { showToast } from '../components/toast.js';
+import { renderSidebar } from '../components/sidebar.js';
 
 let videoStream = null;
 let scannerActive = false;
@@ -28,6 +29,9 @@ export async function initTicketScannerPage() {
 
     const user = getCurrentUser();
     if (!user) return;
+
+    // Render sidebar (dynamic based on mode)
+    await renderSidebar();
 
     // Get vendor profile
     const vendor = await getVendorByUserId(user.uid);

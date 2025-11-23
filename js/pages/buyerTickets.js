@@ -8,6 +8,7 @@ import { getUserTickets, groupTicketsByEvent } from '../services/tickets.js';
 import { createTicketCard } from '../components/ticketCard.js';
 import { showToast } from '../components/toast.js';
 import { showLoader, hideLoader } from '../components/loader.js';
+import { renderSidebar } from '../components/sidebar.js';
 
 let userId = null;
 
@@ -22,6 +23,10 @@ async function init() {
         if (!authData) return;
 
         userId = authData.user.uid;
+
+        // Render sidebar (dynamic based on mode)
+        await renderSidebar();
+
         await loadTickets();
     } catch (error) {
         console.error('Tickets page error:', error);

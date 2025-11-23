@@ -198,8 +198,8 @@ function renderDropdownContent(isVendor, sellerModeOn) {
                 My Tickets
             </a>
             <a href="/pages/buyer/profile.html" class="dropdown-item">
-                <span class="dropdown-icon">${HEADER_ICONS.user}</span>
-                Profile
+                <span class="dropdown-icon">${HEADER_ICONS.settings}</span>
+                Settings
             </a>
         `;
     }
@@ -255,7 +255,7 @@ function renderMobileMenuContent(isVendor, sellerModeOn) {
             <a href="/pages/buyer/dashboard.html" class="mobile-menu__link"><span class="mobile-menu__icon">${HEADER_ICONS.dashboard}</span> My Dashboard</a>
             <a href="/pages/buyer/bookings.html" class="mobile-menu__link"><span class="mobile-menu__icon">${HEADER_ICONS.calendar}</span> My Bookings</a>
             <a href="/pages/buyer/tickets.html" class="mobile-menu__link"><span class="mobile-menu__icon">${HEADER_ICONS.ticket}</span> My Tickets</a>
-            <a href="/pages/buyer/profile.html" class="mobile-menu__link"><span class="mobile-menu__icon">${HEADER_ICONS.user}</span> Profile</a>
+            <a href="/pages/buyer/profile.html" class="mobile-menu__link"><span class="mobile-menu__icon">${HEADER_ICONS.settings}</span> Settings</a>
         `;
     }
 
@@ -334,12 +334,8 @@ function updateHeaderAuthState(headerEl) {
                     if (sidebarNav) {
                         await renderSidebar();
                     }
-                    // Redirect to appropriate dashboard
-                    if (e.target.checked) {
-                        window.location.href = '/pages/seller/dashboard.html';
-                    } else {
-                        window.location.href = '/pages/buyer/dashboard.html';
-                    }
+                    // Update header state (no redirect - user stays on current page)
+                    updateHeaderAuthState(headerEl);
                 });
             }
         }
@@ -365,12 +361,8 @@ function updateHeaderAuthState(headerEl) {
                     if (sidebarNav) {
                         await renderSidebar();
                     }
-                    // Redirect to appropriate dashboard
-                    if (e.target.checked) {
-                        window.location.href = '/pages/seller/dashboard.html';
-                    } else {
-                        window.location.href = '/pages/buyer/dashboard.html';
-                    }
+                    // Update header state (no redirect - user stays on current page)
+                    updateHeaderAuthState(headerEl);
                 });
             }
         }

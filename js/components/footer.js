@@ -45,7 +45,7 @@ function renderFooter() {
                 <div class="footer__section">
                     <h4 class="footer__title">For Vendors</h4>
                     <nav class="footer__links">
-                        <a href="/pages/auth/register.html" class="footer__link">Become a Vendor</a>
+                        <a href="/pages/auth/register.html?role=vendor" class="footer__link">Become a Vendor</a>
                         <a href="/pages/seller/dashboard.html" class="footer__link">Vendor Dashboard</a>
                         <a href="#" class="footer__link">Pricing</a>
                         <a href="#" class="footer__link">Help Center</a>

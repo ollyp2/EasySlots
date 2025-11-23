@@ -91,7 +91,7 @@ async function redirectToDashboard(userId) {
     // Get user profile to determine role
     try {
         const profile = await getUserProfile(userId);
-        if (profile && profile.role === 'seller') {
+        if (profile && profile.role === 'vendor') {
             window.location.href = '/pages/seller/dashboard.html';
         } else {
             window.location.href = '/pages/buyer/dashboard.html';

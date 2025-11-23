@@ -201,9 +201,9 @@ function updateHeaderAuthState(headerEl) {
             avatarEl.innerHTML = `<img src="${currentUser.photoURL}" alt="${displayName}" class="header__avatar-img">`;
         }
 
-        // Show seller section if user is a seller
+        // Show seller section if user is a vendor
         const sellerElements = headerEl.querySelectorAll('[data-role="seller"]');
-        const isSeller = userProfile?.role === 'seller';
+        const isSeller = userProfile?.role === 'vendor';
         sellerElements.forEach(el => {
             el.style.display = isSeller ? '' : 'none';
         });

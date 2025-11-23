@@ -25,6 +25,16 @@ function init() {
     if (googleBtn) {
         googleBtn.addEventListener('click', handleGoogleSignUp);
     }
+
+    // Pre-select vendor checkbox if role=vendor in URL
+    const urlParams = new URLSearchParams(window.location.search);
+    const preselectedRole = urlParams.get('role');
+    if (preselectedRole === 'vendor') {
+        const vendorCheckbox = document.getElementById('is-vendor');
+        if (vendorCheckbox) {
+            vendorCheckbox.checked = true;
+        }
+    }
 }
 
 /**
@@ -96,7 +106,7 @@ async function handleGoogleSignUp() {
 
         // Google users start as buyers, redirect to buyer dashboard
         const profile = await getUserProfile(user.uid);
-        if (profile && profile.role === 'seller') {
+        if (profile && profile.role === 'vendor') {
             window.location.href = '/pages/seller/dashboard.html';
         } else {
             window.location.href = '/pages/buyer/dashboard.html';

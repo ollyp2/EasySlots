@@ -48,7 +48,7 @@ export async function requireSeller() {
 
     const profile = await getUserProfile(user.uid);
 
-    if (!profile || profile.role !== 'seller') {
+    if (!profile || profile.role !== 'vendor') {
         window.location.href = '/pages/buyer/dashboard.html';
         return null;
     }
@@ -84,7 +84,7 @@ export async function redirectIfAuth(redirectTo = null) {
         } else {
             // Redirect based on role
             const profile = await getUserProfile(user.uid);
-            if (profile && profile.role === 'seller') {
+            if (profile && profile.role === 'vendor') {
                 window.location.href = '/pages/seller/dashboard.html';
             } else {
                 window.location.href = '/pages/buyer/dashboard.html';
@@ -103,7 +103,7 @@ export async function isSeller() {
     if (!user) return false;
 
     const profile = await getUserProfile(user.uid);
-    return profile && profile.role === 'seller';
+    return profile && profile.role === 'vendor';
 }
 
 /**

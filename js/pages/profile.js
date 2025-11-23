@@ -1,11 +1,11 @@
 /**
- * EasySeats - Profile Page
- * Handles user profile management and vendor mode toggle
+ * EasySeats - Profile/Settings Page
+ * Handles user profile management, vendor mode toggle, dark mode, and theme colors
  */
 
 import { auth, onAuthStateChanged } from '../config/firebase.js';
 import { getUserProfile, updateUserProfile } from '../services/auth.js';
-import { isSellerModeEnabled, setSellerMode, setBuyerTheme, getThemeSettings } from '../utils/sellerMode.js';
+import { isSellerModeEnabled, setSellerMode, isDarkModeEnabled, setDarkMode, getCustomColor, setCustomColor } from '../utils/sellerMode.js';
 import { renderSidebar } from '../components/sidebar.js';
 import { showToast } from '../utils/toast.js';
 
@@ -34,19 +34,11 @@ async function initProfile() {
         // Setup vendor toggle section
         setupVendorSection();
 
-        // Setup theme selector
-        setupThemeSelector();
+        // Setup theme settings
+        setupThemeSettings();
 
         // Setup form submission
         setupFormSubmission();
-
-        // Handle URL hash for scrolling to become-vendor section
-        if (window.location.hash === '#become-vendor') {
-            const section = document.getElementById('become-vendor-section');
-            if (section) {
-                section.scrollIntoView({ behavior: 'smooth' });
-            }
-        }
     });
 }
 
@@ -124,7 +116,7 @@ function setupVendorSection() {
                     enabled ? 'success' : 'info'
                 );
 
-                // Note: NO REDIRECT - user stays on profile page
+                // Note: NO REDIRECT - user stays on settings page
             });
         }
     } else {
@@ -135,40 +127,103 @@ function setupVendorSection() {
 }
 
 /**
- * Setup theme selector
+ * Setup theme settings (dark mode, color picker)
  */
-function setupThemeSelector() {
-    const themeSelector = document.getElementById('buyer-theme-selector');
-    if (!themeSelector) return;
+function setupThemeSettings() {
+    // Dark Mode Toggle
+    const darkModeToggle = document.getElementById('dark-mode-toggle');
+    const darkModeLabel = document.getElementById('dark-mode-label');
 
-    const themeOptions = themeSelector.querySelectorAll('.theme-option');
-    const { buyerTheme } = getThemeSettings();
-
-    // Set initial active state
-    themeOptions.forEach(option => {
-        const theme = option.dataset.theme;
-        if (theme === buyerTheme || (buyerTheme === 'default' && theme === 'default')) {
-            option.classList.add('active');
+    if (darkModeToggle) {
+        darkModeToggle.checked = isDarkModeEnabled();
+        if (darkModeLabel) {
+            darkModeLabel.textContent = isDarkModeEnabled() ? 'On' : 'Off';
         }
 
-        // Add click handler
-        option.addEventListener('click', () => {
-            // Remove active from all
-            themeOptions.forEach(opt => opt.classList.remove('active'));
-            // Add active to clicked
-            option.classList.add('active');
+        darkModeToggle.addEventListener('change', (e) => {
+            setDarkMode(e.target.checked);
+            if (darkModeLabel) {
+                darkModeLabel.textContent = e.target.checked ? 'On' : 'Off';
+            }
+            showToast(
+                e.target.checked ? 'Dark mode enabled' : 'Dark mode disabled',
+                'info'
+            );
+        });
+    }
 
-            // Apply theme
-            const selectedTheme = option.dataset.theme;
-            if (selectedTheme === 'default') {
-                setBuyerTheme(null); // Reset to default
-            } else {
-                setBuyerTheme(selectedTheme);
+    // Color Presets
+    const colorPresets = document.querySelectorAll('.color-preset');
+    const customColorPicker = document.getElementById('custom-color-picker');
+    const resetColorBtn = document.getElementById('reset-color');
+
+    // Get current color
+    const currentColor = getCustomColor() || '#4A90A4';
+
+    // Set custom color picker value
+    if (customColorPicker) {
+        customColorPicker.value = currentColor;
+    }
+
+    // Mark active preset
+    colorPresets.forEach(preset => {
+        if (preset.dataset.color.toLowerCase() === currentColor.toLowerCase()) {
+            preset.classList.add('active');
+        }
+
+        preset.addEventListener('click', () => {
+            const color = preset.dataset.color;
+
+            // Update active state
+            colorPresets.forEach(p => p.classList.remove('active'));
+            preset.classList.add('active');
+
+            // Apply color
+            setCustomColor(color);
+
+            // Update custom picker
+            if (customColorPicker) {
+                customColorPicker.value = color;
             }
 
-            showToast('Theme updated!', 'success');
+            showToast('Theme color updated', 'success');
         });
     });
+
+    // Custom Color Picker
+    if (customColorPicker) {
+        customColorPicker.addEventListener('change', (e) => {
+            const color = e.target.value;
+
+            // Remove active from presets
+            colorPresets.forEach(p => p.classList.remove('active'));
+
+            // Apply color
+            setCustomColor(color);
+            showToast('Custom theme color applied', 'success');
+        });
+    }
+
+    // Reset Color Button
+    if (resetColorBtn) {
+        resetColorBtn.addEventListener('click', () => {
+            // Reset to default
+            setCustomColor(null);
+
+            // Reset UI
+            if (customColorPicker) {
+                customColorPicker.value = '#4A90A4';
+            }
+            colorPresets.forEach(p => {
+                p.classList.remove('active');
+                if (p.dataset.color === '#4A90A4') {
+                    p.classList.add('active');
+                }
+            });
+
+            showToast('Theme color reset to default', 'info');
+        });
+    }
 }
 
 /**
@@ -194,10 +249,10 @@ function setupFormSubmission() {
                 updatedAt: new Date()
             });
 
-            showToast('Profile updated successfully!', 'success');
+            showToast('Settings saved successfully!', 'success');
         } catch (error) {
             console.error('Error updating profile:', error);
-            showToast('Failed to update profile. Please try again.', 'error');
+            showToast('Failed to save settings. Please try again.', 'error');
         }
     });
 }

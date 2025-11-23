@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>My Profile - EasySeats</title>
+    <title>Settings - EasySeats</title>
 
     <link rel="stylesheet" href="/css/main.css">
     <link rel="stylesheet" href="/css/layout.css">
@@ -23,31 +23,17 @@
             <div class="dashboard-layout">
                 <aside class="dashboard-sidebar">
                     <nav class="dashboard-nav">
-                        <a href="/pages/buyer/dashboard.html" class="dashboard-nav__item">
-                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7"></rect><rect x="14" y="3" width="7" height="7"></rect><rect x="14" y="14" width="7" height="7"></rect><rect x="3" y="14" width="7" height="7"></rect></svg>
-                            Dashboard
-                        </a>
-                        <a href="/pages/buyer/bookings.html" class="dashboard-nav__item">
-                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg>
-                            My Bookings
-                        </a>
-                        <a href="/pages/buyer/tickets.html" class="dashboard-nav__item">
-                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 9a3 3 0 0 1 0 6v2a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2v-2a3 3 0 0 1 0-6V7a2 2 0 0 0-2-2H4a2 2 0 0 0-2 2Z"></path></svg>
-                            My Tickets
-                        </a>
-                        <a href="/pages/buyer/profile.html" class="dashboard-nav__item dashboard-nav__item--active">
-                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
-                            Profile
-                        </a>
+                        <!-- Dynamically rendered by sidebar.js -->
                     </nav>
                 </aside>
 
                 <div class="dashboard-content">
                     <div class="dashboard-header">
-                        <h1 class="dashboard-title">My Profile</h1>
+                        <h1 class="dashboard-title">Buyer Settings</h1>
                     </div>
 
                     <form class="profile-form" id="profile-form">
+                        <!-- Personal Information -->
                         <section class="form-section">
                             <h2 class="form-section__title">Personal Information</h2>
                             <div class="form-row">
@@ -71,6 +57,43 @@
                             </div>
                         </section>
 
+                        <!-- Theme Settings -->
+                        <section class="form-section">
+                            <h2 class="form-section__title">Appearance</h2>
+
+                            <!-- Dark Mode -->
+                            <div class="form-group">
+                                <label class="form-label">Dark Mode</label>
+                                <div class="toggle-container">
+                                    <label class="toggle-switch">
+                                        <input type="checkbox" id="dark-mode-toggle">
+                                        <span class="toggle-slider"></span>
+                                    </label>
+                                    <span class="toggle-label" id="dark-mode-label">Off</span>
+                                </div>
+                            </div>
+
+                            <!-- Theme Color -->
+                            <div class="form-group">
+                                <label class="form-label">Theme Color</label>
+                                <div class="color-picker-container">
+                                    <div class="color-presets">
+                                        <button type="button" class="color-preset" data-color="#4A90A4" style="background:#4A90A4" title="Default Blue"></button>
+                                        <button type="button" class="color-preset" data-color="#28A745" style="background:#28A745" title="Green"></button>
+                                        <button type="button" class="color-preset" data-color="#6366F1" style="background:#6366F1" title="Indigo"></button>
+                                        <button type="button" class="color-preset" data-color="#EC4899" style="background:#EC4899" title="Pink"></button>
+                                        <button type="button" class="color-preset" data-color="#F59E0B" style="background:#F59E0B" title="Amber"></button>
+                                        <button type="button" class="color-preset" data-color="#EF4444" style="background:#EF4444" title="Red"></button>
+                                    </div>
+                                    <div class="custom-color">
+                                        <label class="form-label-sm">Custom:</label>
+                                        <input type="color" id="custom-color-picker" class="color-input" value="#4A90A4">
+                                        <button type="button" class="btn btn-sm btn-ghost" id="reset-color">Reset</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </section>
+
                         <!-- Vendor Mode Section (only shown for vendors) -->
                         <section class="form-section" id="vendor-mode-section" style="display: none;">
                             <h2 class="form-section__title">Seller Mode</h2>
@@ -86,36 +109,9 @@
 
                         <!-- Become a Vendor Section (only shown for non-vendors) -->
                         <section class="form-section" id="become-vendor-section">
-                            <h2 class="form-section__title">Become a Vendor</h2>
-                            <p class="form-text">Want to sell your own events and services? Register as a vendor to start listing events.</p>
-                            <a href="/pages/auth/register.html?role=vendor" class="btn btn-outline">Register as Vendor</a>
-                        </section>
-
-                        <!-- Appearance Section -->
-                        <section class="form-section">
-                            <h2 class="form-section__title">Appearance</h2>
-                            <p class="form-text">Customize the color theme for your buyer experience.</p>
-                            <div class="form-group">
-                                <label class="form-label">Buyer Theme</label>
-                                <div class="theme-selector" id="buyer-theme-selector">
-                                    <button type="button" class="theme-option theme-option--default" data-theme="default" title="Default Blue">
-                                        <span class="theme-option__color" style="background: #4A90A4;"></span>
-                                        <span class="theme-option__check"></span>
-                                    </button>
-                                    <button type="button" class="theme-option" data-theme="purple" title="Purple">
-                                        <span class="theme-option__color" style="background: #7C3AED;"></span>
-                                        <span class="theme-option__check"></span>
-                                    </button>
-                                    <button type="button" class="theme-option" data-theme="teal" title="Teal">
-                                        <span class="theme-option__color" style="background: #0D9488;"></span>
-                                        <span class="theme-option__check"></span>
-                                    </button>
-                                    <button type="button" class="theme-option" data-theme="rose" title="Rose">
-                                        <span class="theme-option__color" style="background: #E11D48;"></span>
-                                        <span class="theme-option__check"></span>
-                                    </button>
-                                </div>
-                            </div>
+                            <h2 class="form-section__title">Upgrade to Vendor</h2>
+                            <p class="form-text">Want to sell your own events and services? Upgrade your account to start listing events.</p>
+                            <a href="/pages/auth/register.html?upgrade=vendor" class="btn btn-outline">Upgrade to Vendor</a>
                         </section>
 
                         <div class="form-actions">

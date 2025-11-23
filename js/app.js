@@ -8,6 +8,7 @@ import { CONSTANTS } from './config/constants.js';
 import { initHeader } from './components/header.js';
 import { initFooter } from './components/footer.js';
 import { renderSidebar } from './components/sidebar.js';
+import { initTheme, checkSellerPage } from './utils/sellerMode.js';
 import { showToast } from './components/toast.js';
 
 // Global application state
@@ -22,6 +23,10 @@ export const AppState = {
  */
 async function init() {
     console.log(`${CONSTANTS.APP_NAME} v${CONSTANTS.APP_VERSION} initializing...`);
+
+    // Initialize theme (dark mode, seller mode, custom colors)
+    initTheme();
+    checkSellerPage();
 
     // Check Firebase configuration
     if (!isFirebaseConfigured()) {

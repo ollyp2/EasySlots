@@ -1,14 +1,14 @@
 /**
- * EasySeats - Seller Mode State Management
- * Handles switching between buyer and seller modes for vendors
+ * EasySeats - Seller Mode & Theme Management
+ * Handles switching between buyer and seller modes, colors, and dark mode
  */
 
 import { auth } from '../config/firebase.js';
 import { getUserProfile } from '../services/auth.js';
 
 const SELLER_MODE_KEY = 'easyseats_seller_mode';
-const BUYER_THEME_KEY = 'easyseats_buyer_theme';
-const SELLER_THEME_KEY = 'easyseats_seller_theme';
+const DARK_MODE_KEY = 'easyseats_dark_mode';
+const CUSTOM_COLOR_KEY = 'easyseats_custom_color';
 
 /**
  * Check if seller mode is enabled
@@ -25,87 +25,19 @@ export function isSellerModeEnabled() {
 export function setSellerMode(enabled) {
     localStorage.setItem(SELLER_MODE_KEY, enabled ? 'true' : 'false');
 
-    // Update body class for CSS theming
-    updateBodyClass(enabled);
+    // Apply body class for CSS styling
+    if (enabled) {
+        document.body.classList.add('seller-mode');
+        document.body.classList.remove('buyer-mode');
+    } else {
+        document.body.classList.remove('seller-mode');
+        document.body.classList.add('buyer-mode');
+    }
 
     // Dispatch event for other components to react
     window.dispatchEvent(new CustomEvent('sellerModeChanged', {
         detail: { enabled }
     }));
-}
-
-/**
- * Update body class based on seller mode
- * @param {boolean} enabled - Whether seller mode is enabled
- */
-function updateBodyClass(enabled) {
-    if (enabled) {
-        document.body.classList.add('seller-mode');
-    } else {
-        document.body.classList.remove('seller-mode');
-    }
-
-    // Apply custom themes
-    applyCustomThemes();
-}
-
-/**
- * Apply custom color themes from localStorage
- */
-function applyCustomThemes() {
-    const buyerTheme = localStorage.getItem(BUYER_THEME_KEY);
-    const sellerTheme = localStorage.getItem(SELLER_THEME_KEY);
-
-    // Remove all theme attributes first
-    document.body.removeAttribute('data-theme-buyer');
-    document.body.removeAttribute('data-theme-seller');
-
-    // Apply buyer theme if set and not in seller mode
-    if (buyerTheme && !isSellerModeEnabled()) {
-        document.body.setAttribute('data-theme-buyer', buyerTheme);
-    }
-
-    // Apply seller theme if set and in seller mode
-    if (sellerTheme && isSellerModeEnabled()) {
-        document.body.setAttribute('data-theme-seller', sellerTheme);
-    }
-}
-
-/**
- * Set custom theme for buyer mode
- * @param {string|null} theme - Theme name (null to reset)
- */
-export function setBuyerTheme(theme) {
-    if (theme) {
-        localStorage.setItem(BUYER_THEME_KEY, theme);
-    } else {
-        localStorage.removeItem(BUYER_THEME_KEY);
-    }
-    applyCustomThemes();
-}
-
-/**
- * Set custom theme for seller mode
- * @param {string|null} theme - Theme name (null to reset)
- */
-export function setSellerTheme(theme) {
-    if (theme) {
-        localStorage.setItem(SELLER_THEME_KEY, theme);
-    } else {
-        localStorage.removeItem(SELLER_THEME_KEY);
-    }
-    applyCustomThemes();
-}
-
-/**
- * Get current theme settings
- * @returns {Object} Current buyer and seller themes
- */
-export function getThemeSettings() {
-    return {
-        buyerTheme: localStorage.getItem(BUYER_THEME_KEY) || 'default',
-        sellerTheme: localStorage.getItem(SELLER_THEME_KEY) || 'default'
-    };
 }
 
 /**
@@ -162,22 +94,160 @@ export async function ensureSellerMode() {
     return true;
 }
 
+// ============================================
+// Dark Mode
+// ============================================
+
 /**
- * Initialize seller mode on page load
- * Sets body class based on stored preference
+ * Check if dark mode is enabled
+ * @returns {boolean} True if dark mode is on
  */
-export function initSellerMode() {
-    const enabled = isSellerModeEnabled();
-    updateBodyClass(enabled);
+export function isDarkModeEnabled() {
+    const stored = localStorage.getItem(DARK_MODE_KEY);
+    if (stored !== null) {
+        return stored === 'true';
+    }
+    // Check system preference
+    return window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
 }
 
-// Auto-initialize on module load
-if (typeof document !== 'undefined') {
-    // Initialize immediately if DOM is ready
-    if (document.readyState === 'loading') {
-        document.addEventListener('DOMContentLoaded', initSellerMode);
+/**
+ * Set dark mode state
+ * @param {boolean} enabled - Whether to enable dark mode
+ */
+export function setDarkMode(enabled) {
+    localStorage.setItem(DARK_MODE_KEY, enabled ? 'true' : 'false');
+
+    if (enabled) {
+        document.body.classList.add('dark-mode');
     } else {
-        initSellerMode();
+        document.body.classList.remove('dark-mode');
+    }
+
+    window.dispatchEvent(new CustomEvent('darkModeChanged', {
+        detail: { enabled }
+    }));
+}
+
+/**
+ * Toggle dark mode
+ * @returns {boolean} New dark mode state
+ */
+export function toggleDarkMode() {
+    const current = isDarkModeEnabled();
+    setDarkMode(!current);
+    return !current;
+}
+
+// ============================================
+// Custom Color
+// ============================================
+
+/**
+ * Get custom primary color
+ * @returns {string|null} Custom color hex or null
+ */
+export function getCustomColor() {
+    return localStorage.getItem(CUSTOM_COLOR_KEY);
+}
+
+/**
+ * Set custom primary color
+ * @param {string|null} color - Hex color string or null to reset
+ */
+export function setCustomColor(color) {
+    if (color) {
+        localStorage.setItem(CUSTOM_COLOR_KEY, color);
+        document.documentElement.style.setProperty('--color-primary', color);
+        // Calculate darker shade for hover
+        document.documentElement.style.setProperty('--color-primary-dark', darkenColor(color, 15));
+        document.documentElement.style.setProperty('--color-primary-light', lightenColor(color, 40));
+    } else {
+        localStorage.removeItem(CUSTOM_COLOR_KEY);
+        document.documentElement.style.removeProperty('--color-primary');
+        document.documentElement.style.removeProperty('--color-primary-dark');
+        document.documentElement.style.removeProperty('--color-primary-light');
+    }
+
+    window.dispatchEvent(new CustomEvent('themeColorChanged', {
+        detail: { color }
+    }));
+}
+
+/**
+ * Darken a hex color
+ * @param {string} hex - Hex color
+ * @param {number} percent - Percent to darken
+ * @returns {string} Darkened hex color
+ */
+function darkenColor(hex, percent) {
+    const num = parseInt(hex.replace('#', ''), 16);
+    const amt = Math.round(2.55 * percent);
+    const R = Math.max((num >> 16) - amt, 0);
+    const G = Math.max((num >> 8 & 0x00FF) - amt, 0);
+    const B = Math.max((num & 0x0000FF) - amt, 0);
+    return '#' + (0x1000000 + R * 0x10000 + G * 0x100 + B).toString(16).slice(1);
+}
+
+/**
+ * Lighten a hex color
+ * @param {string} hex - Hex color
+ * @param {number} percent - Percent to lighten
+ * @returns {string} Lightened hex color
+ */
+function lightenColor(hex, percent) {
+    const num = parseInt(hex.replace('#', ''), 16);
+    const amt = Math.round(2.55 * percent);
+    const R = Math.min((num >> 16) + amt, 255);
+    const G = Math.min((num >> 8 & 0x00FF) + amt, 255);
+    const B = Math.min((num & 0x0000FF) + amt, 255);
+    return '#' + (0x1000000 + R * 0x10000 + G * 0x100 + B).toString(16).slice(1);
+}
+
+// ============================================
+// Initialization
+// ============================================
+
+/**
+ * Initialize theme settings on app load
+ * Call this from app.js on startup
+ */
+export function initTheme() {
+    // Apply seller mode class if enabled
+    if (isSellerModeEnabled()) {
+        document.body.classList.add('seller-mode');
+    } else {
+        document.body.classList.add('buyer-mode');
+    }
+
+    // Apply dark mode if enabled
+    if (isDarkModeEnabled()) {
+        document.body.classList.add('dark-mode');
+    }
+
+    // Apply custom color if set
+    const customColor = getCustomColor();
+    if (customColor) {
+        setCustomColor(customColor);
+    }
+
+    // Listen for system dark mode changes
+    if (window.matchMedia) {
+        window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', (e) => {
+            // Only auto-change if user hasn't set a preference
+            if (localStorage.getItem(DARK_MODE_KEY) === null) {
+                setDarkMode(e.matches);
+            }
+        });
+    }
+}
+
+// Auto-detect seller pages and enable seller mode
+export function checkSellerPage() {
+    const path = window.location.pathname;
+    if (path.includes('/seller/') || path.includes('/pages/seller/')) {
+        document.body.classList.add('seller-mode');
+        document.body.classList.remove('buyer-mode');
     }
 }
 
@@ -188,8 +258,11 @@ export default {
     canUseSellerMode,
     getCurrentMode,
     ensureSellerMode,
-    initSellerMode,
-    setBuyerTheme,
-    setSellerTheme,
-    getThemeSettings
+    isDarkModeEnabled,
+    setDarkMode,
+    toggleDarkMode,
+    getCustomColor,
+    setCustomColor,
+    initTheme,
+    checkSellerPage
 };
